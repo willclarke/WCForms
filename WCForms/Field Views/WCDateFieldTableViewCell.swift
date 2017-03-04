@@ -11,6 +11,7 @@ import UIKit
 public class WCDateFieldTableViewCell: WCTextFieldTableViewCell {
 
     public var datePickerKeyboard = UIDatePicker()
+    public var dateDisplayFormatter = DateFormatter()
 
     public override func awakeFromNib() {
         super.awakeFromNib()
@@ -25,7 +26,7 @@ public class WCDateFieldTableViewCell: WCTextFieldTableViewCell {
     }
 
     func dateChanged(sender: UIDatePicker) {
-        
+        fieldValueTextField.text = dateDisplayFormatter.string(from: sender.date)
     }
 
 }

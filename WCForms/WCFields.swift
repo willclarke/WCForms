@@ -281,10 +281,8 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             editableDateCell.datePickerKeyboard.date = dateValue
             editableDateCell.datePickerKeyboard.minimumDate = minimumDate
             editableDateCell.datePickerKeyboard.maximumDate = maximumDate
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateStyle = .medium
-            dateFormatter.timeStyle = .none
-            editableDateCell.fieldValueTextField.text = dateFormatter.string(from: dateValue)
+            editableDateCell.dateDisplayFormatter = dateDisplayFormatter
+            editableDateCell.fieldValueTextField.text = dateDisplayFormatter.string(from: dateValue)
         }
     }
 }
