@@ -8,9 +8,14 @@
 
 import UIKit
 
-public class WCTextFieldTableViewCell: UITableViewCell {
+public class WCTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var fieldNameLabel: UILabel!
     @IBOutlet weak var fieldValueTextField: UITextField!
+
+    @IBAction func textFieldEditingChanged(_ sender: UITextField) {
+        let text = sender.text ?? ""
+        print("New text field value: \(text)")
+    }
 
 }

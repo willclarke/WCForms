@@ -14,4 +14,9 @@ public class WCIntFieldSliderTableViewCell: UITableViewCell {
     @IBOutlet weak var fieldValueLabel: UILabel!
     @IBOutlet weak var fieldValueSlider: UISlider!
     
+    @IBAction func intSliderValueChanged(_ sender: UISlider) {
+        let text = String(round(sender.value))
+        print("Int field value: \(text)")
+    }
+
 }

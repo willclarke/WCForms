@@ -13,4 +13,8 @@ public class WCBoolFieldTableViewCell: UITableViewCell {
     @IBOutlet weak var fieldNameLabel: UILabel!
     @IBOutlet weak var fieldValueSwitch: UISwitch!
     
+    @IBAction func switchValueChanged(_ sender: UISwitch) {
+        print("Switch value: \(sender.isOn)")
+    }
+
 }

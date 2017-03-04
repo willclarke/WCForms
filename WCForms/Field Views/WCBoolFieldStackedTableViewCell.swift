@@ -13,4 +13,15 @@ public class WCBoolFieldStackedTableViewCell: WCBoolFieldTableViewCell {
     @IBOutlet weak var offDisplayValueLabel: UILabel!
     @IBOutlet weak var onDisplayValueLabel: UILabel!
     
+    @IBAction override func switchValueChanged(_ sender: UISwitch) {
+        print("Switch value: \(sender.isOn)")
+        if sender.isOn {
+            onDisplayValueLabel.textColor = UIColor.darkGray
+            offDisplayValueLabel.textColor = UIColor.lightGray
+        } else {
+            onDisplayValueLabel.textColor = UIColor.lightGray
+            offDisplayValueLabel.textColor = UIColor.darkGray
+        }
+    }
+
 }

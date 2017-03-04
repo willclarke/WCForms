@@ -10,5 +10,9 @@ import UIKit
 
 public class WCIntFieldTableViewCell: WCTextFieldTableViewCell {
 
+    @IBAction func intTextFieldEditingChanged(_ sender: UITextField) {
+        let text = sender.text ?? ""
+        print("Int field value: \(text)")
+    }
     
 }

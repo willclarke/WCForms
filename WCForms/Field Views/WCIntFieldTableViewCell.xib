@@ -30,6 +30,10 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        <connections>
+                            <action selector="intTextFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="xLc-nh-HJf"/>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="sY8-a7-TiK"/>
+                        </connections>
                     </textField>
                 </subviews>
                 <constraints>

@@ -31,6 +31,10 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits"/>
+                        <connections>
+                            <action selector="dateFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="xqo-Wn-ume"/>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="W9X-uI-Htb"/>
+                        </connections>
                     </textField>
                 </subviews>
                 <constraints>
