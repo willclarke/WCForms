@@ -253,8 +253,9 @@ public enum WCDateFieldAppearance: FieldCellLoadable {
 }
 
 public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
-    let datePicker = UIDatePicker()
-    let dateDisplayFormatter = DateFormatter()
+    public var dateDisplayFormatter = DateFormatter()
+    public var minimumDate: Date? = nil
+    public var maximumDate: Date? = nil
 
     public override init(fieldIdentifier: String, fieldName: String, initialValue: Date, appearance: WCDateFieldAppearance?) {
         super.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName, initialValue: initialValue, appearance: appearance)
@@ -277,8 +278,9 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
         if let editableDateCell = cell as? WCDateFieldTableViewCell {
             let dateValue: Date = fieldValue ?? defaultValue ?? Date()
             editableDateCell.fieldNameLabel.text = fieldName
-            datePicker.date = dateValue
-            editableDateCell.fieldValueTextField.inputView = datePicker
+            editableDateCell.datePickerKeyboard.date = dateValue
+            editableDateCell.datePickerKeyboard.minimumDate = minimumDate
+            editableDateCell.datePickerKeyboard.maximumDate = maximumDate
             let dateFormatter = DateFormatter()
             dateFormatter.dateStyle = .medium
             dateFormatter.timeStyle = .none
