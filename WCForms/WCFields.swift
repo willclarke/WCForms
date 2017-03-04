@@ -308,7 +308,7 @@ public enum WCIntFieldAppearance: FieldCellLoadable {
         case .rightDetail:
             return "WCIntFieldRightDetailTableViewCell"
         case .stacked:
-            return "WCDateFieldTableViewCell"
+            return "WCIntFieldTableViewCell"
         case .slider:
             return "WCIntFieldSliderTableViewCell"
         }
