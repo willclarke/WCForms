@@ -22,6 +22,7 @@ public class WCDateFieldTableViewCell: WCGenericTextFieldTableViewCell {
 
     public override func awakeFromNib() {
         super.awakeFromNib()
+        fieldValueTextField.tintColor = UIColor.clear
         datePickerKeyboard.datePickerMode = .date
         datePickerKeyboard.addTarget(self, action: #selector(dateChanged(sender:)), for: UIControlEvents.valueChanged)
         fieldValueTextField.inputView = datePickerKeyboard
@@ -39,6 +40,14 @@ public class WCDateFieldTableViewCell: WCGenericTextFieldTableViewCell {
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         print("tried replacing \(string)")
         return false
+    }
+
+    public func textFieldDidBeginEditing(_ textField: UITextField) {
+        fieldValueTextField.textColor = self.tintColor
+    }
+
+    public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+        fieldValueTextField.textColor = UIColor.darkGray
     }
 
 }
