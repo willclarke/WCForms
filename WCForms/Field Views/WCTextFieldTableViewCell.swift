@@ -28,4 +28,9 @@ public class WCTextFieldTableViewCell: WCGenericTextFieldTableViewCell {
         delegate?.viewDidUpdateValue(newValue: sender.text)
     }
 
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
 }

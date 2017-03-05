@@ -29,7 +29,7 @@
                         <rect key="frame" x="16" y="41" width="288" height="30"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                         <connections>
                             <action selector="intTextFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="xLc-nh-HJf"/>
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="sY8-a7-TiK"/>

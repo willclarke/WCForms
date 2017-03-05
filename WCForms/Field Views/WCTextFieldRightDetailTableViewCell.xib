@@ -30,7 +30,7 @@
                         <rect key="frame" x="125" y="9" width="179" height="24"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <textInputTraits key="textInputTraits"/>
+                        <textInputTraits key="textInputTraits" returnKeyType="done"/>
                         <connections>
                             <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="kUk-7C-jY2"/>
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="Kds-Yk-GWG"/>
