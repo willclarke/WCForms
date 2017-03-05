@@ -132,9 +132,7 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
         for appearance in AppearanceType.allValues {
             let readOnlyNib = UINib(nibName: appearance.nibName, bundle: nibBundle)
             let editableNib = UINib(nibName: appearance.editableNibName, bundle: nibBundle)
-            print("Registering nib \(appearance.nibName) for cell ID \(appearance.cellIdentifier)")
             tableView.register(readOnlyNib, forCellReuseIdentifier: appearance.cellIdentifier)
-            print("Registering nib \(appearance.editableNibName) for cell ID \(appearance.editableCellIdentifier)")
             tableView.register(editableNib, forCellReuseIdentifier: appearance.editableCellIdentifier)
         }
     }
