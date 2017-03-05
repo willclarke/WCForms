@@ -106,11 +106,16 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
     }
     
     public func setupCell(_ cell: UITableViewCell) {
+        var setValueTextColor = UIColor.black
+
         if let readOnlyCell = cell as? WCGenericFieldTableViewCell {
+            setValueTextColor = UIColor.darkGray
             readOnlyCell.titleLabel.text = fieldName
+        }
+        if let readOnlyCell = cell as? WCGenericFieldNoLabelTableViewCell {
             if let stringConvertableValue = fieldValue as? CustomStringConvertible {
                 if stringConvertableValue.description != "" {
-                    readOnlyCell.valueLabel.textColor = UIColor.darkGray
+                    readOnlyCell.valueLabel.textColor = setValueTextColor
                     readOnlyCell.valueLabel.text = stringConvertableValue.description
                 } else {
                     readOnlyCell.valueLabel.textColor = UIColor.lightText

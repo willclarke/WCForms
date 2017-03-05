@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class WCIntFieldTableViewCell: WCGenericTextFieldTableViewCell {
+public class WCIntFieldTableViewCell: WCGenericTextFieldAndLabelCell {
 
     weak var delegate: WCIntField? = nil
     lazy var prohibitedCharacters = CharacterSet(charactersIn: "0123456789").inverted

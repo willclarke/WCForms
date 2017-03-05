@@ -19,6 +19,7 @@
 		8A4BA4921E68F80B004F7089 /* WCIntFieldSliderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4BA4901E68F80B004F7089 /* WCIntFieldSliderTableViewCell.swift */; };
 		8A4BA4931E68F80B004F7089 /* WCIntFieldSliderTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A4BA4911E68F80B004F7089 /* WCIntFieldSliderTableViewCell.xib */; };
 		8A4BA4971E68F966004F7089 /* WCDateFieldRightDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A4BA4951E68F966004F7089 /* WCDateFieldRightDetailTableViewCell.xib */; };
+		8A6801521E6BF7A900227ABC /* WCTextFieldNoLabelCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A6801501E6BF7A900227ABC /* WCTextFieldNoLabelCell.xib */; };
 		8A9FA3FF1E66D29E00C16C26 /* WCGenericFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9FA3FD1E66D29E00C16C26 /* WCGenericFieldTableViewCell.swift */; };
 		8A9FA4001E66D29E00C16C26 /* WCGenericFieldTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A9FA3FE1E66D29E00C16C26 /* WCGenericFieldTableViewCell.xib */; };
 		8A9FA4031E676A6200C16C26 /* WCTextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9FA4011E676A6200C16C26 /* WCTextFieldTableViewCell.swift */; };
@@ -34,6 +35,7 @@
 		8AB1901E1E64637D00AE13AF /* WCFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB1901D1E64637D00AE13AF /* WCFormController.swift */; };
 		8AB190201E64667C00AE13AF /* FormProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB1901F1E64667C00AE13AF /* FormProtocols.swift */; };
 		8AB190221E64671900AE13AF /* WCForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB190211E64671900AE13AF /* WCForm.swift */; };
+		8AB50DBC1E6C613E0057C249 /* WCGenericFieldNoLabelTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AB50DBA1E6C613E0057C249 /* WCGenericFieldNoLabelTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +51,7 @@
 		8A4BA4901E68F80B004F7089 /* WCIntFieldSliderTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WCIntFieldSliderTableViewCell.swift; path = "Field Views/WCIntFieldSliderTableViewCell.swift"; sourceTree = "<group>"; };
 		8A4BA4911E68F80B004F7089 /* WCIntFieldSliderTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCIntFieldSliderTableViewCell.xib; path = "Field Views/WCIntFieldSliderTableViewCell.xib"; sourceTree = "<group>"; };
 		8A4BA4951E68F966004F7089 /* WCDateFieldRightDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCDateFieldRightDetailTableViewCell.xib; path = "Field Views/WCDateFieldRightDetailTableViewCell.xib"; sourceTree = "<group>"; };
+		8A6801501E6BF7A900227ABC /* WCTextFieldNoLabelCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCTextFieldNoLabelCell.xib; path = "Field Views/WCTextFieldNoLabelCell.xib"; sourceTree = "<group>"; };
 		8A9FA3FD1E66D29E00C16C26 /* WCGenericFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WCGenericFieldTableViewCell.swift; path = "Field Views/WCGenericFieldTableViewCell.swift"; sourceTree = "<group>"; };
 		8A9FA3FE1E66D29E00C16C26 /* WCGenericFieldTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCGenericFieldTableViewCell.xib; path = "Field Views/WCGenericFieldTableViewCell.xib"; sourceTree = "<group>"; };
 		8A9FA4011E676A6200C16C26 /* WCTextFieldTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WCTextFieldTableViewCell.swift; path = "Field Views/WCTextFieldTableViewCell.swift"; sourceTree = "<group>"; };
@@ -66,6 +69,7 @@
 		8AB1901D1E64637D00AE13AF /* WCFormController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCFormController.swift; sourceTree = "<group>"; };
 		8AB1901F1E64667C00AE13AF /* FormProtocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormProtocols.swift; sourceTree = "<group>"; };
 		8AB190211E64671900AE13AF /* WCForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCForm.swift; sourceTree = "<group>"; };
+		8AB50DBA1E6C613E0057C249 /* WCGenericFieldNoLabelTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCGenericFieldNoLabelTableViewCell.xib; path = "Field Views/WCGenericFieldNoLabelTableViewCell.xib"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,9 +99,11 @@
 			isa = PBXGroup;
 			children = (
 				8A9FA3FD1E66D29E00C16C26 /* WCGenericFieldTableViewCell.swift */,
+				8AB50DBA1E6C613E0057C249 /* WCGenericFieldNoLabelTableViewCell.xib */,
 				8A9FA3FE1E66D29E00C16C26 /* WCGenericFieldTableViewCell.xib */,
 				8A4BA4811E686BB3004F7089 /* WCGenericFieldRightDetailTableViewCell.xib */,
 				8A9FA4011E676A6200C16C26 /* WCTextFieldTableViewCell.swift */,
+				8A6801501E6BF7A900227ABC /* WCTextFieldNoLabelCell.xib */,
 				8A9FA4021E676A6200C16C26 /* WCTextFieldTableViewCell.xib */,
 				8A4BA4851E686DEC004F7089 /* WCTextFieldRightDetailTableViewCell.xib */,
 				8A9FA4071E67969F00C16C26 /* WCBoolFieldTableViewCell.swift */,
@@ -224,10 +230,12 @@
 				8A4BA4931E68F80B004F7089 /* WCIntFieldSliderTableViewCell.xib in Resources */,
 				8A9FA40A1E67969F00C16C26 /* WCBoolFieldTableViewCell.xib in Resources */,
 				8A9FA4041E676A6200C16C26 /* WCTextFieldTableViewCell.xib in Resources */,
+				8AB50DBC1E6C613E0057C249 /* WCGenericFieldNoLabelTableViewCell.xib in Resources */,
 				8A4BA4831E686BB3004F7089 /* WCGenericFieldRightDetailTableViewCell.xib in Resources */,
 				8A4BA4871E686DEC004F7089 /* WCTextFieldRightDetailTableViewCell.xib in Resources */,
 				8A9FA4121E67A1B800C16C26 /* WCIntFieldTableViewCell.xib in Resources */,
 				8A4BA48F1E6892F5004F7089 /* WCIntFieldRightDetailTableViewCell.xib in Resources */,
+				8A6801521E6BF7A900227ABC /* WCTextFieldNoLabelCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

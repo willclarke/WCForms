@@ -8,9 +8,14 @@
 
 import UIKit
 
-public class WCGenericFieldTableViewCell: UITableViewCell {
+public class WCGenericFieldNoLabelTableViewCell: UITableViewCell {
+
+    @IBOutlet weak var valueLabel: UILabel!
+
+}
+
+public class WCGenericFieldTableViewCell: WCGenericFieldNoLabelTableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var valueLabel: UILabel!
 
 }

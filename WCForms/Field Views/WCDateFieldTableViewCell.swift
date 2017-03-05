@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class WCDateFieldTableViewCell: WCGenericTextFieldTableViewCell {
+public class WCDateFieldTableViewCell: WCGenericTextFieldAndLabelCell {
 
     public var datePickerKeyboard = UIDatePicker()
     public var dateDisplayFormatter = DateFormatter()

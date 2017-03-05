@@ -10,12 +10,37 @@ import UIKit
 
 public class WCGenericTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
 
-    @IBOutlet weak var fieldNameLabel: UILabel!
     @IBOutlet weak var fieldValueTextField: UITextField!
 
 }
 
-public class WCTextFieldTableViewCell: WCGenericTextFieldTableViewCell {
+public class WCTextFieldNoLabelCell: WCGenericTextFieldTableViewCell {
+
+    weak var delegate: WCTextField? = nil
+
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        delegate = nil
+    }
+
+    @IBAction func textFieldEditingChanged(_ sender: UITextField) {
+        delegate?.viewDidUpdateValue(newValue: sender.text)
+    }
+
+    public func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+
+}
+
+public class WCGenericTextFieldAndLabelCell: WCGenericTextFieldTableViewCell {
+    
+    @IBOutlet weak var fieldNameLabel: UILabel!
+
+}
+
+public class WCTextFieldTableViewCell: WCGenericTextFieldAndLabelCell {
 
     weak var delegate: WCTextField? = nil
 

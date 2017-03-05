@@ -11,11 +11,14 @@ import Foundation
 public enum WCTextFieldAppearance: FieldCellLoadable {
     case stacked
     case rightDetail
-    
+    case fieldNameAsPlaceholder
+
     public var nibName: String {
         switch self {
         case .rightDetail:
             return "WCGenericFieldRightDetailTableViewCell"
+        case .fieldNameAsPlaceholder:
+            return "WCGenericFieldNoLabelTableViewCell"
         case .stacked:
             return "WCGenericFieldTableViewCell"
         }
@@ -27,6 +30,8 @@ public enum WCTextFieldAppearance: FieldCellLoadable {
             return "WCTextFieldRightDetailTableViewCell"
         case .stacked:
             return "WCTextFieldTableViewCell"
+        case .fieldNameAsPlaceholder:
+            return "WCTextFieldNoLabelCell"
         }
     }
 
@@ -39,7 +44,7 @@ public enum WCTextFieldAppearance: FieldCellLoadable {
     }
     
     public static var allValues: [WCTextFieldAppearance] {
-        return [.stacked, .rightDetail]
+        return [.stacked, .rightDetail, .fieldNameAsPlaceholder]
     }
 }
 
@@ -49,6 +54,11 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
     public var placeholderText: String? = nil
     
     public override func setupEditableCell(_ cell: UITableViewCell) {
+        if let editableTextCell = cell as? WCTextFieldNoLabelCell {
+            editableTextCell.fieldValueTextField.text = fieldValue
+            editableTextCell.fieldValueTextField.placeholder = placeholderText ?? fieldName
+            editableTextCell.delegate = self
+        }
         if let editableTextCell = cell as? WCTextFieldTableViewCell {
             editableTextCell.fieldNameLabel.text = fieldName
             editableTextCell.fieldValueTextField.text = fieldValue
