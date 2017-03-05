@@ -46,6 +46,11 @@ public enum WCBoolFieldAppearance: FieldCellLoadable {
 public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
     public var onDisplayValue: String = "Yes"
     public var offDisplayValue: String = "No"
+
+    public override var copyValue: String? {
+        let boolValue = fieldValue ?? defaultValue ?? false
+        return boolValue ? onDisplayValue : offDisplayValue
+    }
     
     public override func setupCell(_ cell: UITableViewCell) {
         if let readOnlyCell = cell as? WCGenericFieldTableViewCell {

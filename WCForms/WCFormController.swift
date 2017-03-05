@@ -109,6 +109,54 @@ open class WCFormController: UITableViewController {
         return formModel.formSections[section].footerTitle
     }
 
+    open override func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
+        guard let formModel = formModel else {
+            return false
+        }
+        guard let field = formModel[indexPath] else {
+            return false
+        }
+        guard !isEditing || !field.isEditable else {
+            //we only want to allow copying if the form is in non-edit mode, or if the field itself isn't editable
+            return false
+        }
+        return field.isAbleToCopy && field.copyValue != nil
+    }
+
+    open override func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
+        guard let formModel = formModel else {
+            return false
+        }
+        guard let field = formModel[indexPath] else {
+            return false
+        }
+        guard !isEditing || !field.isEditable else {
+            //we only want to allow copying if the form is in non-edit mode, or if the field itself isn't editable
+            return false
+        }
+        if field.isAbleToCopy && field.copyValue != nil {
+            return action == #selector(copy(_:))
+        } else {
+            return false
+        }
+    }
+
+    open override func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
+        guard let formModel = formModel else {
+            return
+        }
+        guard let field = formModel[indexPath] else {
+            return
+        }
+        guard !isEditing || !field.isEditable else {
+            //we only want to allow copying if the form is in non-edit mode, or if the field itself isn't editable
+            return
+        }
+        if let valueToCopy = field.copyValue, field.isAbleToCopy && action == #selector(copy(_:)) {
+            UIPasteboard.general.string = valueToCopy
+        }
+    }
+
     /*
     // Override to support conditional editing of the table view.
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {

@@ -14,6 +14,8 @@ public protocol WCField: class {
     var editableNibName: String { get }
     var editableCellIdentifier: String { get }
     var isEditable: Bool { get set }
+    var isAbleToCopy: Bool { get set }
+    var copyValue: String? { get }
     func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell
     func registerNibsForCellReuseIdentifiers(in tableView: UITableView)
 }
@@ -67,6 +69,13 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
         return editableAppearance?.editableCellIdentifier ?? appearance.editableCellIdentifier
     }
     public var isEditable: Bool = true
+    public var isAbleToCopy: Bool = true
+    public var copyValue: String? {
+        if let stringConvertableValue = fieldValue as? CustomStringConvertible {
+            return stringConvertableValue.description
+        }
+        return nil
+    }
 
     public init(fieldName: String) {
         self.fieldName = fieldName
@@ -95,9 +104,9 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
 
     public final func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell {
         let editableCellIdentifier = editableAppearance?.editableCellIdentifier ?? appearance.editableCellIdentifier
-        let cellIdentifier = isEditing ? editableCellIdentifier : appearance.cellIdentifier
+        let cellIdentifier = isEditing && isEditable ? editableCellIdentifier : appearance.cellIdentifier
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        if isEditing {
+        if isEditing && isEditable {
             self.setupEditableCell(cell)
         } else {
             self.setupCell(cell)
@@ -107,6 +116,11 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
     
     public func setupCell(_ cell: UITableViewCell) {
         var setValueTextColor = UIColor.black
+        if isAbleToCopy && copyValue != nil {
+            cell.selectionStyle = .default
+        } else {
+            cell.selectionStyle = .none
+        }
 
         if let readOnlyCell = cell as? WCGenericFieldTableViewCell {
             setValueTextColor = UIColor.darkGray
