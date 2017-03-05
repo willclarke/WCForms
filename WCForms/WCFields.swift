@@ -21,6 +21,12 @@ public protocol WCField: class {
 }
 
 public protocol WCInputField: WCField {
+    var canBecomeFirstResponder: Bool { get }
+    func becomeFirstResponder()
+    func resignFirstResponder()
+}
+
+public protocol WCTypedInputField: WCInputField {
     associatedtype InputValueType
     var fieldValue: InputValueType? { get set }
     func viewDidUpdateValue(newValue: InputValueType?)
@@ -47,7 +53,7 @@ public extension FieldCellLoadable {
     }
 }
 
-public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInputField {
+public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCTypedInputField {
     public typealias InputValueType = ValueType
     public var fieldName: String
     public var defaultValue: ValueType?
@@ -55,6 +61,9 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
     public var appearance: AppearanceType
     public var editableAppearance: AppearanceType?
     public var onValueChange: ((ValueType?) -> Void)? = nil
+    public var canBecomeFirstResponder: Bool {
+        return editableAppearance?.canBecomeFirstResponder ?? appearance.canBecomeFirstResponder
+    }
 
     public final var nibName: String {
         return appearance.nibName
@@ -162,4 +171,9 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
             settingBlock(newValue)
         }
     }
+
+    public func becomeFirstResponder() {}
+
+    public func resignFirstResponder() {}
+
 }

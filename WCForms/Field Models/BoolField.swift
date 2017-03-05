@@ -53,6 +53,12 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
     }
     
     public override func setupCell(_ cell: UITableViewCell) {
+        if isAbleToCopy && copyValue != nil {
+            cell.selectionStyle = .default
+        } else {
+            cell.selectionStyle = .none
+        }
+
         if let readOnlyCell = cell as? WCGenericFieldTableViewCell {
             let boolValue = fieldValue ?? defaultValue ?? false
             readOnlyCell.titleLabel.text = fieldName

@@ -29,6 +29,7 @@ open class WCFormController: UITableViewController {
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44.0
+        tableView.allowsSelectionDuringEditing = true
     }
 
     override open func didReceiveMemoryWarning() {
@@ -154,6 +155,19 @@ open class WCFormController: UITableViewController {
         }
         if let valueToCopy = field.copyValue, field.isAbleToCopy && action == #selector(copy(_:)) {
             UIPasteboard.general.string = valueToCopy
+        }
+    }
+
+    open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        guard let formModel = formModel else {
+            return
+        }
+        guard let field = formModel[indexPath] else {
+            return
+        }
+        if let inputField = field as? WCInputField, isEditing && field.isEditable && inputField.canBecomeFirstResponder {
+            inputField.becomeFirstResponder()
         }
     }
 

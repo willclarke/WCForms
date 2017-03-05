@@ -57,8 +57,19 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
     public var minimumValue: Int?
     public var maximumValue: Int?
     public var placeholderText: String?
-    
+    weak var lastLoadedEditableCell: WCGenericTextFieldAndLabelCell? = nil
+
+    public override func setupCell(_ cell: UITableViewCell) {
+        super.setupCell(cell)
+        lastLoadedEditableCell = nil
+    }
+
     public override func setupEditableCell(_ cell: UITableViewCell) {
+        if let editableDateCell = cell as? WCGenericTextFieldAndLabelCell {
+            lastLoadedEditableCell = editableDateCell
+        } else {
+            lastLoadedEditableCell = nil
+        }
         if let editableIntCell = cell as? WCIntFieldTableViewCell {
             let intValue: Int = fieldValue ?? defaultValue ?? 0
             editableIntCell.fieldNameLabel.text = fieldName
@@ -84,6 +95,18 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
             sliderCell.fieldValueSlider.maximumValue = Float(sliderMaximum)
             sliderCell.fieldValueSlider.value = Float(intValue)
             sliderCell.delegate = self
+        }
+    }
+
+    public override func becomeFirstResponder() {
+        if let lastLoadedEditableCell = lastLoadedEditableCell {
+            lastLoadedEditableCell.fieldValueTextField.becomeFirstResponder()
+        }
+    }
+
+    public override func resignFirstResponder() {
+        if let lastLoadedEditableCell = lastLoadedEditableCell {
+            lastLoadedEditableCell.fieldValueTextField.resignFirstResponder()
         }
     }
 }

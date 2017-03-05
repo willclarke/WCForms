@@ -52,8 +52,17 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
     public var minimumLength: Int?
     public var maximumLength: Int?
     public var placeholderText: String? = nil
-    
+    weak var lastLoadedEditableCell: WCGenericTextFieldTableViewCell? = nil
+
+    public override func setupCell(_ cell: UITableViewCell) {
+        super.setupCell(cell)
+        lastLoadedEditableCell = nil
+    }
+
     public override func setupEditableCell(_ cell: UITableViewCell) {
+        if let editableTextCell = cell as? WCGenericTextFieldTableViewCell {
+            lastLoadedEditableCell = editableTextCell
+        }
         if let editableTextCell = cell as? WCTextFieldNoLabelCell {
             editableTextCell.fieldValueTextField.text = fieldValue
             editableTextCell.fieldValueTextField.placeholder = placeholderText ?? fieldName
@@ -64,6 +73,18 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
             editableTextCell.fieldValueTextField.text = fieldValue
             editableTextCell.fieldValueTextField.placeholder = placeholderText
             editableTextCell.delegate = self
+        }
+    }
+
+    public override func becomeFirstResponder() {
+        if let lastLoadedEditableCell = lastLoadedEditableCell {
+            lastLoadedEditableCell.fieldValueTextField.becomeFirstResponder()
+        }
+    }
+
+    public override func resignFirstResponder() {
+        if let lastLoadedEditableCell = lastLoadedEditableCell {
+            lastLoadedEditableCell.fieldValueTextField.resignFirstResponder()
         }
     }
 }

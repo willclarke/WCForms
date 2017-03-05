@@ -48,6 +48,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
     public var minimumDate: Date? = nil
     public var maximumDate: Date? = nil
     public var placeholderText: String? = nil
+    weak var lastLoadedEditableCell: WCGenericTextFieldAndLabelCell? = nil
     
     public override init(fieldName: String) {
         super.init(fieldName: fieldName)
@@ -56,6 +57,12 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
     }
     
     public override func setupCell(_ cell: UITableViewCell) {
+        if isAbleToCopy && copyValue != nil {
+            cell.selectionStyle = .default
+        } else {
+            cell.selectionStyle = .none
+        }
+
         if let dateCell = cell as? WCGenericFieldTableViewCell {
             dateCell.titleLabel.text = fieldName
             if let dateValue = fieldValue {
@@ -64,9 +71,13 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
                 dateCell.valueLabel.text = NSLocalizedString("None", tableName: "WCForms", comment: "Displayed when there is no value for a field")
             }
         }
+        lastLoadedEditableCell = nil
     }
     
     public override func setupEditableCell(_ cell: UITableViewCell) {
+        if let editableDateCell = cell as? WCGenericTextFieldAndLabelCell {
+            lastLoadedEditableCell = editableDateCell
+        }
         if let editableDateCell = cell as? WCDateFieldTableViewCell {
             let dateValue: Date = fieldValue ?? defaultValue ?? Date()
             editableDateCell.fieldNameLabel.text = fieldName
@@ -81,6 +92,18 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             }
             editableDateCell.fieldValueTextField.placeholder = placeholderText
             editableDateCell.delegate = self
+        }
+    }
+
+    public override func becomeFirstResponder() {
+        if let lastLoadedEditableCell = lastLoadedEditableCell {
+            lastLoadedEditableCell.fieldValueTextField.becomeFirstResponder()
+        }
+    }
+
+    public override func resignFirstResponder() {
+        if let lastLoadedEditableCell = lastLoadedEditableCell {
+            lastLoadedEditableCell.fieldValueTextField.resignFirstResponder()
         }
     }
 }
