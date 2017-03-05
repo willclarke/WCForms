@@ -34,6 +34,15 @@ public enum WCIntFieldAppearance: FieldCellLoadable {
             return "WCIntFieldSliderTableViewCell"
         }
     }
+
+    public var canBecomeFirstResponder: Bool {
+        switch self {
+        case .rightDetail, .stacked:
+            return true
+        case .slider:
+            return false
+        }
+    }
     
     public static var `default`: WCIntFieldAppearance {
         return WCIntFieldAppearance.rightDetail

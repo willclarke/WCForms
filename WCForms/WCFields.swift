@@ -30,6 +30,7 @@ public protocol FieldCellLoadable {
     var cellIdentifier: String { get }
     var editableNibName: String { get }
     var editableCellIdentifier: String { get }
+    var canBecomeFirstResponder: Bool { get }
     static var `default`: Self { get }
     static var allValues: [Self] { get }
 }

@@ -29,6 +29,10 @@ public enum WCDateFieldAppearance: FieldCellLoadable {
             return "WCDateFieldTableViewCell"
         }
     }
+
+    public var canBecomeFirstResponder: Bool {
+        return true
+    }
     
     public static var `default`: WCDateFieldAppearance {
         return WCDateFieldAppearance.stacked

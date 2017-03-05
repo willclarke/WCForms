@@ -29,6 +29,10 @@ public enum WCTextFieldAppearance: FieldCellLoadable {
             return "WCTextFieldTableViewCell"
         }
     }
+
+    public var canBecomeFirstResponder: Bool {
+        return true
+    }
     
     public static var `default`: WCTextFieldAppearance {
         return WCTextFieldAppearance.stacked

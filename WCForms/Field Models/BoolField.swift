@@ -29,6 +29,10 @@ public enum WCBoolFieldAppearance: FieldCellLoadable {
             return "WCBoolFieldStackedTableViewCell"
         }
     }
+
+    public var canBecomeFirstResponder: Bool {
+        return false
+    }
     
     public static var `default`: WCBoolFieldAppearance {
         return WCBoolFieldAppearance.stacked
