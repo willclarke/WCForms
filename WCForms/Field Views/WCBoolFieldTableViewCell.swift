@@ -12,9 +12,15 @@ public class WCBoolFieldTableViewCell: UITableViewCell {
 
     @IBOutlet weak var fieldNameLabel: UILabel!
     @IBOutlet weak var fieldValueSwitch: UISwitch!
-    
+    weak var delegate: WCBoolField? = nil
+
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        delegate = nil
+    }
+
     @IBAction func switchValueChanged(_ sender: UISwitch) {
-        print("Switch value: \(sender.isOn)")
+        delegate?.viewDidUpdateValue(newValue: sender.isOn)
     }
 
 }

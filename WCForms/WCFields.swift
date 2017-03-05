@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol WCField {
+public protocol WCField: class {
     var fieldIdentifier: String { get }
     var nibName: String { get }
     var cellIdentifier: String { get }
@@ -17,6 +17,12 @@ public protocol WCField {
     var isEditable: Bool { get set }
     func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell
     func registerNibsForCellReuseIdentifiers(in tableView: UITableView)
+}
+
+public protocol WCInputField: WCField {
+    associatedtype InputValueType
+    var fieldValue: InputValueType? { get set }
+    func viewDidUpdateValue(newValue: InputValueType?)
 }
 
 public protocol FieldCellLoadable {
@@ -38,7 +44,8 @@ public extension FieldCellLoadable {
     }
 }
 
-public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCField {
+public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInputField {
+    public typealias InputValueType = ValueType
     public var fieldIdentifier: String
     public var fieldName: String
     public var defaultValue: ValueType?
@@ -112,6 +119,10 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCFie
             tableView.register(editableNib, forCellReuseIdentifier: appearance.editableCellIdentifier)
         }
     }
+
+    public func viewDidUpdateValue(newValue: ValueType?) {
+        fieldValue = newValue
+    }
 }
 
 public enum WCTextFieldAppearance: FieldCellLoadable {
@@ -153,6 +164,7 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
         if let editableTextCell = cell as? WCTextFieldTableViewCell {
             editableTextCell.fieldNameLabel.text = fieldName
             editableTextCell.fieldValueTextField.text = fieldValue
+            editableTextCell.delegate = self
         }
     }
 }
@@ -206,6 +218,7 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
         if let editableBoolCell = cell as? WCBoolFieldTableViewCell {
             editableBoolCell.fieldNameLabel.text = fieldName
             editableBoolCell.fieldValueSwitch.isOn = boolValue
+            editableBoolCell.delegate = self
         }
         if let stackedBoolCell = cell as? WCBoolFieldStackedTableViewCell {
             stackedBoolCell.onDisplayValueLabel.text = onDisplayValue
@@ -217,6 +230,7 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
                 stackedBoolCell.onDisplayValueLabel.textColor = UIColor.lightGray
                 stackedBoolCell.offDisplayValueLabel.textColor = UIColor.darkGray
             }
+            stackedBoolCell.delegate = self
         }
     }
 }
@@ -283,6 +297,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             editableDateCell.datePickerKeyboard.maximumDate = maximumDate
             editableDateCell.dateDisplayFormatter = dateDisplayFormatter
             editableDateCell.fieldValueTextField.text = dateDisplayFormatter.string(from: dateValue)
+            editableDateCell.delegate = self
         }
     }
 }
@@ -332,6 +347,7 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
             let intValue: Int = fieldValue ?? defaultValue ?? 0
             editableIntCell.fieldNameLabel.text = fieldName
             editableIntCell.fieldValueTextField.text = String(intValue)
+            editableIntCell.delegate = self
         }
         if let sliderCell = cell as? WCIntFieldSliderTableViewCell {
             let sliderMinimum = minimumValue ?? 0
@@ -350,6 +366,7 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
             sliderCell.fieldValueSlider.minimumValue = Float(sliderMinimum)
             sliderCell.fieldValueSlider.maximumValue = Float(sliderMaximum)
             sliderCell.fieldValueSlider.value = Float(intValue)
+            sliderCell.delegate = self
         }
     }
 }

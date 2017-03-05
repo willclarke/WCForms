@@ -8,14 +8,24 @@
 
 import UIKit
 
-public class WCTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
+public class WCGenericTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
 
     @IBOutlet weak var fieldNameLabel: UILabel!
     @IBOutlet weak var fieldValueTextField: UITextField!
 
+}
+
+public class WCTextFieldTableViewCell: WCGenericTextFieldTableViewCell {
+
+    weak var delegate: WCTextField? = nil
+
+    public override func prepareForReuse() {
+        super.prepareForReuse()
+        delegate = nil
+    }
+
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
-        let text = sender.text ?? ""
-        print("New text field value: \(text)")
+        delegate?.viewDidUpdateValue(newValue: sender.text)
     }
 
 }
