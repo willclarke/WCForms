@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A3907BE1E6BC22300BE1A20 /* BoolField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3907BD1E6BC22300BE1A20 /* BoolField.swift */; };
+		8A3907C01E6BC24200BE1A20 /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3907BF1E6BC24200BE1A20 /* TextField.swift */; };
+		8A3907C21E6BC25000BE1A20 /* DateField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3907C11E6BC25000BE1A20 /* DateField.swift */; };
+		8A3907C41E6BC26000BE1A20 /* IntField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A3907C31E6BC26000BE1A20 /* IntField.swift */; };
 		8A4BA4831E686BB3004F7089 /* WCGenericFieldRightDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A4BA4811E686BB3004F7089 /* WCGenericFieldRightDetailTableViewCell.xib */; };
 		8A4BA4871E686DEC004F7089 /* WCTextFieldRightDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A4BA4851E686DEC004F7089 /* WCTextFieldRightDetailTableViewCell.xib */; };
 		8A4BA48A1E688C73004F7089 /* WCBoolFieldStackedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A4BA4881E688C73004F7089 /* WCBoolFieldStackedTableViewCell.swift */; };
@@ -33,6 +37,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8A3907BD1E6BC22300BE1A20 /* BoolField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = BoolField.swift; path = "Field Models/BoolField.swift"; sourceTree = "<group>"; };
+		8A3907BF1E6BC24200BE1A20 /* TextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = "Field Models/TextField.swift"; sourceTree = "<group>"; };
+		8A3907C11E6BC25000BE1A20 /* DateField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DateField.swift; path = "Field Models/DateField.swift"; sourceTree = "<group>"; };
+		8A3907C31E6BC26000BE1A20 /* IntField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IntField.swift; path = "Field Models/IntField.swift"; sourceTree = "<group>"; };
 		8A4BA4811E686BB3004F7089 /* WCGenericFieldRightDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCGenericFieldRightDetailTableViewCell.xib; path = "Field Views/WCGenericFieldRightDetailTableViewCell.xib"; sourceTree = "<group>"; };
 		8A4BA4851E686DEC004F7089 /* WCTextFieldRightDetailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCTextFieldRightDetailTableViewCell.xib; path = "Field Views/WCTextFieldRightDetailTableViewCell.xib"; sourceTree = "<group>"; };
 		8A4BA4881E688C73004F7089 /* WCBoolFieldStackedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WCBoolFieldStackedTableViewCell.swift; path = "Field Views/WCBoolFieldStackedTableViewCell.swift"; sourceTree = "<group>"; };
@@ -71,7 +79,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8A9FA3FC1E66D27200C16C26 /* Fields */ = {
+		8A3907BA1E6BC1E000BE1A20 /* Field Models */ = {
+			isa = PBXGroup;
+			children = (
+				8A9FA4051E676C1800C16C26 /* WCFields.swift */,
+				8A3907BF1E6BC24200BE1A20 /* TextField.swift */,
+				8A3907BD1E6BC22300BE1A20 /* BoolField.swift */,
+				8A3907C11E6BC25000BE1A20 /* DateField.swift */,
+				8A3907C31E6BC26000BE1A20 /* IntField.swift */,
+			);
+			name = "Field Models";
+			sourceTree = "<group>";
+		};
+		8A9FA3FC1E66D27200C16C26 /* Fields Views */ = {
 			isa = PBXGroup;
 			children = (
 				8A9FA3FD1E66D29E00C16C26 /* WCGenericFieldTableViewCell.swift */,
@@ -93,7 +113,7 @@
 				8A4BA4901E68F80B004F7089 /* WCIntFieldSliderTableViewCell.swift */,
 				8A4BA4911E68F80B004F7089 /* WCIntFieldSliderTableViewCell.xib */,
 			);
-			name = Fields;
+			name = "Fields Views";
 			sourceTree = "<group>";
 		};
 		8AB18FC61E64023E00AE13AF = {
@@ -119,8 +139,8 @@
 				8AB1901F1E64667C00AE13AF /* FormProtocols.swift */,
 				8AB1901D1E64637D00AE13AF /* WCFormController.swift */,
 				8AB190211E64671900AE13AF /* WCForm.swift */,
-				8A9FA4051E676C1800C16C26 /* WCFields.swift */,
-				8A9FA3FC1E66D27200C16C26 /* Fields */,
+				8A3907BA1E6BC1E000BE1A20 /* Field Models */,
+				8A9FA3FC1E66D27200C16C26 /* Fields Views */,
 				8AB18FD41E64023E00AE13AF /* Info.plist */,
 			);
 			path = WCForms;
@@ -223,10 +243,14 @@
 				8A4BA48A1E688C73004F7089 /* WCBoolFieldStackedTableViewCell.swift in Sources */,
 				8A9FA4031E676A6200C16C26 /* WCTextFieldTableViewCell.swift in Sources */,
 				8A4BA4921E68F80B004F7089 /* WCIntFieldSliderTableViewCell.swift in Sources */,
+				8A3907C01E6BC24200BE1A20 /* TextField.swift in Sources */,
 				8AB1901E1E64637D00AE13AF /* WCFormController.swift in Sources */,
+				8A3907C41E6BC26000BE1A20 /* IntField.swift in Sources */,
 				8AB190201E64667C00AE13AF /* FormProtocols.swift in Sources */,
 				8A9FA4091E67969F00C16C26 /* WCBoolFieldTableViewCell.swift in Sources */,
 				8A9FA3FF1E66D29E00C16C26 /* WCGenericFieldTableViewCell.swift in Sources */,
+				8A3907C21E6BC25000BE1A20 /* DateField.swift in Sources */,
+				8A3907BE1E6BC22300BE1A20 /* BoolField.swift in Sources */,
 				8A9FA4111E67A1B800C16C26 /* WCIntFieldTableViewCell.swift in Sources */,
 				8AB190221E64671900AE13AF /* WCForm.swift in Sources */,
 			);
