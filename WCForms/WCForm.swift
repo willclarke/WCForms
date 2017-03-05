@@ -10,11 +10,14 @@ import Foundation
 
 open class WCForm {
     public var formTitle: String? = nil
-    public var formObject: WCFormObject?
     public var formSections: [WCFormSection] = [WCFormSection]()
 
-    public init(formObject: WCFormObject? = nil) {
-        self.formObject = formObject
+    public init() {
+        setupFormSections()
+    }
+
+    open func setupFormSections() {
+        return
     }
 
     subscript(indexPath: IndexPath) -> WCField? {
@@ -22,6 +25,15 @@ open class WCForm {
             return nil
         }
         return formSections[indexPath.section].formFields[indexPath.row]
+    }
+}
+
+open class WCObjectForm<ObjectType: WCFormObject>: WCForm {
+    public var formObject: ObjectType
+
+    public init(formObject: ObjectType) {
+        self.formObject = formObject
+        super.init()
     }
 }
 
