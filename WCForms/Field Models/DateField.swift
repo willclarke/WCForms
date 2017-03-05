@@ -44,8 +44,8 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
     public var minimumDate: Date? = nil
     public var maximumDate: Date? = nil
     
-    public override init(fieldIdentifier: String, fieldName: String, initialValue: Date, appearance: WCDateFieldAppearance?) {
-        super.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName, initialValue: initialValue, appearance: appearance)
+    public override init(fieldIdentifier: String, fieldName: String) {
+        super.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName)
         dateDisplayFormatter.dateStyle = .medium
         dateDisplayFormatter.timeStyle = .none
     }

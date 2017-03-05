@@ -23,6 +23,7 @@ public protocol WCInputField: WCField {
     associatedtype InputValueType
     var fieldValue: InputValueType? { get set }
     func viewDidUpdateValue(newValue: InputValueType?)
+    var onValueChange: ((InputValueType?) -> Void)? { get set }
 }
 
 public protocol FieldCellLoadable {
@@ -52,6 +53,7 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
     public var fieldValue: ValueType?
     public var appearance: AppearanceType
     public var editableAppearance: AppearanceType?
+    public var onValueChange: ((ValueType?) -> Void)? = nil
 
     public final var nibName: String {
         return appearance.nibName
@@ -67,11 +69,35 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
     }
     public var isEditable: Bool = true
 
-    public init(fieldIdentifier: String, fieldName: String, initialValue: ValueType, appearance: AppearanceType? = nil) {
+    public init(fieldIdentifier: String, fieldName: String) {
         self.fieldIdentifier = fieldIdentifier
         self.fieldName = fieldName
+        self.appearance = AppearanceType.default
+    }
+
+    public convenience init(fieldIdentifier: String, fieldName: String, initialValue: ValueType) {
+        self.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName)
         self.fieldValue = initialValue
-        self.appearance = appearance ?? AppearanceType.default
+    }
+
+    public convenience init(fieldIdentifier: String, fieldName: String, initialValue: ValueType, onValueChange: @escaping ((ValueType?) -> Void)) {
+        self.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName, initialValue: initialValue)
+        self.onValueChange = onValueChange
+    }
+
+    public convenience init(fieldIdentifier: String, fieldName: String, initialValue: ValueType, appearance: AppearanceType) {
+        self.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName, initialValue: initialValue)
+        self.appearance = appearance
+    }
+
+    public convenience init(fieldIdentifier: String,
+                            fieldName: String,
+                            initialValue: ValueType,
+                            appearance: AppearanceType,
+                            onValueChange: @escaping ((ValueType?) -> Void))
+    {
+        self.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName, initialValue: initialValue, appearance: appearance)
+        self.onValueChange = onValueChange
     }
 
     public final func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell {
@@ -122,5 +148,8 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
 
     public func viewDidUpdateValue(newValue: ValueType?) {
         fieldValue = newValue
+        if let settingBlock = onValueChange {
+            settingBlock(newValue)
+        }
     }
 }
