@@ -9,7 +9,6 @@
 import Foundation
 
 public protocol WCField: class {
-    var fieldIdentifier: String { get }
     var nibName: String { get }
     var cellIdentifier: String { get }
     var editableNibName: String { get }
@@ -47,7 +46,6 @@ public extension FieldCellLoadable {
 
 public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInputField {
     public typealias InputValueType = ValueType
-    public var fieldIdentifier: String
     public var fieldName: String
     public var defaultValue: ValueType?
     public var fieldValue: ValueType?
@@ -69,34 +67,28 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCInp
     }
     public var isEditable: Bool = true
 
-    public init(fieldIdentifier: String, fieldName: String) {
-        self.fieldIdentifier = fieldIdentifier
+    public init(fieldName: String) {
         self.fieldName = fieldName
         self.appearance = AppearanceType.default
     }
 
-    public convenience init(fieldIdentifier: String, fieldName: String, initialValue: ValueType) {
-        self.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName)
+    public convenience init(fieldName: String, initialValue: ValueType) {
+        self.init(fieldName: fieldName)
         self.fieldValue = initialValue
     }
 
-    public convenience init(fieldIdentifier: String, fieldName: String, initialValue: ValueType, onValueChange: @escaping ((ValueType?) -> Void)) {
-        self.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName, initialValue: initialValue)
+    public convenience init(fieldName: String, initialValue: ValueType, onValueChange: @escaping ((ValueType?) -> Void)) {
+        self.init(fieldName: fieldName, initialValue: initialValue)
         self.onValueChange = onValueChange
     }
 
-    public convenience init(fieldIdentifier: String, fieldName: String, initialValue: ValueType, appearance: AppearanceType) {
-        self.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName, initialValue: initialValue)
+    public convenience init(fieldName: String, initialValue: ValueType, appearance: AppearanceType) {
+        self.init(fieldName: fieldName, initialValue: initialValue)
         self.appearance = appearance
     }
 
-    public convenience init(fieldIdentifier: String,
-                            fieldName: String,
-                            initialValue: ValueType,
-                            appearance: AppearanceType,
-                            onValueChange: @escaping ((ValueType?) -> Void))
-    {
-        self.init(fieldIdentifier: fieldIdentifier, fieldName: fieldName, initialValue: initialValue, appearance: appearance)
+    public convenience init(fieldName: String, initialValue: ValueType, appearance: AppearanceType, onValueChange: @escaping ((ValueType?) -> Void)) {
+        self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance)
         self.onValueChange = onValueChange
     }
 
