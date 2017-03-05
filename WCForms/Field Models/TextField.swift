@@ -46,11 +46,13 @@ public enum WCTextFieldAppearance: FieldCellLoadable {
 public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
     public var minimumLength: Int?
     public var maximumLength: Int?
+    public var placeholderText: String? = nil
     
     public override func setupEditableCell(_ cell: UITableViewCell) {
         if let editableTextCell = cell as? WCTextFieldTableViewCell {
             editableTextCell.fieldNameLabel.text = fieldName
             editableTextCell.fieldValueTextField.text = fieldValue
+            editableTextCell.fieldValueTextField.placeholder = placeholderText
             editableTextCell.delegate = self
         }
     }

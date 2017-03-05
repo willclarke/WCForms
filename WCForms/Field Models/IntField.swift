@@ -56,12 +56,14 @@ public enum WCIntFieldAppearance: FieldCellLoadable {
 public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
     public var minimumValue: Int?
     public var maximumValue: Int?
+    public var placeholderText: String?
     
     public override func setupEditableCell(_ cell: UITableViewCell) {
         if let editableIntCell = cell as? WCIntFieldTableViewCell {
             let intValue: Int = fieldValue ?? defaultValue ?? 0
             editableIntCell.fieldNameLabel.text = fieldName
             editableIntCell.fieldValueTextField.text = String(intValue)
+            editableIntCell.fieldValueTextField.placeholder = placeholderText
             editableIntCell.delegate = self
         }
         if let sliderCell = cell as? WCIntFieldSliderTableViewCell {

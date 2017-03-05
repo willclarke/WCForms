@@ -47,6 +47,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
     public var dateDisplayFormatter = DateFormatter()
     public var minimumDate: Date? = nil
     public var maximumDate: Date? = nil
+    public var placeholderText: String? = nil
     
     public override init(fieldName: String) {
         super.init(fieldName: fieldName)
@@ -73,7 +74,12 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             editableDateCell.datePickerKeyboard.minimumDate = minimumDate
             editableDateCell.datePickerKeyboard.maximumDate = maximumDate
             editableDateCell.dateDisplayFormatter = dateDisplayFormatter
-            editableDateCell.fieldValueTextField.text = dateDisplayFormatter.string(from: dateValue)
+            if let initialValue = fieldValue {
+                editableDateCell.fieldValueTextField.text = dateDisplayFormatter.string(from: initialValue)
+            } else if let defaultValue = defaultValue {
+                editableDateCell.fieldValueTextField.text = dateDisplayFormatter.string(from: defaultValue)
+            }
+            editableDateCell.fieldValueTextField.placeholder = placeholderText
             editableDateCell.delegate = self
         }
     }
