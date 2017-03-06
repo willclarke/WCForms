@@ -18,6 +18,8 @@ open class WCFormController: UITableViewController {
             }
         }
     }
+    private var wasEditingCanceled: Bool = false
+    private var cancelButton = UIBarButtonItem()
 
     override open func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +32,7 @@ open class WCFormController: UITableViewController {
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44.0
         tableView.allowsSelectionDuringEditing = true
+        cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelEditingButtonTapped(_:)))
     }
 
     override open func didReceiveMemoryWarning() {
@@ -79,9 +82,23 @@ open class WCFormController: UITableViewController {
             super.setEditing(editing, animated: animated)
             return
         }
-        if let firstError = formModel.firstValidationError() {
-            displayFormValidationError(for: firstError)
-            return
+        if editing {
+            navigationItem.leftBarButtonItem = cancelButton
+            formModel.beginEditing()
+        } else {
+            if wasEditingCanceled {
+                formModel.cancelEditing()
+            } else {
+                if let firstError = formModel.firstValidationError() {
+                    displayFormValidationError(for: firstError)
+                    return
+                }
+                formModel.finishEditing()
+            }
+            if navigationItem.leftBarButtonItem == cancelButton {
+                navigationItem.leftBarButtonItem = nil
+            }
+            wasEditingCanceled = false
         }
         super.setEditing(editing, animated: animated)
         var indexPathsToReload = [IndexPath]()
@@ -93,6 +110,36 @@ open class WCFormController: UITableViewController {
             }
         }
         tableView.reloadRows(at: indexPathsToReload, with: .automatic)
+    }
+
+    func cancelEditingButtonTapped(_ sender: UIBarButtonItem) {
+        guard let formModel = formModel else {
+            return
+        }
+        if isEditing {
+            if formModel.hasFieldChanges {
+                let confirmationTitle = NSLocalizedString("Are you sure?",
+                                                          tableName: "WCForms",
+                                                          comment: "Error message title to confirm a destructive action")
+                let confirmationMessage = NSLocalizedString("You have made changes. Do you want to discard them?",
+                                                            tableName: "WCForms",
+                                                            comment: "Massage to the user to confirm a destructive action")
+                let confirmationAlert = UIAlertController(title: confirmationTitle, message: confirmationMessage, preferredStyle: .alert)
+                let cancelTitle = NSLocalizedString("No, Keep Editing", tableName: "WCForms", comment: "Action to keep editing a form")
+                let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel, handler: nil)
+                let discardTitle = NSLocalizedString("Yes, Discard", tableName: "WCForms", comment: "Action stop editing a form and discard changes")
+                let discardAction = UIAlertAction(title: discardTitle, style: .destructive, handler: { (action: UIAlertAction) in
+                    self.wasEditingCanceled = true
+                    self.setEditing(false, animated: true)
+                })
+                confirmationAlert.addAction(discardAction)
+                confirmationAlert.addAction(cancelAction)
+                present(confirmationAlert, animated: true, completion: nil)
+            } else {
+                wasEditingCanceled = true
+                setEditing(false, animated: true)
+            }
+        }
     }
 
     open override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {

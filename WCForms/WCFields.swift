@@ -22,8 +22,12 @@ public protocol WCField: class {
     var isEditable: Bool { get set }
     var isAbleToCopy: Bool { get set }
     var copyValue: String? { get }
+    var hasChanges: Bool { get }
     func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell
     func registerNibsForCellReuseIdentifiers(in tableView: UITableView)
+    func formWillBeginEditing()
+    func formDidCancelEditing()
+    func formDidFinishEditing()
 }
 
 public protocol WCInputField: WCField {
@@ -62,10 +66,11 @@ public extension FieldCellLoadable {
     }
 }
 
-public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCTypedInputField {
+public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellLoadable>: WCTypedInputField {
     public typealias InputValueType = ValueType
     public var fieldName: String
     public var fieldValue: ValueType?
+    var previousValue: ValueType?
     public var appearance: AppearanceType
     public var editableAppearance: AppearanceType?
     public var onValueChange: ((ValueType?) -> Void)? = nil
@@ -93,6 +98,16 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCTyp
             return stringConvertableValue.description
         }
         return nil
+    }
+    public var hasChanges: Bool {
+        if !isEditable {
+            return false
+        }
+        if fieldValue != previousValue {
+            return true
+        } else {
+            return false
+        }
     }
 
     public init(fieldName: String) {
@@ -219,6 +234,22 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCTyp
         if isRequired && fieldValue == nil {
             throw WCFieldValidationError.missingValue(fieldName: fieldName)
         }
+    }
+
+    public func formWillBeginEditing() {
+        previousValue = fieldValue
+    }
+
+    public func formDidCancelEditing() {
+        fieldValue = previousValue
+        if let settingBlock = onValueChange {
+            settingBlock(previousValue)
+        }
+        previousValue = nil
+    }
+
+    public func formDidFinishEditing() {
+        previousValue = nil
     }
 
 }

@@ -49,6 +49,39 @@ open class WCForm {
         return nil
     }
 
+    func beginEditing() {
+        for formSection in formSections {
+            for formField in formSection.formFields {
+                formField.formWillBeginEditing()
+            }
+        }
+    }
+
+    func cancelEditing() {
+        for formSection in formSections {
+            for formField in formSection.formFields {
+                formField.formDidCancelEditing()
+            }
+        }
+    }
+
+    func finishEditing() {
+        for formSection in formSections {
+            for formField in formSection.formFields {
+                formField.formDidFinishEditing()
+            }
+        }
+    }
+
+    var hasFieldChanges: Bool {
+        for formSection in formSections {
+            if formSection.hasFieldChanges {
+                return true
+            }
+        }
+        return false
+    }
+
     subscript(indexPath: IndexPath) -> WCField? {
         guard indexPath.section < formSections.count && indexPath.row < formSections[indexPath.section].formFields.count else {
             return nil
@@ -70,6 +103,15 @@ public class WCFormSection {
     public var headerTitle: String? = nil
     public var formFields = [WCField]()
     public var footerTitle: String? = nil
+
+    var hasFieldChanges: Bool {
+        for formField in formFields {
+            if formField.hasChanges {
+                return true
+            }
+        }
+        return false
+    }
 
     public init(headerTitle: String? = nil, formFields: [WCField]? = nil) {
         self.headerTitle = headerTitle
