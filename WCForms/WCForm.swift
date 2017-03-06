@@ -8,6 +8,8 @@
 
 import Foundation
 
+public typealias WCFormValidationError = (field: WCInputField, indexPath: IndexPath, error: String)
+
 open class WCForm {
     public var formTitle: String? = nil
     public var formSections: [WCFormSection] = [WCFormSection]()
@@ -18,6 +20,33 @@ open class WCForm {
 
     open func setupFormSections() {
         return
+    }
+
+    open func firstValidationError() -> WCFormValidationError? {
+        for (formSectionIndex, formSection) in formSections.enumerated() {
+            for (fieldIndex, field) in formSection.formFields.enumerated() {
+                if let inputField = field as? WCInputField {
+                    do {
+                        try inputField.validateFieldValue()
+                    } catch WCFieldValidationError.missingValue(_) {
+                        let errorMessage = NSLocalizedString("This field is required.",
+                                                             tableName: "WCForms",
+                                                             comment: "Error message displayed when a required field is not completed.")
+                        return WCFormValidationError(inputField, IndexPath(row: fieldIndex, section: formSectionIndex), errorMessage)
+                    } catch WCFieldValidationError.outOfBounds(_, let boundsError) {
+                        return WCFormValidationError(inputField, IndexPath(row: fieldIndex, section: formSectionIndex), boundsError)
+                    } catch WCFieldValidationError.invalidFormat(_, let formatError) {
+                        return WCFormValidationError(inputField, IndexPath(row: fieldIndex, section: formSectionIndex), formatError)
+                    } catch {
+                        let errorMessage = NSLocalizedString("An unknown error occurred.",
+                                                             tableName: "WCForms",
+                                                             comment: "Error message displayed when an unknown error occurrs on a form.")
+                        return WCFormValidationError(inputField, IndexPath(row: fieldIndex, section: formSectionIndex), errorMessage)
+                    }
+                }
+            }
+        }
+        return nil
     }
 
     subscript(indexPath: IndexPath) -> WCField? {

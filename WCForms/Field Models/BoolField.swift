@@ -51,7 +51,12 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
         let boolValue = fieldValue ?? defaultValue ?? false
         return boolValue ? onDisplayValue : offDisplayValue
     }
-    
+
+    public override init(fieldName: String) {
+        super.init(fieldName: fieldName)
+        fieldValue = false
+    }
+
     public override func setupCell(_ cell: UITableViewCell) {
         if isAbleToCopy && copyValue != nil {
             cell.selectionStyle = .default

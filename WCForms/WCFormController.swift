@@ -75,10 +75,15 @@ open class WCFormController: UITableViewController {
     }
 
     open override func setEditing(_ editing: Bool, animated: Bool) {
-        super.setEditing(editing, animated: animated)
         guard let formModel = formModel else {
+            super.setEditing(editing, animated: animated)
             return
         }
+        if let firstError = formModel.firstValidationError() {
+            displayFormValidationError(for: firstError)
+            return
+        }
+        super.setEditing(editing, animated: animated)
         var indexPathsToReload = [IndexPath]()
         for (sectionIndex, section) in formModel.formSections.enumerated() {
             for (fieldIndex, field) in section.formFields.enumerated() {
@@ -224,6 +229,22 @@ open class WCFormController: UITableViewController {
             for field in section.formFields {
                 field.registerNibsForCellReuseIdentifiers(in: tableView)
             }
+        }
+    }
+
+    func displayFormValidationError(for formError: WCFormValidationError) {
+        var errorTitle = NSLocalizedString("Error:", tableName: "WCForms", comment: "An error that has occurred. What follows the colon is a field name")
+        errorTitle += " \(formError.field.fieldName)"
+        let errorAlert = UIAlertController(title: errorTitle, message: formError.error, preferredStyle: .alert)
+        let okayTitle = NSLocalizedString("OK", tableName: "WCForms", comment: "Title of an alert view button")
+        let okayAction = UIAlertAction(title: okayTitle, style: .default) { (action: UIAlertAction) in
+            if formError.field.canBecomeFirstResponder {
+                formError.field.becomeFirstResponder()
+            }
+        }
+        errorAlert.addAction(okayAction)
+        present(errorAlert, animated: true) { 
+            self.tableView.scrollToRow(at: formError.indexPath, at: .middle, animated: true)
         }
     }
 

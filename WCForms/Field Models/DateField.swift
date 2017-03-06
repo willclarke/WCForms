@@ -106,4 +106,36 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             lastLoadedEditableCell.fieldValueTextField.resignFirstResponder()
         }
     }
+
+    public override func validateFieldValue() throws {
+        if isRequired && fieldValue == nil {
+            throw WCFieldValidationError.missingValue(fieldName: fieldName)
+        }
+        if let chosenDate = fieldValue {
+            if let minimumDate = minimumDate, let maximumDate = maximumDate, (chosenDate < minimumDate || chosenDate > maximumDate) {
+                let errorFormatter = NSLocalizedString("%@ must be between %@ and %@.",
+                                                       tableName: "WCForms",
+                                                       comment: "Warning that a date must occur between specified dates. %@ represent the dates.")
+                let minimumDateString = dateDisplayFormatter.string(from: minimumDate)
+                let maximumDateString = dateDisplayFormatter.string(from: maximumDate)
+                let errorString = String(format: errorFormatter, fieldName, minimumDateString, maximumDateString)
+                throw WCFieldValidationError.outOfBounds(fieldName: fieldName, boundsError: errorString)
+            } else if let minimumDate = minimumDate, chosenDate < minimumDate {
+                let errorFormatter = NSLocalizedString("%@ must be on or after %@.",
+                                                       tableName: "WCForms",
+                                                       comment: "Warning that a date must occur on or after a specified date. %@ represent the dates.")
+                let minimumDateString = dateDisplayFormatter.string(from: minimumDate)
+                let errorString = String(format: errorFormatter, fieldName, minimumDateString)
+                throw WCFieldValidationError.outOfBounds(fieldName: fieldName, boundsError: errorString)
+            } else if let maximumDate = maximumDate, chosenDate > maximumDate {
+                let errorFormatter = NSLocalizedString("%@ must be on or before %@.",
+                                                       tableName: "WCForms",
+                                                       comment: "Warning that a must occur on or before a specified date. %@ represent the dates.")
+                let maximumDateString = dateDisplayFormatter.string(from: maximumDate)
+                let errorString = String(format: errorFormatter, fieldName, maximumDateString)
+                throw WCFieldValidationError.outOfBounds(fieldName: fieldName, boundsError: errorString)
+            }
+        }
+    }
+    
 }

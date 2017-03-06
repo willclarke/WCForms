@@ -109,4 +109,26 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
             lastLoadedEditableCell.fieldValueTextField.resignFirstResponder()
         }
     }
+
+    public override func validateFieldValue() throws {
+        if isRequired && fieldValue == nil {
+            throw WCFieldValidationError.missingValue(fieldName: fieldName)
+        }
+        if let fieldValue = fieldValue {
+            if let minimumValue = minimumValue, fieldValue < minimumValue {
+                let errorFormatter = NSLocalizedString("%@ must be greater than or equal to %d.",
+                                                       tableName: "WCForms",
+                                                       comment: "Warning that an number is too small. %@ is the field name, %d is the minimum value.")
+                let errorString = String(format: errorFormatter, fieldName, minimumValue)
+                throw WCFieldValidationError.outOfBounds(fieldName: fieldName, boundsError: errorString)
+            }
+            if let maximumValue = maximumValue, fieldValue > maximumValue {
+                let errorFormatter = NSLocalizedString("%@ must be less than or equal to %d.",
+                                                       tableName: "WCForms",
+                                                       comment: "Warning that a number is too large. %@ is the field name, %d is the maximum value.")
+                let errorString = String(format: errorFormatter, fieldName, maximumValue)
+                throw WCFieldValidationError.outOfBounds(fieldName: fieldName, boundsError: errorString)
+            }
+        }
+    }
 }

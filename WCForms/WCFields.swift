@@ -8,6 +8,12 @@
 
 import Foundation
 
+public enum WCFieldValidationError: Error {
+    case missingValue(fieldName: String)
+    case outOfBounds(fieldName: String, boundsError: String)
+    case invalidFormat(fieldName: String, formatError: String)
+}
+
 public protocol WCField: class {
     var nibName: String { get }
     var cellIdentifier: String { get }
@@ -21,6 +27,9 @@ public protocol WCField: class {
 }
 
 public protocol WCInputField: WCField {
+    var fieldName: String { get set }
+    var isRequired: Bool { get set }
+    func validateFieldValue() throws
     var canBecomeFirstResponder: Bool { get }
     func becomeFirstResponder()
     func resignFirstResponder()
@@ -64,6 +73,7 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCTyp
     public var canBecomeFirstResponder: Bool {
         return editableAppearance?.canBecomeFirstResponder ?? appearance.canBecomeFirstResponder
     }
+    public var isRequired: Bool = false
 
     public final var nibName: String {
         return appearance.nibName
@@ -91,24 +101,54 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCTyp
         self.appearance = AppearanceType.default
     }
 
-    public convenience init(fieldName: String, initialValue: ValueType) {
+    public convenience init(fieldName: String, isRequired: Bool) {
+        self.init(fieldName: fieldName)
+        self.isRequired = isRequired
+    }
+
+    public convenience init(fieldName: String, initialValue: ValueType?) {
         self.init(fieldName: fieldName)
         self.fieldValue = initialValue
     }
 
-    public convenience init(fieldName: String, initialValue: ValueType, onValueChange: @escaping ((ValueType?) -> Void)) {
+    public convenience init(fieldName: String, initialValue: ValueType?, isRequired: Bool) {
+        self.init(fieldName: fieldName, initialValue: initialValue)
+        self.isRequired = isRequired
+    }
+
+    public convenience init(fieldName: String, initialValue: ValueType?, onValueChange: @escaping ((ValueType?) -> Void)) {
         self.init(fieldName: fieldName, initialValue: initialValue)
         self.onValueChange = onValueChange
     }
 
-    public convenience init(fieldName: String, initialValue: ValueType, appearance: AppearanceType) {
+    public convenience init(fieldName: String, initialValue: ValueType?, onValueChange: @escaping ((ValueType?) -> Void), isRequired: Bool) {
+        self.init(fieldName: fieldName, initialValue: initialValue, onValueChange: onValueChange)
+        self.isRequired = isRequired
+    }
+
+    public convenience init(fieldName: String, initialValue: ValueType?, appearance: AppearanceType) {
         self.init(fieldName: fieldName, initialValue: initialValue)
         self.appearance = appearance
     }
 
-    public convenience init(fieldName: String, initialValue: ValueType, appearance: AppearanceType, onValueChange: @escaping ((ValueType?) -> Void)) {
+    public convenience init(fieldName: String, initialValue: ValueType?, appearance: AppearanceType, isRequired: Bool) {
+        self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance)
+        self.isRequired = isRequired
+    }
+
+    public convenience init(fieldName: String, initialValue: ValueType?, appearance: AppearanceType, onValueChange: @escaping ((ValueType?) -> Void)) {
         self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance)
         self.onValueChange = onValueChange
+    }
+
+    public convenience init(fieldName: String,
+                            initialValue: ValueType,
+                            appearance: AppearanceType,
+                            onValueChange: @escaping ((ValueType?) -> Void),
+                            isRequired: Bool)
+    {
+        self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance, onValueChange: onValueChange)
+        self.isRequired = isRequired
     }
 
     public final func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell {
@@ -175,5 +215,11 @@ public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCTyp
     public func becomeFirstResponder() {}
 
     public func resignFirstResponder() {}
+
+    public func validateFieldValue() throws {
+        if isRequired && fieldValue == nil {
+            throw WCFieldValidationError.missingValue(fieldName: fieldName)
+        }
+    }
 
 }
