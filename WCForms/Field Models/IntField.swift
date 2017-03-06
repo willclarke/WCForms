@@ -71,7 +71,7 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
             lastLoadedEditableCell = nil
         }
         if let editableIntCell = cell as? WCIntFieldTableViewCell {
-            let intValue: Int = fieldValue ?? defaultValue ?? 0
+            let intValue: Int = fieldValue ?? 0
             editableIntCell.fieldNameLabel.text = fieldName
             editableIntCell.fieldValueTextField.text = String(intValue)
             editableIntCell.fieldValueTextField.placeholder = placeholderText
@@ -80,7 +80,7 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
         if let sliderCell = cell as? WCIntFieldSliderTableViewCell {
             let sliderMinimum = minimumValue ?? 0
             let sliderMaximum = maximumValue ?? 100
-            var intValue: Int = fieldValue ?? defaultValue ?? 0
+            var intValue: Int = fieldValue ?? 0
             
             if intValue < sliderMinimum {
                 intValue = sliderMinimum

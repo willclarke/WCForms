@@ -48,7 +48,7 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
     public var offDisplayValue: String = "No"
 
     public override var copyValue: String? {
-        let boolValue = fieldValue ?? defaultValue ?? false
+        let boolValue = fieldValue ?? false
         return boolValue ? onDisplayValue : offDisplayValue
     }
 
@@ -65,7 +65,7 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
         }
 
         if let readOnlyCell = cell as? WCGenericFieldTableViewCell {
-            let boolValue = fieldValue ?? defaultValue ?? false
+            let boolValue = fieldValue ?? false
             readOnlyCell.titleLabel.text = fieldName
             readOnlyCell.valueLabel.textColor = UIColor.darkGray
             readOnlyCell.valueLabel.text = boolValue ? onDisplayValue : offDisplayValue
@@ -73,7 +73,7 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
     }
     
     public override func setupEditableCell(_ cell: UITableViewCell) {
-        let boolValue = fieldValue ?? defaultValue ?? false
+        let boolValue = fieldValue ?? false
         if let editableBoolCell = cell as? WCBoolFieldTableViewCell {
             editableBoolCell.fieldNameLabel.text = fieldName
             editableBoolCell.fieldValueSwitch.isOn = boolValue

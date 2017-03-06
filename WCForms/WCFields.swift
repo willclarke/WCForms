@@ -65,7 +65,6 @@ public extension FieldCellLoadable {
 public class WCGenericField<ValueType, AppearanceType: FieldCellLoadable>: WCTypedInputField {
     public typealias InputValueType = ValueType
     public var fieldName: String
-    public var defaultValue: ValueType?
     public var fieldValue: ValueType?
     public var appearance: AppearanceType
     public var editableAppearance: AppearanceType?

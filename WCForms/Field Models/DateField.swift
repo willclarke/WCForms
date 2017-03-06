@@ -79,7 +79,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             lastLoadedEditableCell = editableDateCell
         }
         if let editableDateCell = cell as? WCDateFieldTableViewCell {
-            let dateValue: Date = fieldValue ?? defaultValue ?? Date()
+            let dateValue: Date = fieldValue ?? Date()
             editableDateCell.fieldNameLabel.text = fieldName
             editableDateCell.datePickerKeyboard.date = dateValue
             editableDateCell.datePickerKeyboard.minimumDate = minimumDate
@@ -87,8 +87,6 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             editableDateCell.dateDisplayFormatter = dateDisplayFormatter
             if let initialValue = fieldValue {
                 editableDateCell.fieldValueTextField.text = dateDisplayFormatter.string(from: initialValue)
-            } else if let defaultValue = defaultValue {
-                editableDateCell.fieldValueTextField.text = dateDisplayFormatter.string(from: defaultValue)
             }
             editableDateCell.fieldValueTextField.placeholder = placeholderText
             editableDateCell.delegate = self
