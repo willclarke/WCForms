@@ -12,7 +12,14 @@ public typealias WCFormValidationError = (field: WCInputField, indexPath: IndexP
 
 open class WCForm {
     public var formTitle: String? = nil
-    public var formSections: [WCFormSection] = [WCFormSection]()
+    public var formSections: [WCFormSection] = [WCFormSection]() {
+        didSet {
+            for section in formSections {
+                section.form = self
+            }
+        }
+    }
+    weak var formController: WCFormController? = nil
 
     public init() {
         setupFormSections()
@@ -113,6 +120,39 @@ open class WCForm {
         return section(forVisibleSection: visibleIndexPath.section, whenEditingForm: isEditing)?
                 .field(forVisibleRow: visibleIndexPath.row, whenEditingForm: isEditing)
     }
+
+    func nextVisibleResponder(after currentField: WCInputField) -> WCInputField? {
+        var foundCurrentField = false
+        for section in formSections {
+            for field in section.formFields {
+                if let inputField = field as? WCInputField {
+                    if inputField === currentField {
+                        foundCurrentField = true
+                    } else if foundCurrentField && inputField.isEditable && inputField.canBecomeFirstResponder && inputField.isVisible(whenEditingForm: true) {
+                        return inputField
+                    }
+                }
+            }
+        }
+        return nil
+    }
+
+    func previousVisibleResponder(before currentField: WCInputField) -> WCInputField? {
+        var previousVisibleResponder: WCInputField? = nil
+        for section in formSections {
+            for field in section.formFields {
+                if let inputField = field as? WCInputField {
+                    if inputField === currentField {
+                        return previousVisibleResponder
+                    } else if inputField.isEditable && inputField.canBecomeFirstResponder && inputField.isVisible(whenEditingForm: true){
+                        previousVisibleResponder = inputField
+                    }
+                }
+            }
+        }
+        return nil
+    }
+
 }
 
 open class WCObjectForm<ObjectType: WCFormObject>: WCForm {
@@ -126,8 +166,15 @@ open class WCObjectForm<ObjectType: WCFormObject>: WCForm {
 
 public class WCFormSection {
     public var headerTitle: String? = nil
-    public var formFields = [WCField]()
+    public var formFields = [WCField]() {
+        didSet {
+            for field in formFields {
+                field.formSection = self
+            }
+        }
+    }
     public var footerTitle: String? = nil
+    weak var form: WCForm? = nil
     
     func isVisible(whenEditingForm isEditing: Bool) -> Bool {
         if numberOfVisibleFields(whenEditingForm: isEditing) > 0 {
@@ -173,6 +220,9 @@ public class WCFormSection {
         self.headerTitle = headerTitle
         if let formFields = formFields {
             self.formFields = formFields
+            for field in formFields {
+                field.formSection = self
+            }
         }
     }
 }

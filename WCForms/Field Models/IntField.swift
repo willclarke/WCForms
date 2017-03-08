@@ -65,8 +65,9 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
     }
 
     public override func setupEditableCell(_ cell: UITableViewCell) {
-        if let editableDateCell = cell as? WCGenericTextFieldAndLabelCell {
-            lastLoadedEditableCell = editableDateCell
+        if let editableIntCell = cell as? WCGenericTextFieldAndLabelCell {
+            lastLoadedEditableCell = editableIntCell
+            editableIntCell.fieldValueTextField.inputAccessoryView = self.fieldInputAccessory
         } else {
             lastLoadedEditableCell = nil
         }

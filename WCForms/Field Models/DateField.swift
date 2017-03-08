@@ -77,6 +77,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
     public override func setupEditableCell(_ cell: UITableViewCell) {
         if let editableDateCell = cell as? WCGenericTextFieldAndLabelCell {
             lastLoadedEditableCell = editableDateCell
+            editableDateCell.fieldValueTextField.inputAccessoryView = self.fieldInputAccessory
         }
         if let editableDateCell = cell as? WCDateFieldTableViewCell {
             let dateValue: Date = fieldValue ?? Date()

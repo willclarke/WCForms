@@ -62,6 +62,7 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
     public override func setupEditableCell(_ cell: UITableViewCell) {
         if let editableTextCell = cell as? WCGenericTextFieldTableViewCell {
             lastLoadedEditableCell = editableTextCell
+            editableTextCell.fieldValueTextField.inputAccessoryView = self.fieldInputAccessory
         }
         if let editableTextCell = cell as? WCTextFieldNoLabelCell {
             editableTextCell.fieldValueTextField.text = fieldValue

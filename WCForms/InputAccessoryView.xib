@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="InputAccessoryView" customModule="WCForms" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tP4-UQ-FPf">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                    <items>
+                        <barButtonItem image="BackArrow" id="UMC-ta-VKT">
+                            <connections>
+                                <action selector="previousButtonTapped:" destination="iN0-l3-epB" id="2fc-wj-8Eb"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem width="16" style="plain" systemItem="fixedSpace" id="9k3-VV-3uS"/>
+                        <barButtonItem image="ForwardArrow" id="v5H-Rm-Aoc">
+                            <connections>
+                                <action selector="nextButtonTapped:" destination="iN0-l3-epB" id="O0i-HG-t0L"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="Aqd-Ea-OQr"/>
+                        <barButtonItem systemItem="done" id="Fbn-VX-zlM">
+                            <connections>
+                                <action selector="doneButtonTapped:" destination="iN0-l3-epB" id="AIr-MM-SKH"/>
+                            </connections>
+                        </barButtonItem>
+                    </items>
+                </toolbar>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="tP4-UQ-FPf" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="ENg-Yp-OPn"/>
+                <constraint firstAttribute="trailing" secondItem="tP4-UQ-FPf" secondAttribute="trailing" id="QU0-H1-wUA"/>
+                <constraint firstItem="tP4-UQ-FPf" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="UVP-9L-e5Z"/>
+                <constraint firstAttribute="bottom" secondItem="tP4-UQ-FPf" secondAttribute="bottom" id="UZb-su-Z3g"/>
+            </constraints>
+            <nil key="simulatedStatusBarMetrics"/>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="doneButton" destination="Fbn-VX-zlM" id="uqs-tB-pcJ"/>
+                <outlet property="nextButton" destination="v5H-Rm-Aoc" id="mqf-09-wzF"/>
+                <outlet property="previousButton" destination="UMC-ta-VKT" id="oEl-TB-fF1"/>
+            </connections>
+            <point key="canvasLocation" x="34.5" y="-258"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="BackArrow" width="22" height="22"/>
+        <image name="ForwardArrow" width="22" height="22"/>
+    </resources>
+</document>

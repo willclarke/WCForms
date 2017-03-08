@@ -70,6 +70,7 @@ open class WCFormController: UITableViewController {
             if let formTitle = formModel?.formTitle {
                 navigationItem.title = formTitle
             }
+            formModel?.formController = self
         }
     }
     private var cancelEditingFormButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: nil, action: nil)

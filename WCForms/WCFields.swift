@@ -23,6 +23,7 @@ public protocol WCField: class {
     var isAbleToCopy: Bool { get set }
     var copyValue: String? { get }
     var hasChanges: Bool { get }
+    weak var formSection: WCFormSection? { get set }
     func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell
     func registerNibsForCellReuseIdentifiers(in tableView: UITableView)
     func formWillBeginEditing()
@@ -50,6 +51,41 @@ extension WCInputField {
             return true
         }
         return false
+    }
+
+    var fieldInputAccessory: InputAccessoryView? {
+        let formBundle = Bundle(for: InputAccessoryView.self)
+        if let nib = formBundle.loadNibNamed("InputAccessoryView", owner: nil, options: nil) {
+            if let inputAccessoryView = nib.first as? InputAccessoryView {
+                if formSection?.form?.previousVisibleResponder(before: self) == nil {
+                    inputAccessoryView.previousButton.isEnabled = false
+                } else {
+                    inputAccessoryView.previousButton.isEnabled = true
+                }
+                if formSection?.form?.nextVisibleResponder(after: self) == nil {
+                    inputAccessoryView.nextButton.isEnabled = false
+                } else {
+                    inputAccessoryView.nextButton.isEnabled = true
+                }
+                inputAccessoryView.fieldDelegate = self
+                return inputAccessoryView
+            }
+        }
+        return nil
+    }
+
+    func previousInputAccessoryButtonTapped(_ sender: Any) {
+        self.resignFirstResponder()
+        formSection?.form?.previousVisibleResponder(before: self)?.becomeFirstResponder()
+    }
+
+    func nextInputAccessoryButtonTapped(_ sender: Any) {
+        self.resignFirstResponder()
+        formSection?.form?.nextVisibleResponder(after: self)?.becomeFirstResponder()
+    }
+
+    func doneInputAccessoryButtonTapped(_ sender: Any) {
+        self.resignFirstResponder()
     }
 }
 
@@ -91,6 +127,7 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellLoada
     public var canBecomeFirstResponder: Bool {
         return editableAppearance?.canBecomeFirstResponder ?? appearance.canBecomeFirstResponder
     }
+    weak public var formSection: WCFormSection? = nil
     public var isRequired: Bool = false
 
     public final var nibName: String {
