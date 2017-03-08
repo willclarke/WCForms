@@ -87,6 +87,8 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             editableDateCell.dateDisplayFormatter = dateDisplayFormatter
             if let initialValue = fieldValue {
                 editableDateCell.fieldValueTextField.text = dateDisplayFormatter.string(from: initialValue)
+            } else {
+                editableDateCell.fieldValueTextField.text = nil
             }
             editableDateCell.fieldValueTextField.placeholder = placeholderText
             editableDateCell.delegate = self
