@@ -75,6 +75,7 @@ open class WCFormController: UITableViewController {
     private var cancelEditingFormButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: nil, action: nil)
     private var editFormButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: nil, action: nil)
     private var doneEditingFormButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: nil, action: nil)
+    private var previousRightBarButtonItems: [UIBarButtonItem]? = nil
     private var previousLeftBarButtonItems: [UIBarButtonItem]? = nil
     private var previousLeftItemsSupplementBackButtonSetting: Bool = false
 
@@ -97,14 +98,14 @@ open class WCFormController: UITableViewController {
 
         if formMode == .default {
             if var rightBarButtonItems = navigationItem.rightBarButtonItems {
-                rightBarButtonItems.append(editFormButtonItem)
+                rightBarButtonItems.insert(editFormButtonItem, at: 0)
                 navigationItem.rightBarButtonItems = rightBarButtonItems
             } else {
                 navigationItem.rightBarButtonItem = editFormButtonItem
             }
         } else if formMode == .editableOnly {
             if var rightBarButtonItems = navigationItem.rightBarButtonItems {
-                rightBarButtonItems.append(doneEditingFormButtonItem)
+                rightBarButtonItems.insert(doneEditingFormButtonItem, at: 0)
                 navigationItem.rightBarButtonItems = rightBarButtonItems
             } else {
                 navigationItem.rightBarButtonItem = doneEditingFormButtonItem
@@ -240,20 +241,12 @@ open class WCFormController: UITableViewController {
         guard let formModel = formModel else {
             return
         }
-        if navigationItem.rightBarButtonItem == editFormButtonItem {
-            navigationItem.setRightBarButton(doneEditingFormButtonItem, animated: true)
-        } else if var rightBarButtonItems = navigationItem.rightBarButtonItems {
-            if let editButtonIndex = rightBarButtonItems.index(of: editFormButtonItem) {
-                rightBarButtonItems[editButtonIndex] = doneEditingFormButtonItem
-            } else {
-                rightBarButtonItems.append(doneEditingFormButtonItem)
-            }
-            navigationItem.setRightBarButtonItems(rightBarButtonItems, animated: true)
-        }
+        previousRightBarButtonItems = navigationItem.rightBarButtonItems
         previousLeftBarButtonItems = navigationItem.leftBarButtonItems
         previousLeftItemsSupplementBackButtonSetting = navigationItem.leftItemsSupplementBackButton
         navigationItem.leftItemsSupplementBackButton = false
-        navigationItem.setLeftBarButton(cancelEditingFormButtonItem, animated: true)
+        navigationItem.setLeftBarButtonItems([cancelEditingFormButtonItem], animated: true)
+        navigationItem.setRightBarButtonItems([doneEditingFormButtonItem], animated: true)
         formModel.beginEditing()
         setEditing(true, animated: true)
     }
@@ -289,6 +282,7 @@ open class WCFormController: UITableViewController {
                 doneEditingFormButtonItem.isEnabled = true
                 formDidFinishEditing()
                 restoreBarButtonsAfterCompletion()
+                setEditing(false, animated: true)
             } else {
                 doneEditingFormButtonItem.isEnabled = true
             }
@@ -357,16 +351,8 @@ open class WCFormController: UITableViewController {
         previousLeftItemsSupplementBackButtonSetting = false
         navigationItem.setLeftBarButtonItems(previousLeftBarButtonItems, animated: true)
         previousLeftBarButtonItems = nil
-        if navigationItem.rightBarButtonItem == doneEditingFormButtonItem {
-            navigationItem.setRightBarButton(editFormButtonItem, animated: true)
-        } else if var rightBarButtonItems = navigationItem.rightBarButtonItems {
-            if let doneButtonIndex = rightBarButtonItems.index(of: doneEditingFormButtonItem) {
-                rightBarButtonItems[doneButtonIndex] = editFormButtonItem
-            } else {
-                rightBarButtonItems.append(editFormButtonItem)
-            }
-            navigationItem.setRightBarButtonItems(rightBarButtonItems, animated: true)
-        }
+        navigationItem.setRightBarButtonItems(previousRightBarButtonItems, animated: true)
+        previousRightBarButtonItems = nil
     }
 
     open override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
