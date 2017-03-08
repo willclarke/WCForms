@@ -82,11 +82,36 @@ open class WCForm {
         return false
     }
 
-    subscript(indexPath: IndexPath) -> WCField? {
-        guard indexPath.section < formSections.count && indexPath.row < formSections[indexPath.section].formFields.count else {
-            return nil
+    func numberOfVisibleSections(whenEditingForm isEditing: Bool) -> Int {
+        var numberOfVisibleSections = 0
+        for section in formSections {
+            if section.numberOfVisibleFields(whenEditingForm: isEditing) > 0 {
+                numberOfVisibleSections += 1
+            }
         }
-        return formSections[indexPath.section].formFields[indexPath.row]
+        return numberOfVisibleSections
+    }
+
+    func numberOfVisibleFields(forVisibleSection visibleSection: Int, whenEditingForm isEditing: Bool) -> Int {
+        return section(forVisibleSection: visibleSection, whenEditingForm: isEditing)?.numberOfVisibleFields(whenEditingForm: isEditing) ?? 0
+    }
+
+    func section(forVisibleSection visibleSection: Int, whenEditingForm isEditing: Bool) -> WCFormSection? {
+        var currentVisibleSection = 0
+        for section in formSections {
+            if section.isVisible(whenEditingForm: isEditing) {
+                if visibleSection == currentVisibleSection {
+                    return section
+                }
+                currentVisibleSection += 1
+            }
+        }
+        return nil
+    }
+
+    func field(for visibleIndexPath: IndexPath, whenEditingForm isEditing: Bool) -> WCField? {
+        return section(forVisibleSection: visibleIndexPath.section, whenEditingForm: isEditing)?
+                .field(forVisibleRow: visibleIndexPath.row, whenEditingForm: isEditing)
     }
 }
 
@@ -103,6 +128,37 @@ public class WCFormSection {
     public var headerTitle: String? = nil
     public var formFields = [WCField]()
     public var footerTitle: String? = nil
+    
+    func isVisible(whenEditingForm isEditing: Bool) -> Bool {
+        if numberOfVisibleFields(whenEditingForm: isEditing) > 0 {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    func field(forVisibleRow visibleRow: Int, whenEditingForm isEditing: Bool) -> WCField? {
+        var visibleRowIndex = 0
+        for field in formFields {
+            if field.isVisible(whenEditingForm: isEditing) {
+                if visibleRow == visibleRowIndex {
+                    return field
+                }
+                visibleRowIndex += 1
+            }
+        }
+        return nil
+    }
+
+    public func numberOfVisibleFields(whenEditingForm isEditing: Bool) -> Int {
+        var numberOfVisibleFields = 0
+        for field in formFields {
+            if field.isVisible(whenEditingForm: isEditing) {
+                numberOfVisibleFields += 1
+            }
+        }
+        return numberOfVisibleFields
+    }
 
     var hasFieldChanges: Bool {
         for formField in formFields {

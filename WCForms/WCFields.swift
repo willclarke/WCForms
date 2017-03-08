@@ -28,15 +28,29 @@ public protocol WCField: class {
     func formWillBeginEditing()
     func formDidCancelEditing()
     func formDidFinishEditing()
+    func isVisible(whenEditingForm isEditing: Bool) -> Bool
 }
 
 public protocol WCInputField: WCField {
     var fieldName: String { get set }
     var isRequired: Bool { get set }
+    var isHiddenWhenEmpty: Bool { get set }
+    var isEmpty: Bool { get }
     func validateFieldValue() throws
     var canBecomeFirstResponder: Bool { get }
     func becomeFirstResponder()
     func resignFirstResponder()
+}
+
+extension WCInputField {
+    public func isVisible(whenEditingForm isEditing: Bool) -> Bool {
+        if isEditing && isEditable {
+            return true
+        } else if !isHiddenWhenEmpty || !isEmpty {
+            return true
+        }
+        return false
+    }
 }
 
 public protocol WCTypedInputField: WCInputField {
@@ -93,6 +107,10 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellLoada
     }
     public var isEditable: Bool = true
     public var isAbleToCopy: Bool = true
+    public var isHiddenWhenEmpty: Bool = true
+    public var isEmpty: Bool {
+        return fieldValue == nil
+    }
     public var copyValue: String? {
         if let stringConvertableValue = fieldValue as? CustomStringConvertible {
             return stringConvertableValue.description
