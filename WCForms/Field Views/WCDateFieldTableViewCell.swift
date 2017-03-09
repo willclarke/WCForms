@@ -38,7 +38,6 @@ public class WCDateFieldTableViewCell: WCGenericTextFieldAndLabelCell {
     }
 
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
-        print("tried replacing \(string)")
         return false
     }
 
