@@ -336,7 +336,7 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellAppea
 
     // MARK: - Cell setup
 
-    /// Set up the read-only version of this cell. By default this will set up a `WCGenericFieldTableViewCell` or `WCGenericFieldNoLabelTableViewCell` - 
+    /// Set up the read-only version of this cell. By default this will set up a `WCGenericFieldWithFieldNameCell` or `WCGenericFieldCell` - 
     /// override this function in subclasses to customize behavior.
     ///
     /// - Parameter cell: The UITableViewCell for the field.
@@ -348,11 +348,11 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellAppea
             cell.selectionStyle = .none
         }
         
-        if let readOnlyCell = cell as? WCGenericFieldTableViewCell {
+        if let readOnlyCell = cell as? WCGenericFieldWithFieldNameCell {
             setValueTextColor = UIColor.darkGray
             readOnlyCell.fieldNameLabel.text = fieldName
         }
-        if let readOnlyCell = cell as? WCGenericFieldNoLabelTableViewCell {
+        if let readOnlyCell = cell as? WCGenericFieldCell {
             if let stringConvertableValue = fieldValue as? CustomStringConvertible {
                 if stringConvertableValue.description != "" {
                     readOnlyCell.valueLabel.textColor = setValueTextColor

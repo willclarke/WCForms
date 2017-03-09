@@ -1,5 +1,5 @@
 //
-//  WCDateFieldTableViewCell.swift
+//  WCDateFieldCell.swift
 //  WCForms
 //
 //  Created by Will Clarke on 3/1/17.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable date field.
-public class WCDateFieldTableViewCell: WCGenericTextFieldAndLabelCell {
+public class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
 
     /// A picker view to use as the inputView for the text field's keyboard.
     public var datePickerKeyboard = UIDatePicker()

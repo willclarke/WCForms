@@ -23,7 +23,7 @@ public enum WCDateFieldAppearance: FieldCellAppearance {
         case .rightDetail:
             return "WCGenericFieldRightDetailTableViewCell"
         case .stacked:
-            return "WCGenericFieldTableViewCell"
+            return "WCGenericFieldStackedCell"
         }
     }
 
@@ -31,9 +31,9 @@ public enum WCDateFieldAppearance: FieldCellAppearance {
     public var editableNibName: String {
         switch self {
         case .rightDetail:
-            return "WCDateFieldRightDetailTableViewCell"
+            return "WCDateFieldRightDetailCell"
         case .stacked:
-            return "WCDateFieldTableViewCell"
+            return "WCDateFieldCell"
         }
     }
 
@@ -95,7 +95,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             cell.selectionStyle = .none
         }
 
-        if let dateCell = cell as? WCGenericFieldTableViewCell {
+        if let dateCell = cell as? WCGenericFieldWithFieldNameCell {
             dateCell.fieldNameLabel.text = fieldName
             if let dateValue = fieldValue {
                 dateCell.valueLabel.text = dateDisplayFormatter.string(from: dateValue)
@@ -114,7 +114,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             lastLoadedEditableCell = editableDateCell
             editableDateCell.fieldValueTextField.inputAccessoryView = self.fieldInputAccessory
         }
-        if let editableDateCell = cell as? WCDateFieldTableViewCell {
+        if let editableDateCell = cell as? WCDateFieldCell {
             let dateValue: Date = fieldValue ?? Date()
             editableDateCell.fieldNameLabel.text = fieldName
             editableDateCell.datePickerKeyboard.date = dateValue

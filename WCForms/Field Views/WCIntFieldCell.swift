@@ -1,5 +1,5 @@
 //
-//  WCIntFieldTableViewCell.swift
+//  WCIntFieldCell.swift
 //  WCForms
 //
 //  Created by Will Clarke on 3/1/17.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable integer field.
-public class WCIntFieldTableViewCell: WCGenericTextFieldAndLabelCell {
+public class WCIntFieldCell: WCGenericTextFieldAndLabelCell {
 
     /// A delegate to handle actions when the field changes.
     weak var delegate: WCIntField? = nil

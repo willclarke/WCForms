@@ -1,5 +1,5 @@
 //
-//  WCTextFieldTableViewCell.swift
+//  WCTextFieldCell.swift
 //  WCForms
 //
 //  Created by Will Clarke on 3/1/17.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable field that displays its value in a UITextField.
-public class WCGenericTextFieldTableViewCell: UITableViewCell, UITextFieldDelegate {
+public class WCGenericTextFieldCell: UITableViewCell, UITextFieldDelegate {
 
     /// The UITextField for the field value.
     @IBOutlet weak var fieldValueTextField: UITextField!
@@ -17,7 +17,7 @@ public class WCGenericTextFieldTableViewCell: UITableViewCell, UITextFieldDelega
 }
 
 /// A table view cell for an editable WCTextField with the `fieldNameAsPlaceholder` appearance.
-public class WCTextFieldNoLabelCell: WCGenericTextFieldTableViewCell {
+public class WCTextFieldNoFieldNameLabelCell: WCGenericTextFieldCell {
 
     /// The text field delegate.
     weak var delegate: WCTextField? = nil
@@ -47,7 +47,7 @@ public class WCTextFieldNoLabelCell: WCGenericTextFieldTableViewCell {
 }
 
 /// A table view cell for an editable field that displays its value in a UITextField and also has a field name label.
-public class WCGenericTextFieldAndLabelCell: WCGenericTextFieldTableViewCell {
+public class WCGenericTextFieldAndLabelCell: WCGenericTextFieldCell {
 
     /// The UILabel for the field name.
     @IBOutlet weak var fieldNameLabel: UILabel!
@@ -55,7 +55,7 @@ public class WCGenericTextFieldAndLabelCell: WCGenericTextFieldTableViewCell {
 }
 
 /// A table view cell for an editable WCTextField that also has a field name label.
-public class WCTextFieldTableViewCell: WCGenericTextFieldAndLabelCell {
+public class WCTextFieldCell: WCGenericTextFieldAndLabelCell {
 
     /// The text field delegate.
     weak var delegate: WCTextField? = nil

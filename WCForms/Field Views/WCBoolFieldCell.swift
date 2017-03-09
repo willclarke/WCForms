@@ -1,5 +1,5 @@
 //
-//  WCBoolFieldTableViewCell.swift
+//  WCBoolFieldCell.swift
 //  WCForms
 //
 //  Created by Will Clarke on 3/1/17.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable boolean field that displays its value in a `UISwitch`.
-public class WCBoolFieldTableViewCell: UITableViewCell {
+public class WCBoolFieldCell: UITableViewCell {
 
     /// The label for the field name.
     @IBOutlet weak var fieldNameLabel: UILabel!

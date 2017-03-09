@@ -25,7 +25,7 @@ public enum WCIntFieldAppearance: FieldCellAppearance {
         case .rightDetail:
             return "WCGenericFieldRightDetailTableViewCell"
         case .stacked:
-            return "WCGenericFieldTableViewCell"
+            return "WCGenericFieldStackedCell"
         case .slider:
             return "WCGenericFieldRightDetailTableViewCell"
         }
@@ -35,11 +35,11 @@ public enum WCIntFieldAppearance: FieldCellAppearance {
     public var editableNibName: String {
         switch self {
         case .rightDetail:
-            return "WCIntFieldRightDetailTableViewCell"
+            return "WCIntFieldRightDetailCell"
         case .stacked:
-            return "WCIntFieldTableViewCell"
+            return "WCIntFieldCell"
         case .slider:
-            return "WCIntFieldSliderTableViewCell"
+            return "WCIntFieldSliderCell"
         }
     }
 
@@ -102,14 +102,14 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
         } else {
             lastLoadedEditableCell = nil
         }
-        if let editableIntCell = cell as? WCIntFieldTableViewCell {
+        if let editableIntCell = cell as? WCIntFieldCell {
             let intValue: Int = fieldValue ?? 0
             editableIntCell.fieldNameLabel.text = fieldName
             editableIntCell.fieldValueTextField.text = String(intValue)
             editableIntCell.fieldValueTextField.placeholder = placeholderText
             editableIntCell.delegate = self
         }
-        if let sliderCell = cell as? WCIntFieldSliderTableViewCell {
+        if let sliderCell = cell as? WCIntFieldSliderCell {
             let sliderMinimum = minimumValue ?? 0
             let sliderMaximum = maximumValue ?? 100
             var intValue: Int = fieldValue ?? 0

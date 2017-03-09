@@ -1,5 +1,5 @@
 //
-//  WCIntFieldSliderTableViewCell.swift
+//  WCIntFieldSliderCell.swift
 //  WCForms
 //
 //  Created by Will Clarke on 3/2/17.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable integer field with the `slider` appearance.
-public class WCIntFieldSliderTableViewCell: UITableViewCell {
+public class WCIntFieldSliderCell: UITableViewCell {
 
     /// A delegate to handle actions when the field changes.
     weak var delegate: WCIntField? = nil

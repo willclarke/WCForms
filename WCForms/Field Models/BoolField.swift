@@ -23,7 +23,7 @@ public enum WCBoolFieldAppearance: FieldCellAppearance {
         case .rightDetail:
             return "WCGenericFieldRightDetailTableViewCell"
         case .stacked:
-            return "WCGenericFieldTableViewCell"
+            return "WCGenericFieldStackedCell"
         }
     }
 
@@ -31,9 +31,9 @@ public enum WCBoolFieldAppearance: FieldCellAppearance {
     public var editableNibName: String {
         switch self {
         case .rightDetail:
-            return "WCBoolFieldTableViewCell"
+            return "WCBoolFieldCell"
         case .stacked:
-            return "WCBoolFieldStackedTableViewCell"
+            return "WCBoolFieldStackedCell"
         }
     }
 
@@ -87,7 +87,7 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
             cell.selectionStyle = .none
         }
 
-        if let readOnlyCell = cell as? WCGenericFieldTableViewCell {
+        if let readOnlyCell = cell as? WCGenericFieldWithFieldNameCell {
             let boolValue = fieldValue ?? false
             readOnlyCell.fieldNameLabel.text = fieldName
             readOnlyCell.valueLabel.textColor = UIColor.darkGray
@@ -100,12 +100,12 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
     /// - Parameter cell: the table view cell.
     public override func setupEditableCell(_ cell: UITableViewCell) {
         let boolValue = fieldValue ?? false
-        if let editableBoolCell = cell as? WCBoolFieldTableViewCell {
+        if let editableBoolCell = cell as? WCBoolFieldCell {
             editableBoolCell.fieldNameLabel.text = fieldName
             editableBoolCell.fieldValueSwitch.isOn = boolValue
             editableBoolCell.delegate = self
         }
-        if let stackedBoolCell = cell as? WCBoolFieldStackedTableViewCell {
+        if let stackedBoolCell = cell as? WCBoolFieldStackedCell {
             stackedBoolCell.onDisplayValueLabel.text = onDisplayValue
             stackedBoolCell.offDisplayValueLabel.text = offDisplayValue
             if boolValue {

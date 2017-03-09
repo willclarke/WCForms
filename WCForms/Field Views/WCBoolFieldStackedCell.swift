@@ -1,5 +1,5 @@
 //
-//  WCBoolFieldStackedTableViewCell.swift
+//  WCBoolFieldStackedCell.swift
 //  WCForms
 //
 //  Created by Will Clarke on 3/2/17.
@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable boolean field with the `stacked` appearance.
-public class WCBoolFieldStackedTableViewCell: WCBoolFieldTableViewCell {
+public class WCBoolFieldStackedCell: WCBoolFieldCell {
 
     /// The label displaying the off label.
     @IBOutlet weak var offDisplayValueLabel: UILabel!

@@ -25,9 +25,9 @@ public enum WCTextFieldAppearance: FieldCellAppearance {
         case .rightDetail:
             return "WCGenericFieldRightDetailTableViewCell"
         case .fieldNameAsPlaceholder:
-            return "WCGenericFieldNoLabelTableViewCell"
+            return "WCGenericFieldCell"
         case .stacked:
-            return "WCGenericFieldTableViewCell"
+            return "WCGenericFieldStackedCell"
         }
     }
 
@@ -35,11 +35,11 @@ public enum WCTextFieldAppearance: FieldCellAppearance {
     public var editableNibName: String {
         switch self {
         case .rightDetail:
-            return "WCTextFieldRightDetailTableViewCell"
+            return "WCTextFieldRightDetailCell"
         case .stacked:
-            return "WCTextFieldTableViewCell"
+            return "WCTextFieldCell"
         case .fieldNameAsPlaceholder:
-            return "WCTextFieldNoLabelCell"
+            return "WCTextFieldNoFieldNameLabelCell"
         }
     }
 
@@ -81,7 +81,7 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
     }
 
     /// The last loaded editable text field cell.
-    weak var lastLoadedEditableCell: WCGenericTextFieldTableViewCell? = nil
+    weak var lastLoadedEditableCell: WCGenericTextFieldCell? = nil
 
     /// Sets up the read-only version of the cell for this field.
     ///
@@ -95,16 +95,16 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
     ///
     /// - Parameter cell: the table view cell.
     public override func setupEditableCell(_ cell: UITableViewCell) {
-        if let editableTextCell = cell as? WCGenericTextFieldTableViewCell {
+        if let editableTextCell = cell as? WCGenericTextFieldCell {
             lastLoadedEditableCell = editableTextCell
             editableTextCell.fieldValueTextField.inputAccessoryView = self.fieldInputAccessory
         }
-        if let editableTextCell = cell as? WCTextFieldNoLabelCell {
+        if let editableTextCell = cell as? WCTextFieldNoFieldNameLabelCell {
             editableTextCell.fieldValueTextField.text = fieldValue
             editableTextCell.fieldValueTextField.placeholder = placeholderText ?? fieldName
             editableTextCell.delegate = self
         }
-        if let editableTextCell = cell as? WCTextFieldTableViewCell {
+        if let editableTextCell = cell as? WCTextFieldCell {
             editableTextCell.fieldNameLabel.text = fieldName
             editableTextCell.fieldValueTextField.text = fieldValue
             editableTextCell.fieldValueTextField.placeholder = placeholderText
