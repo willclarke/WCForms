@@ -8,52 +8,129 @@
 
 import Foundation
 
+/// Protocol for a form field.
+public protocol WCField: class {
+
+    /// Whether or not the field is editable. Note that this is different from when a form is editable - a form can be editable generally, but an individual
+    /// field may be designated as not editable. A form controller will only make a field editable if both the form is editable, and the individual field is
+    /// designated as editable.
+    var isEditable: Bool { get set }
+
+    /// Whether or not the user can copy the field's value to the clipboard when the field is in read-only mode. This can be accomplished by tapping
+    /// and holding on the read-only table view cell.
+    var isAbleToCopy: Bool { get set }
+
+    /// A string value for the field to copy to the clipboard when the user requests to copy the field. This will only be called if isAbleToCopy is set to true.
+    var copyValue: String? { get }
+
+    /// Whether or not this field has been changed since it began editing. If you inherit from WCGenericField, this will be automatically implemented by 
+    /// comparing the stored, pre-edit value to the current value. If you have your own field implementation, you must manage the pre-editing and current
+    /// values manually.
+    var hasChanges: Bool { get }
+
+    /// A pointer to the section that contains this field.
+    weak var formSection: WCFormSection? { get set }
+
+    /// Dequeue a cell from a tableView for an indexPath for this cell in the specified edit mode.
+    ///
+    /// - Parameters:
+    ///   - tableView: The UITableView from which to dequeue the cell.
+    ///   - indexPath: The IndexPath that is being requested.
+    ///   - isEditing: The current editing mode of the form.
+    /// - Returns: A valid UITableViewCell for the reqested IndexPath, dequeued from the specified UITableView.
+    func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell
+
+    /// Register any nibs/cell reuse identifiers this field may use that aren't contained in the table view's prototype cells. Note that if you inherit from
+    /// WCGenericField, this will be handled automatically by specifying the correct nibs and cell reuse identifiers in your appearance enum.
+    ///
+    /// - Parameter tableView: The UITableView in which to register the nibs for their cell reuse identifiers.
+    func registerNibsForCellReuseIdentifiers(in tableView: UITableView)
+
+    /// Called when a form containing the field begins editing. If your field has a field value, you should take this opportunity to save the pre-edit value
+    /// in order to be able to revert the value if editing is canceled, or determine if the field has changed. If you inherit from WCGenericField, this
+    /// behavior will be implemented automatically.
+    func formWillBeginEditing()
+
+    /// Called when a form containing the field cancels editing. If your field has a field value, you should revert it to the pre-editing value. If you inherit
+    /// from WCGenericField, this behavior will be implemented automatically.
+    func formDidCancelEditing()
+
+    /// Called when a form containing the field cancels editing. If your field has a field value, and you are storing a pre-editing value, you should discard
+    /// if. If you inherit from WCGenericField, this behavior will be implemented automatically.
+    func formDidFinishEditing()
+
+    /// Whether or not this field should be visible in the specified edit mode.
+    ///
+    /// - Parameter isEditing: Whether or not the form is editing.
+    /// - Returns: Whether or not the form is editing.
+    func isVisible(whenEditingForm isEditing: Bool) -> Bool
+
+}
+
+/// A validation error that can be thrown when a field is validated.
+///
+/// - missingValue: a required field has no value. The associated type `fieldName` is the name of the field with the missing value.
+/// - outOfBounds: the field value is set outside of its defined bounds. The associated type `fieldName` is the name of the field, and the associated type
+///                `boundsError` is a localized error string that may be displayed to the user.
+/// - invalidFormat: the field value is in an invalid format. The associated type `fieldName` is the name of the field, and the associated type
+///                `formatError` is a localized error string that may be displayed to the user.
 public enum WCFieldValidationError: Error {
+
     case missingValue(fieldName: String)
     case outOfBounds(fieldName: String, boundsError: String)
     case invalidFormat(fieldName: String, formatError: String)
+
 }
 
-public protocol WCField: class {
-    var nibName: String { get }
-    var cellIdentifier: String { get }
-    var editableNibName: String { get }
-    var editableCellIdentifier: String { get }
-    var isEditable: Bool { get set }
-    var isAbleToCopy: Bool { get set }
-    var copyValue: String? { get }
-    var hasChanges: Bool { get }
-    weak var formSection: WCFormSection? { get set }
-    func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell
-    func registerNibsForCellReuseIdentifiers(in tableView: UITableView)
-    func formWillBeginEditing()
-    func formDidCancelEditing()
-    func formDidFinishEditing()
-    func isVisible(whenEditingForm isEditing: Bool) -> Bool
-}
-
+/// A field at that accepts user input.
 public protocol WCInputField: WCField {
+
+    /// The name of the field. This should be a user facing string.
     var fieldName: String { get set }
+
+    /// Whether or not this field is required to have a valid value set.
     var isRequired: Bool { get set }
-    var isHiddenWhenEmpty: Bool { get set }
+
+    /// Whether or not this field should be visible in the read only mode when it does not have a valid value set.
+    var isVisibleWhenEmpty: Bool { get set }
+
+    /// Whether or not this field has a valid value set.
     var isEmpty: Bool { get }
-    func validateFieldValue() throws
+
+    /// Whether or not this field has the ability to become a first responder.
     var canBecomeFirstResponder: Bool { get }
+
+    /// Attempt to make this field to become the first responder. To implement this, you may need to store the last loaded table view cell.
     func becomeFirstResponder()
+
+    /// Attempt to make this field resign its first responder status. Implement this you may need to store the last loaded table view cell.
     func resignFirstResponder()
+
+    /// Make sure this field has a valid value assigned.
+    ///
+    /// - Throws: A `WCFieldValidationError` describing the first error in validating the field.
+    func validateFieldValue() throws
+
 }
 
 extension WCInputField {
+    
+    /// Determines whether the field is visible during a particular edit mode. A field should visible if it is being edited, if it is in read-only mode and is 
+    /// not empty, or if it is set to be visible when empty. See also: `isEditable`, `isEmpty`, and `isVisibleWhenEmpty`
+    ///
+    /// - Parameter isEditing: Whether or not the form is editing.
+    /// - Returns: True if the section is visible, false otherwise.
     public func isVisible(whenEditingForm isEditing: Bool) -> Bool {
         if isEditing && isEditable {
             return true
-        } else if !isHiddenWhenEmpty || !isEmpty {
+        } else if isVisibleWhenEmpty || !isEmpty {
             return true
         }
         return false
     }
 
-    var fieldInputAccessory: InputAccessoryView? {
+    /// An input accessory view for a field that can become first responder.
+    public var fieldInputAccessory: InputAccessoryView? {
         let formBundle = Bundle(for: InputAccessoryView.self)
         if let nib = formBundle.loadNibNamed("InputAccessoryView", owner: nil, options: nil) {
             if let inputAccessoryView = nib.first as? InputAccessoryView {
@@ -74,237 +151,35 @@ extension WCInputField {
         return nil
     }
 
-    func previousInputAccessoryButtonTapped(_ sender: Any) {
+    /// Resign first responder status and make the previous visible responder the first responder if possible.
+    func makePreviousVisibleResponderFirstResponder() {
         self.resignFirstResponder()
         formSection?.form?.previousVisibleResponder(before: self)?.becomeFirstResponder()
     }
 
-    func nextInputAccessoryButtonTapped(_ sender: Any) {
+    /// Resign first responder status and make the previous visible responder the first responder if possible.
+    func makeNextVisibleResponderFirstResponder() {
         self.resignFirstResponder()
         formSection?.form?.nextVisibleResponder(after: self)?.becomeFirstResponder()
     }
 
-    func doneInputAccessoryButtonTapped(_ sender: Any) {
-        self.resignFirstResponder()
-    }
 }
 
+/// An input field with an associated type for its field value.
 public protocol WCTypedInputField: WCInputField {
+
+    /// The type this input field uses.
     associatedtype InputValueType
+
+    /// The value of this field.
     var fieldValue: InputValueType? { get set }
+
+    /// User interaction with a view as resulted in the field's value changing.
+    ///
+    /// - Parameter newValue: The new value that has been set by the user in the view.
     func viewDidUpdateValue(newValue: InputValueType?)
+
+    /// A block to call when the field changes its value.
     var onValueChange: ((InputValueType?) -> Void)? { get set }
-}
-
-public protocol FieldCellLoadable {
-    var nibName: String { get }
-    var cellIdentifier: String { get }
-    var editableNibName: String { get }
-    var editableCellIdentifier: String { get }
-    var canBecomeFirstResponder: Bool { get }
-    static var `default`: Self { get }
-    static var allValues: [Self] { get }
-}
-
-public extension FieldCellLoadable {
-    public var cellIdentifier: String {
-        return self.nibName
-    }
-
-    public var editableCellIdentifier: String {
-        return self.editableNibName
-    }
-}
-
-public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellLoadable>: WCTypedInputField {
-    public typealias InputValueType = ValueType
-    public var fieldName: String
-    public var fieldValue: ValueType?
-    var previousValue: ValueType?
-    public var appearance: AppearanceType
-    public var editableAppearance: AppearanceType?
-    public var onValueChange: ((ValueType?) -> Void)? = nil
-    public var canBecomeFirstResponder: Bool {
-        return editableAppearance?.canBecomeFirstResponder ?? appearance.canBecomeFirstResponder
-    }
-    weak public var formSection: WCFormSection? = nil
-    public var isRequired: Bool = false
-
-    public final var nibName: String {
-        return appearance.nibName
-    }
-    public final var cellIdentifier: String {
-        return appearance.cellIdentifier
-    }
-    public final var editableNibName: String {
-        return editableAppearance?.editableNibName ?? appearance.editableNibName
-    }
-    public final var editableCellIdentifier: String {
-        return editableAppearance?.editableCellIdentifier ?? appearance.editableCellIdentifier
-    }
-    public var isEditable: Bool = true
-    public var isAbleToCopy: Bool = true
-    public var isHiddenWhenEmpty: Bool = true
-    public var isEmpty: Bool {
-        return fieldValue == nil
-    }
-    public var copyValue: String? {
-        if let stringConvertableValue = fieldValue as? CustomStringConvertible {
-            return stringConvertableValue.description
-        }
-        return nil
-    }
-    public var hasChanges: Bool {
-        if !isEditable {
-            return false
-        }
-        if fieldValue != previousValue {
-            return true
-        } else {
-            return false
-        }
-    }
-
-    public init(fieldName: String) {
-        self.fieldName = fieldName
-        self.appearance = AppearanceType.default
-    }
-
-    public convenience init(fieldName: String, isRequired: Bool) {
-        self.init(fieldName: fieldName)
-        self.isRequired = isRequired
-    }
-
-    public convenience init(fieldName: String, initialValue: ValueType?) {
-        self.init(fieldName: fieldName)
-        self.fieldValue = initialValue
-    }
-
-    public convenience init(fieldName: String, initialValue: ValueType?, isRequired: Bool) {
-        self.init(fieldName: fieldName, initialValue: initialValue)
-        self.isRequired = isRequired
-    }
-
-    public convenience init(fieldName: String, initialValue: ValueType?, onValueChange: @escaping ((ValueType?) -> Void)) {
-        self.init(fieldName: fieldName, initialValue: initialValue)
-        self.onValueChange = onValueChange
-    }
-
-    public convenience init(fieldName: String, initialValue: ValueType?, onValueChange: @escaping ((ValueType?) -> Void), isRequired: Bool) {
-        self.init(fieldName: fieldName, initialValue: initialValue, onValueChange: onValueChange)
-        self.isRequired = isRequired
-    }
-
-    public convenience init(fieldName: String, initialValue: ValueType?, appearance: AppearanceType) {
-        self.init(fieldName: fieldName, initialValue: initialValue)
-        self.appearance = appearance
-    }
-
-    public convenience init(fieldName: String, initialValue: ValueType?, appearance: AppearanceType, isRequired: Bool) {
-        self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance)
-        self.isRequired = isRequired
-    }
-
-    public convenience init(fieldName: String, initialValue: ValueType?, appearance: AppearanceType, onValueChange: @escaping ((ValueType?) -> Void)) {
-        self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance)
-        self.onValueChange = onValueChange
-    }
-
-    public convenience init(fieldName: String,
-                            initialValue: ValueType,
-                            appearance: AppearanceType,
-                            onValueChange: @escaping ((ValueType?) -> Void),
-                            isRequired: Bool)
-    {
-        self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance, onValueChange: onValueChange)
-        self.isRequired = isRequired
-    }
-
-    public final func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell {
-        let editableCellIdentifier = editableAppearance?.editableCellIdentifier ?? appearance.editableCellIdentifier
-        let cellIdentifier = isEditing && isEditable ? editableCellIdentifier : appearance.cellIdentifier
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-        if isEditing && isEditable {
-            self.setupEditableCell(cell)
-        } else {
-            self.setupCell(cell)
-        }
-        return cell
-    }
-    
-    public func setupCell(_ cell: UITableViewCell) {
-        var setValueTextColor = UIColor.black
-        if isAbleToCopy && copyValue != nil {
-            cell.selectionStyle = .default
-        } else {
-            cell.selectionStyle = .none
-        }
-
-        if let readOnlyCell = cell as? WCGenericFieldTableViewCell {
-            setValueTextColor = UIColor.darkGray
-            readOnlyCell.titleLabel.text = fieldName
-        }
-        if let readOnlyCell = cell as? WCGenericFieldNoLabelTableViewCell {
-            if let stringConvertableValue = fieldValue as? CustomStringConvertible {
-                if stringConvertableValue.description != "" {
-                    readOnlyCell.valueLabel.textColor = setValueTextColor
-                    readOnlyCell.valueLabel.text = stringConvertableValue.description
-                } else {
-                    readOnlyCell.valueLabel.textColor = UIColor.lightText
-                    readOnlyCell.valueLabel.text = NSLocalizedString("None", tableName: "WCForms", comment: "Displayed when there is no value for a field")
-                }
-            } else {
-                readOnlyCell.valueLabel.textColor = UIColor.lightText
-                readOnlyCell.valueLabel.text = NSLocalizedString("None", tableName: "WCForms", comment: "Displayed when there is no value for a field")
-            }
-        }
-    }
-
-    public func setupEditableCell(_ cell: UITableViewCell) {
-        setupCell(cell)
-    }
-
-    public func registerNibsForCellReuseIdentifiers(in tableView: UITableView) {
-        let nibBundle = Bundle(for: WCTextField.self)
-        for appearance in AppearanceType.allValues {
-            let readOnlyNib = UINib(nibName: appearance.nibName, bundle: nibBundle)
-            let editableNib = UINib(nibName: appearance.editableNibName, bundle: nibBundle)
-            tableView.register(readOnlyNib, forCellReuseIdentifier: appearance.cellIdentifier)
-            tableView.register(editableNib, forCellReuseIdentifier: appearance.editableCellIdentifier)
-        }
-    }
-
-    public func viewDidUpdateValue(newValue: ValueType?) {
-        fieldValue = newValue
-        if let settingBlock = onValueChange {
-            settingBlock(newValue)
-        }
-    }
-
-    public func becomeFirstResponder() {}
-
-    public func resignFirstResponder() {}
-
-    public func validateFieldValue() throws {
-        if isRequired && fieldValue == nil {
-            throw WCFieldValidationError.missingValue(fieldName: fieldName)
-        }
-    }
-
-    public func formWillBeginEditing() {
-        previousValue = fieldValue
-    }
-
-    public func formDidCancelEditing() {
-        fieldValue = previousValue
-        if let settingBlock = onValueChange {
-            settingBlock(previousValue)
-        }
-        previousValue = nil
-    }
-
-    public func formDidFinishEditing() {
-        previousValue = nil
-    }
 
 }

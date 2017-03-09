@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// A protocol all form objects must conform to.
 public protocol WCFormObject {
 
 }

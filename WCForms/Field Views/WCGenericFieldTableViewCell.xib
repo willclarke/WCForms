@@ -43,7 +43,7 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="titleLabel" destination="Od5-34-zdt" id="s2e-O0-c3b"/>
+                <outlet property="fieldNameLabel" destination="Od5-34-zdt" id="s2e-O0-c3b"/>
                 <outlet property="valueLabel" destination="fuf-l5-xKu" id="eXI-Ax-c8S"/>
             </connections>
             <point key="canvasLocation" x="34" y="69.5"/>

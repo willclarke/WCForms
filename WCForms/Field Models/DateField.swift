@@ -8,10 +8,16 @@
 
 import Foundation
 
-public enum WCDateFieldAppearance: FieldCellLoadable {
+/// Appearance enum for date fields.
+///
+/// - stacked: The field name appears on a line above the field value.
+/// - rightDetail: The field value is on the right side of the cell, and the field name on the left.
+public enum WCDateFieldAppearance: FieldCellAppearance {
+
     case stacked
     case rightDetail
-    
+
+    /// The nib name for the read-only version of a field in this appearance.
     public var nibName: String {
         switch self {
         case .rightDetail:
@@ -20,7 +26,8 @@ public enum WCDateFieldAppearance: FieldCellLoadable {
             return "WCGenericFieldTableViewCell"
         }
     }
-    
+
+    /// The nib name for the editable version of a field in this appearance.
     public var editableNibName: String {
         switch self {
         case .rightDetail:
@@ -30,32 +37,57 @@ public enum WCDateFieldAppearance: FieldCellLoadable {
         }
     }
 
+    /// Always returns `true`, because a date field can always become first responder.
     public var canBecomeFirstResponder: Bool {
         return true
     }
-    
+
+    /// Returns `stacked`, the default date field appearance.
     public static var `default`: WCDateFieldAppearance {
         return WCDateFieldAppearance.stacked
     }
-    
+
+    /// Returns all values of the date field appearance.
     public static var allValues: [WCDateFieldAppearance] {
         return [.stacked, .rightDetail]
     }
+
 }
 
+/// A date field for a specific day.
 public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
+
+    /// Formatter to use to display the date to the user. By default, this will use a `dateStyle` of `DateFormatter.Style.medium` (and no `timeStyle`)
     public var dateDisplayFormatter = DateFormatter()
+
+    /// The minimum date allowed for the field value. A date before this date will generate a validation error when the user attempts to complete
+    /// the form. This date is also used to set the `minimumDate` of the UIDatePicker used to set the field. If this property is set to nil, no minimum date 
+    /// will be enforced.
     public var minimumDate: Date? = nil
+
+    /// The maximum date allowed for the field value. A date after this date will generate a validation error when the user attempts to complete
+    /// the form. This date is also used to set the `maximumDate` of the UIDatePicker used to set the field. If this property is set to nil, no maximum date
+    /// will be enforced.
     public var maximumDate: Date? = nil
+
+    /// Placeholder text to be set for the text field.
     public var placeholderText: String? = nil
+
+    /// The last loaded editable date field cell.
     weak var lastLoadedEditableCell: WCGenericTextFieldAndLabelCell? = nil
-    
+
+    /// Initializer that sets the initial date formatter style.
+    ///
+    /// - Parameter fieldName: A user facing, localized name for the field.
     public override init(fieldName: String) {
         super.init(fieldName: fieldName)
         dateDisplayFormatter.dateStyle = .medium
         dateDisplayFormatter.timeStyle = .none
     }
-    
+
+    /// Sets up the read-only version of the cell for this field.
+    ///
+    /// - Parameter cell: the table view cell.
     public override func setupCell(_ cell: UITableViewCell) {
         if isAbleToCopy && copyValue != nil {
             cell.selectionStyle = .default
@@ -64,7 +96,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
         }
 
         if let dateCell = cell as? WCGenericFieldTableViewCell {
-            dateCell.titleLabel.text = fieldName
+            dateCell.fieldNameLabel.text = fieldName
             if let dateValue = fieldValue {
                 dateCell.valueLabel.text = dateDisplayFormatter.string(from: dateValue)
             } else {
@@ -73,7 +105,10 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
         }
         lastLoadedEditableCell = nil
     }
-    
+
+    /// Sets up the editable version of the cell for this field.
+    ///
+    /// - Parameter cell: the table view cell.
     public override func setupEditableCell(_ cell: UITableViewCell) {
         if let editableDateCell = cell as? WCGenericTextFieldAndLabelCell {
             lastLoadedEditableCell = editableDateCell
@@ -96,18 +131,23 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
         }
     }
 
+    /// Attempt to make this field to become the first responder.
     public override func becomeFirstResponder() {
         if let lastLoadedEditableCell = lastLoadedEditableCell {
             lastLoadedEditableCell.fieldValueTextField.becomeFirstResponder()
         }
     }
 
+    /// Attempt to make this field resign its first responder status.
     public override func resignFirstResponder() {
         if let lastLoadedEditableCell = lastLoadedEditableCell {
             lastLoadedEditableCell.fieldValueTextField.resignFirstResponder()
         }
     }
 
+    /// Makes sure the value is set if it's required, and that the date is between `minimumDate` and `maximumDate` if they are set.
+    ///
+    /// - Throws: A `WCFieldValidationError` describing the first error in validating the field.
     public override func validateFieldValue() throws {
         if isRequired && fieldValue == nil {
             throw WCFieldValidationError.missingValue(fieldName: fieldName)
@@ -138,5 +178,5 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             }
         }
     }
-    
+
 }

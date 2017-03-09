@@ -8,11 +8,18 @@
 
 import Foundation
 
-public enum WCTextFieldAppearance: FieldCellLoadable {
+/// Appearance enum for text fields.
+///
+/// - stacked: The field name appears on a line above the field value.
+/// - rightDetail: The field value is on the right side of the cell, and the field name on the left.
+/// - fieldNameAsPlaceholder: The field name appears as the placeholder text when being edited. When in read-only mode, the field name is hidden.
+public enum WCTextFieldAppearance: FieldCellAppearance {
+
     case stacked
     case rightDetail
     case fieldNameAsPlaceholder
 
+    /// The nib name for the read-only version of a field in this appearance.
     public var nibName: String {
         switch self {
         case .rightDetail:
@@ -23,7 +30,8 @@ public enum WCTextFieldAppearance: FieldCellLoadable {
             return "WCGenericFieldTableViewCell"
         }
     }
-    
+
+    /// The nib name for the editable version of a field in this appearance.
     public var editableNibName: String {
         switch self {
         case .rightDetail:
@@ -35,30 +43,57 @@ public enum WCTextFieldAppearance: FieldCellLoadable {
         }
     }
 
+    /// Always returns `true`, because a text field can always become first responder.
     public var canBecomeFirstResponder: Bool {
         return true
     }
-    
+
+    /// Returns `stacked`, the default text field appearance.
     public static var `default`: WCTextFieldAppearance {
         return WCTextFieldAppearance.stacked
     }
-    
+
+    /// Returns all values of the text field appearance.
     public static var allValues: [WCTextFieldAppearance] {
         return [.stacked, .rightDetail, .fieldNameAsPlaceholder]
     }
+
 }
 
+/// A text field for a single line of text.
 public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
+
+    /// The minimum length allowed for the text. A string shorter than the minimum length will generate a validation error when the user attempts to complete 
+    /// the form. If this property is set to nil, no minimum length will be enforced.
     public var minimumLength: Int?
+
+    /// The maximum length allowed for the text. A string longer than the maximum length will generate a validation error when the user attempts to complete
+    /// the form. If this property is set to nil, no maximum length will be enforced.
     public var maximumLength: Int?
-    public var placeholderText: String? = nil
+
+    /// Placeholder text to be set for the text field.
+    public var placeholderText: String? = nil {
+        didSet {
+            if let validCell = lastLoadedEditableCell {
+                validCell.fieldValueTextField.placeholder = placeholderText
+            }
+        }
+    }
+
+    /// The last loaded editable text field cell.
     weak var lastLoadedEditableCell: WCGenericTextFieldTableViewCell? = nil
 
+    /// Sets up the read-only version of the cell for this field.
+    ///
+    /// - Parameter cell: the table view cell.
     public override func setupCell(_ cell: UITableViewCell) {
         super.setupCell(cell)
         lastLoadedEditableCell = nil
     }
 
+    /// Sets up the editable version of the cell for this field.
+    ///
+    /// - Parameter cell: the table view cell.
     public override func setupEditableCell(_ cell: UITableViewCell) {
         if let editableTextCell = cell as? WCGenericTextFieldTableViewCell {
             lastLoadedEditableCell = editableTextCell
@@ -77,18 +112,23 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
         }
     }
 
+    /// Attempt to make this field to become the first responder.
     public override func becomeFirstResponder() {
         if let lastLoadedEditableCell = lastLoadedEditableCell {
             lastLoadedEditableCell.fieldValueTextField.becomeFirstResponder()
         }
     }
 
+    /// Attempt to make this field resign its first responder status.
     public override func resignFirstResponder() {
         if let lastLoadedEditableCell = lastLoadedEditableCell {
             lastLoadedEditableCell.fieldValueTextField.resignFirstResponder()
         }
     }
 
+    /// Makes sure the value is set if it's required, and that the length is between `minimumLength` and `maximumLength` if they are set.
+    ///
+    /// - Throws: A `WCFieldValidationError` describing the first error in validating the field.
     public override func validateFieldValue() throws {
         if isRequired && (fieldValue == "" || fieldValue == nil) {
             throw WCFieldValidationError.missingValue(fieldName: fieldName)
@@ -110,4 +150,5 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
             }
         }
     }
+
 }

@@ -39,6 +39,7 @@
 		8AB50DBE1E6F935F0057C249 /* InputAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AB50DBD1E6F935F0057C249 /* InputAccessoryView.xib */; };
 		8AB50DC01E6F953B0057C249 /* Icons.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AB50DBF1E6F953B0057C249 /* Icons.xcassets */; };
 		8AB50DC21E704F350057C249 /* InputAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB50DC11E704F350057C249 /* InputAccessoryView.swift */; };
+		8AB50DC41E717E9D0057C249 /* GenericField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB50DC31E717E9D0057C249 /* GenericField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -76,6 +77,7 @@
 		8AB50DBD1E6F935F0057C249 /* InputAccessoryView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = InputAccessoryView.xib; sourceTree = "<group>"; };
 		8AB50DBF1E6F953B0057C249 /* Icons.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Icons.xcassets; sourceTree = "<group>"; };
 		8AB50DC11E704F350057C249 /* InputAccessoryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputAccessoryView.swift; sourceTree = "<group>"; };
+		8AB50DC31E717E9D0057C249 /* GenericField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = GenericField.swift; path = "Field Models/GenericField.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +95,7 @@
 			isa = PBXGroup;
 			children = (
 				8A9FA4051E676C1800C16C26 /* WCFields.swift */,
+				8AB50DC31E717E9D0057C249 /* GenericField.swift */,
 				8A3907BF1E6BC24200BE1A20 /* TextField.swift */,
 				8A3907BD1E6BC22300BE1A20 /* BoolField.swift */,
 				8A3907C11E6BC25000BE1A20 /* DateField.swift */,
@@ -264,6 +267,7 @@
 				8A4BA4921E68F80B004F7089 /* WCIntFieldSliderTableViewCell.swift in Sources */,
 				8A3907C01E6BC24200BE1A20 /* TextField.swift in Sources */,
 				8AB1901E1E64637D00AE13AF /* WCFormController.swift in Sources */,
+				8AB50DC41E717E9D0057C249 /* GenericField.swift in Sources */,
 				8A3907C41E6BC26000BE1A20 /* IntField.swift in Sources */,
 				8AB190201E64667C00AE13AF /* FormProtocols.swift in Sources */,
 				8A9FA4091E67969F00C16C26 /* WCBoolFieldTableViewCell.swift in Sources */,

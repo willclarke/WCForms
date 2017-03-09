@@ -8,11 +8,18 @@
 
 import UIKit
 
+/// A table view cell for an editable boolean field with the `stacked` appearance.
 public class WCBoolFieldStackedTableViewCell: WCBoolFieldTableViewCell {
 
+    /// The label displaying the off label.
     @IBOutlet weak var offDisplayValueLabel: UILabel!
+
+    /// The label displaying the on label.
     @IBOutlet weak var onDisplayValueLabel: UILabel!
 
+    /// IBAction for when the switch value changes.
+    ///
+    /// - Parameter sender: The switch that changed.
     @IBAction override func switchValueChanged(_ sender: UISwitch) {
         if sender.isOn {
             onDisplayValueLabel.textColor = UIColor.darkGray

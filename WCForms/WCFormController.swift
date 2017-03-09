@@ -8,14 +8,26 @@
 
 import UIKit
 
+/// The mode that the form controller is in. This is inferred based on the viewMode and editMode variables, which can be set in Interface Builder.
+///
+/// - `default`: The form controller supports view and edit mode.
+/// - readOnly: The form controller only supports view mode.
+/// - editableOnly: The form controller only supports edit mode.
 public enum WCFormControllerMode {
     case `default`
     case readOnly
     case editableOnly
 }
 
-open class WCFormController: UITableViewController {
+// MARK: - WCFormController class definition
 
+/// A UITableViewController that displays a WCForm
+open class WCFormController: UITableViewController {
+    
+    // MARK: - IBInspectable properties
+
+    /// Whether or not the form supports the view (AKA read-only) mode. If both viewMode and editMode are false, the controller will treat the form as if it
+    /// is in read-only mode, because you can't have a form that supports neither. This can only be set before a view loads.
     @IBInspectable public var viewMode: Bool = true {
         didSet {
             if isViewLoaded {
@@ -24,6 +36,8 @@ open class WCFormController: UITableViewController {
             }
         }
     }
+
+    /// Whether or not the form supports the edit mode. This can only be set before a view loads.
     @IBInspectable public var editMode: Bool = true {
         didSet {
             if isViewLoaded {
@@ -32,6 +46,8 @@ open class WCFormController: UITableViewController {
             }
         }
     }
+
+    /// The title that should appear on the right bar button when the form is being edited.
     @IBInspectable public var doneButtonTitle: String? = nil {
         didSet {
             if let validTitle = doneButtonTitle {
@@ -41,7 +57,12 @@ open class WCFormController: UITableViewController {
             }
         }
     }
+
+    /// Whether or not the form should attempt to validate fields and display errors when the user taps the done button.
     @IBInspectable public var validateForm: Bool = true
+
+    /// Whether or not the user can cancel editing the form. Canceling will check for any changes to the form and prompt the user to discard them. This can 
+    /// only be set before a view loads.
     @IBInspectable public var canCancel: Bool = true {
         didSet {
             if isViewLoaded {
@@ -51,16 +72,10 @@ open class WCFormController: UITableViewController {
         }
     }
 
-    private var formMode: WCFormControllerMode {
-        if viewMode && !editMode {
-            return .readOnly
-        } else if !viewMode && editMode {
-            return .editableOnly
-        } else {
-            return .default
-        }
-    }
 
+    // MARK: - Instance variables
+
+    /// The form that the controller displays.
     public var formModel: WCForm? = nil {
         didSet {
             registerNibsForModel()
@@ -71,14 +86,46 @@ open class WCFormController: UITableViewController {
                 navigationItem.title = formTitle
             }
             formModel?.formController = self
+            if isViewLoaded && oldValue != nil {
+                tableView.reloadData()
+            }
         }
     }
+
+
+    // MARK: - Private instance variables
+
+    /// A computed property for the controller mode based on the `viewMode` and `editMode` booleans.
+    private var formMode: WCFormControllerMode {
+        if viewMode && editMode {
+            return .default
+        } else if !viewMode && editMode {
+            return .editableOnly
+        } else {
+            return .readOnly
+        }
+    }
+
+    /// A bar button item for canceling the form.
     private var cancelEditingFormButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: nil, action: nil)
+
+    /// A bar button item for editing the form.
     private var editFormButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: nil, action: nil)
+
+    /// A bar button item for completing editing a form.
     private var doneEditingFormButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: nil, action: nil)
+
+    /// Storage for previous right bar button items while a form is editing. These should be restored after the form is done editing.
     private var previousRightBarButtonItems: [UIBarButtonItem]? = nil
+
+    /// Storage for previous left bar button items while a form is editing. These should be restored after the form is done editing.
     private var previousLeftBarButtonItems: [UIBarButtonItem]? = nil
+
+    /// Storage for the previous `leftItemsSupplementBackButton` setting for while a form is editing.  This should be restored after the form is done editing.
     private var previousLeftItemsSupplementBackButtonSetting: Bool = false
+
+
+    // MARK: - View lifecycle methods
 
     override open func viewDidLoad() {
         if formMode == .editableOnly {
@@ -130,6 +177,7 @@ open class WCFormController: UITableViewController {
         super.didReceiveMemoryWarning()
     }
 
+
     // MARK: - Table view data source
 
     override open func numberOfSections(in tableView: UITableView) -> Int {
@@ -160,208 +208,23 @@ open class WCFormController: UITableViewController {
         }
     }
 
-    open override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
-        return UITableViewCellEditingStyle.none
-    }
-
-    open override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
-    }
-
-    override final public func setEditing(_ editing: Bool, animated: Bool) {
-        guard let formModel = formModel, isEditing != editing else {
-            super.setEditing(editing, animated: animated)
-            return
-        }
-        super.setEditing(editing, animated: animated)
-
-        if formMode == .default {
-            var sectionsToInsert = IndexSet()
-            var sectionsToDelete = IndexSet()
-            var indexPathsToReload = [IndexPath]()
-            var indexPathsToInsert = [IndexPath]()
-            var indexPathsToDelete = [IndexPath]()
-            
-            var currentVisibleSectionIndex = 0
-            var formerVisibleSectionIndex = 0
-            for section in formModel.formSections {
-                let sectionIsVisible = section.isVisible(whenEditingForm: editing)
-                let sectionWasVisible = section.isVisible(whenEditingForm: !editing)
-                if sectionIsVisible && !sectionWasVisible {
-                    //section is now visible but wasn't before, we want to add it
-                    sectionsToInsert.insert(formerVisibleSectionIndex)
-                } else if !sectionIsVisible && sectionWasVisible {
-                    //section was visible but isn't now, we want to delete it
-                    sectionsToDelete.insert(formerVisibleSectionIndex)
-                }
-                if sectionIsVisible {
-                    var formerVisibleFieldIndex = 0
-                    var currentVisibleFieldIndex = 0
-                    for field in section.formFields {
-                        let fieldIsVisible = field.isVisible(whenEditingForm: editing)
-                        let fieldWasVisible = field.isVisible(whenEditingForm: !editing)
-                        if fieldIsVisible && !fieldWasVisible {
-                            //field is visible but wasn't before, we want to insert it
-                            indexPathsToInsert.append(IndexPath(row: formerVisibleFieldIndex, section: formerVisibleSectionIndex))
-                        } else if !fieldIsVisible && fieldWasVisible {
-                            //field was visible but isn't now, we want to delete it
-                            indexPathsToDelete.append(IndexPath(row: formerVisibleFieldIndex, section: formerVisibleSectionIndex))
-                        } else if fieldIsVisible && fieldWasVisible && field.isEditable {
-                            indexPathsToReload.append(IndexPath(row: currentVisibleFieldIndex, section: currentVisibleSectionIndex))
-                        }
-                        if fieldIsVisible {
-                            currentVisibleFieldIndex += 1
-                        }
-                        if fieldWasVisible {
-                            formerVisibleFieldIndex += 1
-                        }
-                    }
-                    currentVisibleSectionIndex += 1
-                }
-                if sectionWasVisible {
-                    formerVisibleSectionIndex += 1
-                }
-            }
-            tableView.beginUpdates()
-            tableView.insertRows(at: indexPathsToInsert, with: .left)
-            tableView.deleteRows(at: indexPathsToDelete, with: .left)
-            tableView.insertSections(sectionsToInsert, with: .left)
-            tableView.deleteSections(sectionsToDelete, with: .left)
-            tableView.endUpdates()
-            
-            tableView.beginUpdates()
-            tableView.reloadRows(at: indexPathsToReload, with: .fade)
-            tableView.endUpdates()
-        }
-    }
-
-    final func editFormButtonTapped(_ sender: UIBarButtonItem) {
-        guard isEditing == false else {
-            return
-        }
-        guard let formModel = formModel else {
-            return
-        }
-        previousRightBarButtonItems = navigationItem.rightBarButtonItems
-        previousLeftBarButtonItems = navigationItem.leftBarButtonItems
-        previousLeftItemsSupplementBackButtonSetting = navigationItem.leftItemsSupplementBackButton
-        navigationItem.leftItemsSupplementBackButton = false
-        navigationItem.setLeftBarButtonItems([cancelEditingFormButtonItem], animated: true)
-        navigationItem.setRightBarButtonItems([doneEditingFormButtonItem], animated: true)
-        formModel.beginEditing()
-        setEditing(true, animated: true)
-    }
-
-    final func doneEditingFormButtonTapped(_ sender: UIBarButtonItem) {
-        guard isEditing == true else {
-            return
-        }
-        guard let formModel = formModel else {
-            return
-        }
-        view.endEditing(true)
-        if validateForm {
-            if let firstError = formModel.firstValidationError() {
-                displayFormValidationError(for: firstError)
-                return
-            }
-        }
-        if formMode == .editableOnly {
-            doneEditingFormButtonItem.isEnabled = false
-            if formShouldFinishEditing() {
-                formModel.finishEditing()
-                doneEditingFormButtonItem.isEnabled = true
-                formDidFinishEditing()
-                formModel.beginEditing()
-            } else {
-                doneEditingFormButtonItem.isEnabled = true
-            }
-        } else if formMode == .default {
-            doneEditingFormButtonItem.isEnabled = false
-            if formShouldFinishEditing() {
-                formModel.finishEditing()
-                doneEditingFormButtonItem.isEnabled = true
-                formDidFinishEditing()
-                restoreBarButtonsAfterCompletion()
-                setEditing(false, animated: true)
-            } else {
-                doneEditingFormButtonItem.isEnabled = true
-            }
-        }
-    }
-
-    open func formShouldFinishEditing() -> Bool {
-        return true
-    }
-
-    open func formDidFinishEditing() { }
-
-    open func formDidCancelEditing() { }
-
-    final func cancelEditingButtonTapped(_ sender: UIBarButtonItem) {
-        guard isEditing else {
-            return
-        }
-        guard let formModel = formModel else {
-            return
-        }
-        view.endEditing(true)
-        if formModel.hasFieldChanges {
-            let confirmationTitle = NSLocalizedString("Are you sure?",
-                                                      tableName: "WCForms",
-                                                      comment: "Error message title to confirm a destructive action")
-            let confirmationMessage = NSLocalizedString("You have made changes. Do you want to discard them?",
-                                                        tableName: "WCForms",
-                                                        comment: "Message to the user to confirm a destructive action")
-            let confirmationAlert = UIAlertController(title: confirmationTitle, message: confirmationMessage, preferredStyle: .alert)
-            let cancelTitle = NSLocalizedString("No, Keep Editing", tableName: "WCForms", comment: "Action to keep editing a form")
-            let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel, handler: nil)
-            let discardTitle = NSLocalizedString("Yes, Discard", tableName: "WCForms", comment: "Action stop editing a form and discard changes")
-            let discardAction = UIAlertAction(title: discardTitle, style: .destructive, handler: { (action: UIAlertAction) in
-                if self.formMode == .default {
-                    self.restoreBarButtonsAfterCompletion()
-                    formModel.cancelEditing()
-                    self.formDidCancelEditing()
-                    self.setEditing(false, animated: true)
-                } else if self.formMode == .editableOnly {
-                    formModel.cancelEditing()
-                    self.formDidCancelEditing()
-                    self.tableView.reloadData()
-                    formModel.beginEditing()
-                }
-            })
-            confirmationAlert.addAction(discardAction)
-            confirmationAlert.addAction(cancelAction)
-            present(confirmationAlert, animated: true, completion: nil)
-        } else {
-            if formMode == .default {
-                restoreBarButtonsAfterCompletion()
-                formModel.cancelEditing()
-                formDidCancelEditing()
-                setEditing(false, animated: true)
-            } else if formMode == .editableOnly {
-                formModel.cancelEditing()
-                formDidCancelEditing()
-                formModel.beginEditing()
-            }
-        }
-    }
-    
-    private func restoreBarButtonsAfterCompletion() {
-        navigationItem.leftItemsSupplementBackButton = previousLeftItemsSupplementBackButtonSetting
-        previousLeftItemsSupplementBackButtonSetting = false
-        navigationItem.setLeftBarButtonItems(previousLeftBarButtonItems, animated: true)
-        previousLeftBarButtonItems = nil
-        navigationItem.setRightBarButtonItems(previousRightBarButtonItems, animated: true)
-        previousRightBarButtonItems = nil
-    }
-
     open override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return formModel?.section(forVisibleSection: section, whenEditingForm: isEditing)?.headerTitle
     }
 
     open override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
         return formModel?.section(forVisibleSection: section, whenEditingForm: isEditing)?.footerTitle
+    }
+
+
+    // MARK: - Table view delegate
+
+    open override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.none
+    }
+
+    open override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
 
     open override func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
@@ -425,7 +288,217 @@ open class WCFormController: UITableViewController {
         }
     }
 
-    func registerNibsForModel() {
+
+    // MARK: - Override superclass editing
+
+    override final public func setEditing(_ editing: Bool, animated: Bool) {
+        guard let formModel = formModel, isEditing != editing else {
+            super.setEditing(editing, animated: animated)
+            return
+        }
+        super.setEditing(editing, animated: animated)
+
+        if formMode == .default {
+            var sectionsToInsert = IndexSet()
+            var sectionsToDelete = IndexSet()
+            var indexPathsToReload = [IndexPath]()
+            var indexPathsToInsert = [IndexPath]()
+            var indexPathsToDelete = [IndexPath]()
+            
+            var currentVisibleSectionIndex = 0
+            var formerVisibleSectionIndex = 0
+            for section in formModel.formSections {
+                let sectionIsVisible = section.isVisible(whenEditingForm: editing)
+                let sectionWasVisible = section.isVisible(whenEditingForm: !editing)
+                if sectionIsVisible && !sectionWasVisible {
+                    //section is now visible but wasn't before, we want to add it
+                    sectionsToInsert.insert(formerVisibleSectionIndex)
+                } else if !sectionIsVisible && sectionWasVisible {
+                    //section was visible but isn't now, we want to delete it
+                    sectionsToDelete.insert(formerVisibleSectionIndex)
+                }
+                if sectionIsVisible {
+                    var formerVisibleFieldIndex = 0
+                    var currentVisibleFieldIndex = 0
+                    for field in section.formFields {
+                        let fieldIsVisible = field.isVisible(whenEditingForm: editing)
+                        let fieldWasVisible = field.isVisible(whenEditingForm: !editing)
+                        if fieldIsVisible && !fieldWasVisible {
+                            //field is visible but wasn't before, we want to insert it
+                            indexPathsToInsert.append(IndexPath(row: formerVisibleFieldIndex, section: formerVisibleSectionIndex))
+                        } else if !fieldIsVisible && fieldWasVisible {
+                            //field was visible but isn't now, we want to delete it
+                            indexPathsToDelete.append(IndexPath(row: formerVisibleFieldIndex, section: formerVisibleSectionIndex))
+                        } else if fieldIsVisible && fieldWasVisible && field.isEditable {
+                            indexPathsToReload.append(IndexPath(row: currentVisibleFieldIndex, section: currentVisibleSectionIndex))
+                        }
+                        if fieldIsVisible {
+                            currentVisibleFieldIndex += 1
+                        }
+                        if fieldWasVisible {
+                            formerVisibleFieldIndex += 1
+                        }
+                    }
+                    currentVisibleSectionIndex += 1
+                }
+                if sectionWasVisible {
+                    formerVisibleSectionIndex += 1
+                }
+            }
+            tableView.beginUpdates()
+            tableView.insertRows(at: indexPathsToInsert, with: .middle)
+            tableView.deleteRows(at: indexPathsToDelete, with: .middle)
+            tableView.insertSections(sectionsToInsert, with: .middle)
+            tableView.deleteSections(sectionsToDelete, with: .middle)
+            tableView.endUpdates()
+            
+            tableView.beginUpdates()
+            tableView.reloadRows(at: indexPathsToReload, with: .fade)
+            tableView.endUpdates()
+        }
+    }
+
+
+    // MARK: - Target actions for buttons
+
+    final func editFormButtonTapped(_ sender: UIBarButtonItem) {
+        guard isEditing == false else {
+            return
+        }
+        guard let formModel = formModel else {
+            return
+        }
+        previousRightBarButtonItems = navigationItem.rightBarButtonItems
+        previousLeftBarButtonItems = navigationItem.leftBarButtonItems
+        previousLeftItemsSupplementBackButtonSetting = navigationItem.leftItemsSupplementBackButton
+        navigationItem.leftItemsSupplementBackButton = false
+        navigationItem.setLeftBarButtonItems([cancelEditingFormButtonItem], animated: true)
+        navigationItem.setRightBarButtonItems([doneEditingFormButtonItem], animated: true)
+        formModel.beginEditing()
+        setEditing(true, animated: true)
+    }
+
+    final func doneEditingFormButtonTapped(_ sender: UIBarButtonItem) {
+        guard isEditing == true else {
+            return
+        }
+        guard let formModel = formModel else {
+            return
+        }
+        view.endEditing(true)
+        if validateForm {
+            if let firstError = formModel.firstValidationError() {
+                displayFormValidationError(for: firstError)
+                return
+            }
+        }
+        if formMode == .editableOnly {
+            doneEditingFormButtonItem.isEnabled = false
+            if formShouldFinishEditing() {
+                formModel.finishEditing()
+                doneEditingFormButtonItem.isEnabled = true
+                formDidFinishEditing()
+                formModel.beginEditing()
+            } else {
+                doneEditingFormButtonItem.isEnabled = true
+            }
+        } else if formMode == .default {
+            doneEditingFormButtonItem.isEnabled = false
+            if formShouldFinishEditing() {
+                formModel.finishEditing()
+                doneEditingFormButtonItem.isEnabled = true
+                formDidFinishEditing()
+                restoreBarButtonsAfterCompletion()
+                setEditing(false, animated: true)
+            } else {
+                doneEditingFormButtonItem.isEnabled = true
+            }
+        }
+    }
+
+    final func cancelEditingButtonTapped(_ sender: UIBarButtonItem) {
+        guard isEditing else {
+            return
+        }
+        guard let formModel = formModel else {
+            return
+        }
+        view.endEditing(true)
+        if formModel.hasFieldChanges {
+            let confirmationTitle = NSLocalizedString("Are you sure?",
+                                                      tableName: "WCForms",
+                                                      comment: "Error message title to confirm a destructive action")
+            let confirmationMessage = NSLocalizedString("You have made changes. Do you want to discard them?",
+                                                        tableName: "WCForms",
+                                                        comment: "Message to the user to confirm a destructive action")
+            let confirmationAlert = UIAlertController(title: confirmationTitle, message: confirmationMessage, preferredStyle: .alert)
+            let cancelTitle = NSLocalizedString("No, Keep Editing", tableName: "WCForms", comment: "Action to keep editing a form")
+            let cancelAction = UIAlertAction(title: cancelTitle, style: .cancel, handler: nil)
+            let discardTitle = NSLocalizedString("Yes, Discard", tableName: "WCForms", comment: "Action stop editing a form and discard changes")
+            let discardAction = UIAlertAction(title: discardTitle, style: .destructive, handler: { (action: UIAlertAction) in
+                if self.formMode == .default {
+                    self.restoreBarButtonsAfterCompletion()
+                    formModel.cancelEditing()
+                    self.formDidCancelEditing()
+                    self.setEditing(false, animated: true)
+                } else if self.formMode == .editableOnly {
+                    formModel.cancelEditing()
+                    self.formDidCancelEditing()
+                    self.tableView.reloadData()
+                    formModel.beginEditing()
+                }
+            })
+            confirmationAlert.addAction(discardAction)
+            confirmationAlert.addAction(cancelAction)
+            present(confirmationAlert, animated: true, completion: nil)
+        } else {
+            if formMode == .default {
+                restoreBarButtonsAfterCompletion()
+                formModel.cancelEditing()
+                formDidCancelEditing()
+                setEditing(false, animated: true)
+            } else if formMode == .editableOnly {
+                formModel.cancelEditing()
+                formDidCancelEditing()
+                formModel.beginEditing()
+            }
+        }
+    }
+
+
+    // MARK: - Override point for subclasses to handle form actions
+
+    /// Called after the user taps the completion button to make sure the form should finish editing. Be default, it always returns true - override it and
+    /// return false to stop the form from finishing editing. It's recommended that you also display some from of error view to the user to let them know why
+    /// the form could not finish editing. Feel free to block this and wait on a web service call to complete before returning true or false.
+    ///
+    /// - Returns: true if the form should finish editing, and false if not.
+    open func formShouldFinishEditing() -> Bool {
+        return true
+    }
+
+    /// Called after a form finishes editing. If validateForm is set to true, this means all field validation passed. Override this to perform some action 
+    /// after completing, like dismissing the view.
+    open func formDidFinishEditing() { }
+    
+    /// Called after a form cancels editing. If changes were made to the form, the user was asked to confirm discarding any changes. Override this to perform 
+    /// some action after completing, like dismissing the view.
+    open func formDidCancelEditing() { }
+
+
+    // MARK: - Functions for updating UI
+
+    private func restoreBarButtonsAfterCompletion() {
+        navigationItem.leftItemsSupplementBackButton = previousLeftItemsSupplementBackButtonSetting
+        previousLeftItemsSupplementBackButtonSetting = false
+        navigationItem.setLeftBarButtonItems(previousLeftBarButtonItems, animated: true)
+        previousLeftBarButtonItems = nil
+        navigationItem.setRightBarButtonItems(previousRightBarButtonItems, animated: true)
+        previousRightBarButtonItems = nil
+    }
+
+
+    private func registerNibsForModel() {
         guard let formModel = formModel else {
             return
         }
@@ -436,7 +509,7 @@ open class WCFormController: UITableViewController {
         }
     }
 
-    func displayFormValidationError(for formError: WCFormValidationError) {
+    private func displayFormValidationError(for formError: WCFormValidationError) {
         var errorTitle = NSLocalizedString("Error:", tableName: "WCForms", comment: "An error that has occurred. What follows the colon is a field name")
         errorTitle += " \(formError.field.fieldName)"
         let errorAlert = UIAlertController(title: errorTitle, message: formError.error, preferredStyle: .alert)
