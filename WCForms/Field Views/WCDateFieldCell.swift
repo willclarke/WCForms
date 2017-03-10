@@ -12,7 +12,7 @@ import UIKit
 public class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
 
     /// A picker view to use as the inputView for the text field's keyboard.
-    public var datePickerKeyboard = UIDatePicker()
+    public var datePickerKeyboard = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 320.0, height: 162.0))
 
     /// A formatter to use to format the date value in the text field.
     public var dateDisplayFormatter = DateFormatter()
@@ -35,6 +35,7 @@ public class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
         fieldValueTextField.tintColor = UIColor.clear
         datePickerKeyboard.datePickerMode = .date
         datePickerKeyboard.addTarget(self, action: #selector(dateChanged(sender:)), for: UIControlEvents.valueChanged)
+        datePickerKeyboard.autoresizingMask = .flexibleWidth
         fieldValueTextField.inputView = datePickerKeyboard
     }
 
