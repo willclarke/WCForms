@@ -26,6 +26,15 @@ public protocol FieldCellAppearance {
     /// Whether or not this field cell appearance can become first responder.
     var canBecomeFirstResponder: Bool { get }
 
+    /// The preferred color for field names in this appearance. Defaults to `UIColor.black`
+    var preferredFieldNameColor: UIColor { get }
+
+    /// The preferred color for field values in this appearance. Defaults to `UIColor.darkGray`
+    var preferredFieldValueColor: UIColor { get }
+
+    /// The preferred color for field values when they are empty in this appearance. Defaults to `UIColor.lightGray`
+    var preferredEmptyFieldValueColor: UIColor { get }
+
     /// The default field cell appearance for this field.
     static var `default`: Self { get }
 
@@ -44,6 +53,21 @@ public extension FieldCellAppearance {
     /// By default, return the field cell appearance's `editableNibName`.
     public var editableCellIdentifier: String {
         return self.editableNibName
+    }
+
+    /// The preferred color for field names in this appearance. Defaults to `UIColor.black`
+    var preferredFieldNameColor: UIColor {
+        return UIColor.black
+    }
+
+    /// The preferred color for field values in this appearance. Defaults to `UIColor.darkGray`
+    var preferredFieldValueColor: UIColor {
+        return UIColor.darkGray
+    }
+
+    /// The preferred color for field values when they are empty in this appearance. Defaults to `UIColor.lightGray`
+    var preferredEmptyFieldValueColor: UIColor {
+        return UIColor.lightGray
     }
 
 }
@@ -341,7 +365,6 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellAppea
     ///
     /// - Parameter cell: The UITableViewCell for the field.
     public func setupCell(_ cell: UITableViewCell) {
-        var setValueTextColor = UIColor.black
         if isAbleToCopy && copyValue != nil {
             cell.selectionStyle = .default
         } else {
@@ -349,20 +372,20 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellAppea
         }
         
         if let readOnlyCell = cell as? WCGenericFieldWithFieldNameCell {
-            setValueTextColor = UIColor.darkGray
+            readOnlyCell.fieldNameLabel.textColor = appearance.preferredFieldNameColor
             readOnlyCell.fieldNameLabel.text = fieldName
         }
         if let readOnlyCell = cell as? WCGenericFieldCell {
             if let stringConvertableValue = fieldValue as? CustomStringConvertible {
                 if stringConvertableValue.description != "" {
-                    readOnlyCell.valueLabel.textColor = setValueTextColor
+                    readOnlyCell.valueLabel.textColor = appearance.preferredFieldValueColor
                     readOnlyCell.valueLabel.text = stringConvertableValue.description
                 } else {
-                    readOnlyCell.valueLabel.textColor = UIColor.lightText
+                    readOnlyCell.valueLabel.textColor = appearance.preferredEmptyFieldValueColor
                     readOnlyCell.valueLabel.text = NSLocalizedString("None", tableName: "WCForms", comment: "Displayed when there is no value for a field")
                 }
             } else {
-                readOnlyCell.valueLabel.textColor = UIColor.lightText
+                readOnlyCell.valueLabel.textColor = appearance.preferredEmptyFieldValueColor
                 readOnlyCell.valueLabel.text = NSLocalizedString("None", tableName: "WCForms", comment: "Displayed when there is no value for a field")
             }
         }

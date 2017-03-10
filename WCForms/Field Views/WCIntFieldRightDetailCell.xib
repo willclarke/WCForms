@@ -21,13 +21,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fja-kj-Tuy">
-                        <rect key="frame" x="16" y="9" width="101" height="24"/>
+                        <rect key="frame" x="16" y="10" width="101" height="23"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="asZ-fj-X1f">
-                        <rect key="frame" x="125" y="9" width="179" height="24"/>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="asZ-fj-X1f">
+                        <rect key="frame" x="125" y="10" width="179" height="23"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
@@ -39,13 +39,13 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="asZ-fj-X1f" firstAttribute="width" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.3" id="2d0-np-nXs"/>
-                    <constraint firstItem="Fja-kj-Tuy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="2tB-Ph-WnJ"/>
+                    <constraint firstItem="Fja-kj-Tuy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="2tB-Ph-WnJ"/>
                     <constraint firstItem="asZ-fj-X1f" firstAttribute="top" secondItem="Fja-kj-Tuy" secondAttribute="top" id="8sJ-0t-9wj"/>
                     <constraint firstItem="asZ-fj-X1f" firstAttribute="leading" secondItem="Fja-kj-Tuy" secondAttribute="trailing" constant="8" id="QsT-lM-6t9"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="asZ-fj-X1f" secondAttribute="trailing" constant="8" id="T7g-Ey-rcb"/>
                     <constraint firstItem="Fja-kj-Tuy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="Y1W-qD-cvh"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Fja-kj-Tuy" secondAttribute="bottom" constant="2.5" id="gGb-LQ-LZH"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Fja-kj-Tuy" secondAttribute="bottom" constant="2" id="gGb-LQ-LZH"/>
                     <constraint firstItem="asZ-fj-X1f" firstAttribute="bottom" secondItem="Fja-kj-Tuy" secondAttribute="bottom" id="lWl-qF-0Qx"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="asZ-fj-X1f" secondAttribute="trailing" constant="8" id="yVC-bp-vWU"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

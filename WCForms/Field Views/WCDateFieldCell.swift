@@ -17,6 +17,9 @@ public class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
     /// A formatter to use to format the date value in the text field.
     public var dateDisplayFormatter = DateFormatter()
 
+    /// The color to make the date text when the field is not active.
+    public var inactiveValueColor: UIColor = UIColor.darkGray
+
     /// A delegate to handle actions when the field changes.
     weak var delegate: WCDateField? = nil
 
@@ -70,7 +73,7 @@ public class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
     ///   - textField: The text field that ended editing.
     ///   - reason: The reason the text field ended editing.
     public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
-        fieldValueTextField.textColor = UIColor.darkGray
+        fieldValueTextField.textColor = inactiveValueColor
     }
 
 }

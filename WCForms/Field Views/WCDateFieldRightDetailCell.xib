@@ -21,13 +21,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPZ-3F-equ">
-                        <rect key="frame" x="16" y="9" width="101" height="24"/>
+                        <rect key="frame" x="16" y="10" width="101" height="23"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="p9Y-L1-saY">
-                        <rect key="frame" x="125" y="9" width="179" height="24"/>
+                        <rect key="frame" x="125" y="10" width="179" height="23"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits"/>
@@ -39,13 +39,13 @@
                 </subviews>
                 <constraints>
                     <constraint firstItem="p9Y-L1-saY" firstAttribute="bottom" secondItem="QPZ-3F-equ" secondAttribute="bottom" id="Giu-gI-dD1"/>
-                    <constraint firstItem="QPZ-3F-equ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="Juz-Cd-Vw5"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="QPZ-3F-equ" secondAttribute="bottom" constant="2.5" id="Vdl-Bm-ew3"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="p9Y-L1-saY" secondAttribute="trailing" constant="8" id="ae7-Jp-8FN"/>
+                    <constraint firstItem="QPZ-3F-equ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="Juz-Cd-Vw5"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="QPZ-3F-equ" secondAttribute="bottom" constant="2" id="Vdl-Bm-ew3"/>
                     <constraint firstItem="p9Y-L1-saY" firstAttribute="top" secondItem="QPZ-3F-equ" secondAttribute="top" id="hXt-fk-pEe"/>
                     <constraint firstItem="QPZ-3F-equ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="iok-0e-FUm"/>
                     <constraint firstItem="p9Y-L1-saY" firstAttribute="width" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.5" id="jn6-5g-zYA"/>
                     <constraint firstItem="p9Y-L1-saY" firstAttribute="leading" secondItem="QPZ-3F-equ" secondAttribute="trailing" constant="8" id="vAT-G3-hTd"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="p9Y-L1-saY" secondAttribute="trailing" constant="8" id="zlK-n5-WeS"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

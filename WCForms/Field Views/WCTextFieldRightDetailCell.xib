@@ -20,14 +20,8 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="APK-RQ-ZuN">
-                        <rect key="frame" x="16" y="9" width="101" height="24"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CdT-Li-LuC">
-                        <rect key="frame" x="125" y="9" width="179" height="24"/>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="CdT-Li-LuC">
+                        <rect key="frame" x="125" y="10" width="179" height="23"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" returnKeyType="done"/>
@@ -36,16 +30,22 @@
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="Kds-Yk-GWG"/>
                         </connections>
                     </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="APK-RQ-ZuN">
+                        <rect key="frame" x="16" y="10" width="101" height="23"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="CdT-Li-LuC" firstAttribute="leading" secondItem="APK-RQ-ZuN" secondAttribute="trailing" constant="8" id="8ry-d8-f70"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="CdT-Li-LuC" secondAttribute="trailing" constant="8" id="N0J-9T-7Xh"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="CdT-Li-LuC" secondAttribute="trailing" constant="8" id="BGK-6G-8Bb"/>
+                    <constraint firstItem="APK-RQ-ZuN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="Lho-CO-bdB"/>
                     <constraint firstItem="CdT-Li-LuC" firstAttribute="width" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.5" id="Ns1-l7-PGn"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="APK-RQ-ZuN" secondAttribute="bottom" constant="2.5" id="QRF-xH-0Je"/>
                     <constraint firstItem="APK-RQ-ZuN" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="UVN-Be-o2f"/>
                     <constraint firstItem="CdT-Li-LuC" firstAttribute="bottom" secondItem="APK-RQ-ZuN" secondAttribute="bottom" id="VaX-hd-myz"/>
-                    <constraint firstItem="APK-RQ-ZuN" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="ZTI-t8-27E"/>
                     <constraint firstItem="CdT-Li-LuC" firstAttribute="top" secondItem="APK-RQ-ZuN" secondAttribute="top" id="hvA-qG-Jl9"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="APK-RQ-ZuN" secondAttribute="bottom" constant="2" id="kOg-Rj-LKy"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

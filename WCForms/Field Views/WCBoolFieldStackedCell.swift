@@ -22,11 +22,11 @@ public class WCBoolFieldStackedCell: WCBoolFieldCell {
     /// - Parameter sender: The switch that changed.
     @IBAction override func switchValueChanged(_ sender: UISwitch) {
         if sender.isOn {
-            onDisplayValueLabel.textColor = UIColor.darkGray
+            onDisplayValueLabel.textColor = offDisplayValueLabel.textColor
             offDisplayValueLabel.textColor = UIColor.lightGray
         } else {
+            offDisplayValueLabel.textColor = onDisplayValueLabel.textColor
             onDisplayValueLabel.textColor = UIColor.lightGray
-            offDisplayValueLabel.textColor = UIColor.darkGray
         }
         delegate?.viewDidUpdateValue(newValue: sender.isOn)
     }

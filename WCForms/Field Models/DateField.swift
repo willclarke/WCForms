@@ -15,6 +15,7 @@ import Foundation
 public enum WCDateFieldAppearance: FieldCellAppearance {
 
     case stacked
+    case stackedCaption
     case rightDetail
 
     /// The nib name for the read-only version of a field in this appearance.
@@ -24,6 +25,8 @@ public enum WCDateFieldAppearance: FieldCellAppearance {
             return "WCGenericFieldRightDetailTableViewCell"
         case .stacked:
             return "WCGenericFieldStackedCell"
+        case .stackedCaption:
+            return "WCGenericFieldStackedCaptionCell"
         }
     }
 
@@ -34,6 +37,18 @@ public enum WCDateFieldAppearance: FieldCellAppearance {
             return "WCDateFieldRightDetailCell"
         case .stacked:
             return "WCDateFieldCell"
+        case .stackedCaption:
+            return "WCDateFieldStackedCaptionCell"
+        }
+    }
+
+    /// The preferred color for the field value
+    public var preferredFieldValueColor: UIColor {
+        switch self {
+        case .stackedCaption:
+            return UIColor.black
+        default:
+            return UIColor.darkGray
         }
     }
 
@@ -49,7 +64,7 @@ public enum WCDateFieldAppearance: FieldCellAppearance {
 
     /// Returns all values of the date field appearance.
     public static var allValues: [WCDateFieldAppearance] {
-        return [.stacked, .rightDetail]
+        return [.stacked, .stackedCaption, .rightDetail]
     }
 
 }
@@ -116,6 +131,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
         }
         if let editableDateCell = cell as? WCDateFieldCell {
             let dateValue: Date = fieldValue ?? Date()
+            editableDateCell.inactiveValueColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor
             editableDateCell.fieldNameLabel.text = fieldName
             editableDateCell.datePickerKeyboard.date = dateValue
             editableDateCell.datePickerKeyboard.minimumDate = minimumDate
@@ -126,7 +142,9 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             } else {
                 editableDateCell.fieldValueTextField.text = nil
             }
-            editableDateCell.fieldValueTextField.placeholder = placeholderText
+            if let placeholderText = placeholderText {
+                editableDateCell.fieldValueTextField.placeholder = placeholderText
+            }
             editableDateCell.delegate = self
         }
     }

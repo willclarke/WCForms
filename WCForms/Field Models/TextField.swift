@@ -16,6 +16,7 @@ import Foundation
 public enum WCTextFieldAppearance: FieldCellAppearance {
 
     case stacked
+    case stackedCaption
     case rightDetail
     case fieldNameAsPlaceholder
 
@@ -28,6 +29,8 @@ public enum WCTextFieldAppearance: FieldCellAppearance {
             return "WCGenericFieldCell"
         case .stacked:
             return "WCGenericFieldStackedCell"
+        case .stackedCaption:
+            return "WCGenericFieldStackedCaptionCell"
         }
     }
 
@@ -36,10 +39,32 @@ public enum WCTextFieldAppearance: FieldCellAppearance {
         switch self {
         case .rightDetail:
             return "WCTextFieldRightDetailCell"
-        case .stacked:
-            return "WCTextFieldCell"
         case .fieldNameAsPlaceholder:
             return "WCTextFieldNoFieldNameLabelCell"
+        case .stacked:
+            return "WCTextFieldCell"
+        case .stackedCaption:
+            return "WCTextFieldStackedCaptionCell"
+        }
+    }
+
+    /// The preferred color for the field name label
+    public var preferredFieldNameColor: UIColor {
+        switch self {
+        case .stackedCaption:
+            return UIColor.darkGray
+        default:
+            return UIColor.black
+        }
+    }
+
+    /// The preferred color for the field of value label.
+    public var preferredFieldValueColor: UIColor {
+        switch self {
+        case .stackedCaption, .fieldNameAsPlaceholder:
+            return UIColor.black
+        default:
+            return UIColor.darkGray
         }
     }
 
@@ -55,7 +80,7 @@ public enum WCTextFieldAppearance: FieldCellAppearance {
 
     /// Returns all values of the text field appearance.
     public static var allValues: [WCTextFieldAppearance] {
-        return [.stacked, .rightDetail, .fieldNameAsPlaceholder]
+        return [.stacked, .stackedCaption, .rightDetail, .fieldNameAsPlaceholder]
     }
 
 }
@@ -74,7 +99,7 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
     /// Placeholder text to be set for the text field.
     public var placeholderText: String? = nil {
         didSet {
-            if let validCell = lastLoadedEditableCell {
+            if let validCell = lastLoadedEditableCell, let placeholderText = placeholderText {
                 validCell.fieldValueTextField.placeholder = placeholderText
             }
         }
@@ -107,7 +132,9 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
         if let editableTextCell = cell as? WCTextFieldCell {
             editableTextCell.fieldNameLabel.text = fieldName
             editableTextCell.fieldValueTextField.text = fieldValue
-            editableTextCell.fieldValueTextField.placeholder = placeholderText
+            if let placeholderText = placeholderText {
+                editableTextCell.fieldValueTextField.placeholder = placeholderText
+            }
             editableTextCell.delegate = self
         }
     }

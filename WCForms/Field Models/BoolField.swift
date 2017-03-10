@@ -15,6 +15,7 @@ import Foundation
 public enum WCBoolFieldAppearance: FieldCellAppearance {
 
     case stacked
+    case stackedCaption
     case rightDetail
 
     /// The nib name for the read-only version of a field in this appearance.
@@ -24,6 +25,8 @@ public enum WCBoolFieldAppearance: FieldCellAppearance {
             return "WCGenericFieldRightDetailTableViewCell"
         case .stacked:
             return "WCGenericFieldStackedCell"
+        case .stackedCaption:
+            return "WCGenericFieldStackedCaptionCell"
         }
     }
 
@@ -34,6 +37,28 @@ public enum WCBoolFieldAppearance: FieldCellAppearance {
             return "WCBoolFieldCell"
         case .stacked:
             return "WCBoolFieldStackedCell"
+        case .stackedCaption:
+            return "WCBoolFieldStackedCaptionCell"
+        }
+    }
+
+    /// The preferred color for the field name label
+    public var preferredFieldNameColor: UIColor {
+        switch self {
+        case .stackedCaption:
+            return UIColor.darkGray
+        default:
+            return UIColor.black
+        }
+    }
+
+    /// The preferred color for the field value label
+    public var preferredFieldValueColor: UIColor {
+        switch self {
+        case .stackedCaption:
+            return UIColor.black
+        default:
+            return UIColor.darkGray
         }
     }
 
@@ -49,7 +74,7 @@ public enum WCBoolFieldAppearance: FieldCellAppearance {
 
     /// Returns all values of the boolean field appearance.
     public static var allValues: [WCBoolFieldAppearance] {
-        return [.stacked, .rightDetail]
+        return [.stacked, .stackedCaption, .rightDetail]
     }
 
 }
@@ -90,7 +115,7 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
         if let readOnlyCell = cell as? WCGenericFieldWithFieldNameCell {
             let boolValue = fieldValue ?? false
             readOnlyCell.fieldNameLabel.text = fieldName
-            readOnlyCell.valueLabel.textColor = UIColor.darkGray
+            readOnlyCell.valueLabel.textColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor
             readOnlyCell.valueLabel.text = boolValue ? onDisplayValue : offDisplayValue
         }
     }
@@ -102,18 +127,21 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
         let boolValue = fieldValue ?? false
         if let editableBoolCell = cell as? WCBoolFieldCell {
             editableBoolCell.fieldNameLabel.text = fieldName
+            editableBoolCell.fieldNameLabel.textColor = editableAppearance?.preferredFieldNameColor ?? appearance.preferredFieldNameColor
             editableBoolCell.fieldValueSwitch.isOn = boolValue
             editableBoolCell.delegate = self
         }
         if let stackedBoolCell = cell as? WCBoolFieldStackedCell {
+            let activeColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor
+            let inactiveColor = editableAppearance?.preferredEmptyFieldValueColor ?? appearance.preferredEmptyFieldValueColor
             stackedBoolCell.onDisplayValueLabel.text = onDisplayValue
             stackedBoolCell.offDisplayValueLabel.text = offDisplayValue
             if boolValue {
-                stackedBoolCell.onDisplayValueLabel.textColor = UIColor.darkGray
-                stackedBoolCell.offDisplayValueLabel.textColor = UIColor.lightGray
+                stackedBoolCell.onDisplayValueLabel.textColor = activeColor
+                stackedBoolCell.offDisplayValueLabel.textColor = inactiveColor
             } else {
-                stackedBoolCell.onDisplayValueLabel.textColor = UIColor.lightGray
-                stackedBoolCell.offDisplayValueLabel.textColor = UIColor.darkGray
+                stackedBoolCell.onDisplayValueLabel.textColor = inactiveColor
+                stackedBoolCell.offDisplayValueLabel.textColor = activeColor
             }
             stackedBoolCell.delegate = self
         }

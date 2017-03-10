@@ -16,6 +16,7 @@ import Foundation
 public enum WCIntFieldAppearance: FieldCellAppearance {
 
     case stacked
+    case stackedCaption
     case rightDetail
     case slider
 
@@ -28,6 +29,8 @@ public enum WCIntFieldAppearance: FieldCellAppearance {
             return "WCGenericFieldStackedCell"
         case .slider:
             return "WCGenericFieldRightDetailTableViewCell"
+        case .stackedCaption:
+            return "WCGenericFieldStackedCaptionCell"
         }
     }
 
@@ -40,13 +43,35 @@ public enum WCIntFieldAppearance: FieldCellAppearance {
             return "WCIntFieldCell"
         case .slider:
             return "WCIntFieldSliderCell"
+        case .stackedCaption:
+            return "WCIntFieldStackedCaptionCell"
+        }
+    }
+
+    /// The preferred color for the field name label
+    public var preferredFieldNameColor: UIColor {
+        switch self {
+        case .stackedCaption:
+            return UIColor.darkGray
+        default:
+            return UIColor.black
+        }
+    }
+
+    /// The preferred color for the field of value label.
+    public var preferredFieldValueColor: UIColor {
+        switch self {
+        case .stackedCaption:
+            return UIColor.black
+        default:
+            return UIColor.darkGray
         }
     }
 
     /// Returns `false` when the appearance is `slider` because UISlider can not become first responder. Otherwise returns `true`.
     public var canBecomeFirstResponder: Bool {
         switch self {
-        case .rightDetail, .stacked:
+        case .rightDetail, .stacked, .stackedCaption:
             return true
         case .slider:
             return false
@@ -60,7 +85,7 @@ public enum WCIntFieldAppearance: FieldCellAppearance {
 
     /// Returns all values of the int field appearance.
     public static var allValues: [WCIntFieldAppearance] {
-        return [.stacked, .rightDetail, .slider]
+        return [.stacked, .stackedCaption, .rightDetail, .slider]
     }
 
 }

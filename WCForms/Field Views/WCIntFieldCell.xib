@@ -13,10 +13,10 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="WCIntFieldCell" id="KGk-i7-Jjw" customClass="WCIntFieldCell" customModule="WCForms" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="82"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyT-Ci-Qny">
@@ -25,8 +25,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LkG-mg-dau">
-                        <rect key="frame" x="16" y="41" width="288" height="30"/>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LkG-mg-dau">
+                        <rect key="frame" x="16" y="39" width="288" height="22"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
@@ -37,13 +37,13 @@
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="LkG-mg-dau" secondAttribute="bottom" constant="2.5" id="3vO-Ub-5TG"/>
                     <constraint firstItem="LkG-mg-dau" firstAttribute="leading" secondItem="eyT-Ci-Qny" secondAttribute="leading" id="8VV-QA-d74"/>
                     <constraint firstAttribute="trailingMargin" secondItem="eyT-Ci-Qny" secondAttribute="trailing" constant="8" id="BQu-ux-18P"/>
-                    <constraint firstItem="LkG-mg-dau" firstAttribute="trailing" secondItem="eyT-Ci-Qny" secondAttribute="trailing" id="M2n-no-zwL"/>
                     <constraint firstItem="eyT-Ci-Qny" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="NDr-ey-8Ji"/>
+                    <constraint firstItem="LkG-mg-dau" firstAttribute="trailing" secondItem="eyT-Ci-Qny" secondAttribute="trailing" id="RYL-Dk-dxN"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="LkG-mg-dau" secondAttribute="bottom" constant="0.5" id="f2T-MD-S0q"/>
                     <constraint firstItem="eyT-Ci-Qny" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="pb7-vo-yLC"/>
-                    <constraint firstItem="LkG-mg-dau" firstAttribute="top" secondItem="eyT-Ci-Qny" secondAttribute="bottom" constant="8" id="uDq-nD-ClS"/>
+                    <constraint firstItem="LkG-mg-dau" firstAttribute="top" secondItem="eyT-Ci-Qny" secondAttribute="bottom" constant="6" id="uDq-nD-ClS"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
