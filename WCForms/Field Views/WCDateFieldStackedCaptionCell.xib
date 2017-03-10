@@ -31,7 +31,7 @@
                         <textInputTraits key="textInputTraits"/>
                         <connections>
                             <action selector="dateFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="y2J-bb-wq0"/>
-                            <outlet property="delegate" destination="-1" id="tjv-T2-oJP"/>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="93C-8G-SQH"/>
                         </connections>
                     </textField>
                 </subviews>
