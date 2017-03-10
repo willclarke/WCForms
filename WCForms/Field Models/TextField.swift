@@ -11,6 +11,7 @@ import Foundation
 /// Appearance enum for text fields.
 ///
 /// - stacked: The field name appears on a line above the field value.
+/// - stackedCaption: Similar to stacked, but with the field name using the font `UIFontTextStyle.caption`
 /// - rightDetail: The field value is on the right side of the cell, and the field name on the left.
 /// - fieldNameAsPlaceholder: The field name appears as the placeholder text when being edited. When in read-only mode, the field name is hidden.
 public enum WCTextFieldAppearance: FieldCellAppearance {

@@ -11,6 +11,7 @@ import Foundation
 /// Appearance enum for boolean fields.
 ///
 /// - stacked: The field name appears on a line above the field value.
+/// - stackedCaption: Similar to stacked, but with the field name using the font `UIFontTextStyle.caption`
 /// - rightDetail: The field value is on the right side of the cell, and the field name on the left.
 public enum WCBoolFieldAppearance: FieldCellAppearance {
 
