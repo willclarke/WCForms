@@ -96,6 +96,33 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
     /// the form. If this property is set to nil, no maximum length will be enforced.
     public var maximumLength: Int?
 
+    /// The autocapitalization type to use for the text field.
+    public var autocapitalizationType = UITextAutocapitalizationType.none {
+        didSet {
+            if let validCell = lastLoadedEditableCell {
+                validCell.fieldValueTextField.autocapitalizationType = autocapitalizationType
+            }
+        }
+    }
+
+    /// The autocorrection style for the text field.
+    public var autocorrectionType = UITextAutocorrectionType.default {
+        didSet {
+            if let validCell = lastLoadedEditableCell {
+                validCell.fieldValueTextField.autocorrectionType = autocorrectionType
+            }
+        }
+    }
+
+    /// The spell-checking style for the text field.
+    public var spellCheckingType = UITextSpellCheckingType.default {
+        didSet {
+            if let validCell = lastLoadedEditableCell {
+                validCell.fieldValueTextField.spellCheckingType = spellCheckingType
+            }
+        }
+    }
+
     /// Placeholder text to be set for the text field.
     public var placeholderText: String? = nil {
         didSet {
@@ -123,6 +150,9 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
         if let editableTextCell = cell as? WCGenericTextFieldCell {
             lastLoadedEditableCell = editableTextCell
             editableTextCell.fieldValueTextField.inputAccessoryView = self.fieldInputAccessory
+            editableTextCell.fieldValueTextField.autocapitalizationType = autocapitalizationType
+            editableTextCell.fieldValueTextField.autocorrectionType = autocorrectionType
+            editableTextCell.fieldValueTextField.spellCheckingType = spellCheckingType
         }
         if let editableTextCell = cell as? WCTextFieldNoFieldNameLabelCell {
             editableTextCell.fieldValueTextField.text = fieldValue
