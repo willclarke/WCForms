@@ -106,6 +106,9 @@ open class WCFormController: UITableViewController {
         }
     }
 
+    /// The identifier for the custom footer since Apple's is ugly
+    private let customFooterIdentifier = "CustomPlainFooterView"
+
     /// A bar button item for canceling the form.
     private var cancelEditingFormButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.cancel, target: nil, action: nil)
 
@@ -170,6 +173,10 @@ open class WCFormController: UITableViewController {
         }
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 44.0
+        if tableView.style == .plain {
+            tableView.sectionFooterHeight = UITableViewAutomaticDimension
+            tableView.estimatedSectionFooterHeight = 46.0
+        }
         tableView.allowsSelectionDuringEditing = true
     }
 
@@ -213,7 +220,11 @@ open class WCFormController: UITableViewController {
     }
 
     open override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        return formModel?.section(forVisibleSection: section, whenEditingForm: isEditing)?.footerTitle
+        let footerTitle = formModel?.section(forVisibleSection: section, whenEditingForm: isEditing)?.footerTitle
+        if tableView.style == .plain {
+            return ""
+        }
+        return footerTitle
     }
 
 
@@ -285,6 +296,44 @@ open class WCFormController: UITableViewController {
         }
         if let inputField = field as? WCInputField, isEditing && field.isEditable && inputField.canBecomeFirstResponder {
             inputField.becomeFirstResponder()
+        }
+    }
+
+    open override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        guard tableView.style == .plain else {
+            return UITableViewAutomaticDimension
+        }
+        guard let formModel = formModel else {
+            return UITableViewAutomaticDimension
+        }
+        guard let section = formModel.section(forVisibleSection: section, whenEditingForm: isEditing) else {
+            return UITableViewAutomaticDimension
+        }
+        if section.footerTitle == nil {
+            return 0.0
+        } else {
+            return UITableViewAutomaticDimension
+        }
+    }
+
+    open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        guard tableView.style == .plain else {
+            return nil
+        }
+        guard let formModel = formModel else {
+            return nil
+        }
+        guard let section = formModel.section(forVisibleSection: section, whenEditingForm: isEditing) else {
+            return nil
+        }
+        guard let sectionFooterTitle = section.footerTitle else {
+            return nil
+        }
+        if let dequeuedFooter = tableView.dequeueReusableHeaderFooterView(withIdentifier: customFooterIdentifier) as? CustomPlainFooterView {
+            dequeuedFooter.footerLabel.text = sectionFooterTitle
+            return dequeuedFooter
+        } else {
+            return nil
         }
     }
 
@@ -502,6 +551,9 @@ open class WCFormController: UITableViewController {
         guard let formModel = formModel else {
             return
         }
+        let nibBundle = Bundle(for: CustomPlainFooterView.self)
+        let footerNib = UINib(nibName: customFooterIdentifier, bundle: nibBundle)
+        tableView.register(footerNib, forHeaderFooterViewReuseIdentifier: customFooterIdentifier)
         for section in formModel.formSections {
             for field in section.formFields {
                 field.registerNibsForCellReuseIdentifiers(in: tableView)
