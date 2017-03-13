@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable date field.
-public class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
+internal class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
 
     /// A picker view to use as the inputView for the text field's keyboard.
     public var datePickerKeyboard = UIDatePicker(frame: CGRect(x: 0, y: 0, width: 320.0, height: 162.0))

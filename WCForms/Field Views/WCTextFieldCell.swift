@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable field that displays its value in a UITextField.
-public class WCGenericTextFieldCell: UITableViewCell, UITextFieldDelegate {
+internal class WCGenericTextFieldCell: UITableViewCell, UITextFieldDelegate {
 
     /// The UITextField for the field value.
     @IBOutlet weak var fieldValueTextField: UITextField!
@@ -17,7 +17,7 @@ public class WCGenericTextFieldCell: UITableViewCell, UITextFieldDelegate {
 }
 
 /// A table view cell for an editable WCTextField with the `fieldNameAsPlaceholder` appearance.
-public class WCTextFieldNoFieldNameLabelCell: WCGenericTextFieldCell {
+internal class WCTextFieldNoFieldNameLabelCell: WCGenericTextFieldCell {
 
     /// The text field delegate.
     weak var delegate: WCTextField? = nil
@@ -47,7 +47,7 @@ public class WCTextFieldNoFieldNameLabelCell: WCGenericTextFieldCell {
 }
 
 /// A table view cell for an editable field that displays its value in a UITextField and also has a field name label.
-public class WCGenericTextFieldAndLabelCell: WCGenericTextFieldCell {
+internal class WCGenericTextFieldAndLabelCell: WCGenericTextFieldCell {
 
     /// The UILabel for the field name.
     @IBOutlet weak var fieldNameLabel: UILabel!
@@ -55,7 +55,7 @@ public class WCGenericTextFieldAndLabelCell: WCGenericTextFieldCell {
 }
 
 /// A table view cell for an editable WCTextField that also has a field name label.
-public class WCTextFieldCell: WCGenericTextFieldAndLabelCell {
+internal class WCTextFieldCell: WCGenericTextFieldAndLabelCell {
 
     /// The text field delegate.
     weak var delegate: WCTextField? = nil

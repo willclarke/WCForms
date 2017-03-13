@@ -9,7 +9,7 @@
 import UIKit
 
 /// A generic field with no field name label
-public class WCGenericFieldCell: UITableViewCell {
+internal class WCGenericFieldCell: UITableViewCell {
 
     /// Outlet to the label for the field value
     @IBOutlet weak var valueLabel: UILabel!
@@ -17,7 +17,7 @@ public class WCGenericFieldCell: UITableViewCell {
 }
 
 /// A generic field with a title label
-public class WCGenericFieldWithFieldNameCell: WCGenericFieldCell {
+internal class WCGenericFieldWithFieldNameCell: WCGenericFieldCell {
 
     /// The UILabel for the field name.
     @IBOutlet weak var fieldNameLabel: UILabel!

@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable boolean field with the `stacked` appearance.
-public class WCBoolFieldStackedCell: WCBoolFieldCell {
+internal class WCBoolFieldStackedCell: WCBoolFieldCell {
 
     /// The label displaying the off label.
     @IBOutlet weak var offDisplayValueLabel: UILabel!

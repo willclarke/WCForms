@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable integer field.
-public class WCIntFieldCell: WCGenericTextFieldAndLabelCell {
+internal class WCIntFieldCell: WCGenericTextFieldAndLabelCell {
 
     /// A delegate to handle actions when the field changes.
     weak var delegate: WCIntField? = nil

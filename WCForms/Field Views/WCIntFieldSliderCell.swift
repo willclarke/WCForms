@@ -9,7 +9,7 @@
 import UIKit
 
 /// A table view cell for an editable integer field with the `slider` appearance.
-public class WCIntFieldSliderCell: UITableViewCell {
+internal class WCIntFieldSliderCell: UITableViewCell {
 
     /// A delegate to handle actions when the field changes.
     weak var delegate: WCIntField? = nil
