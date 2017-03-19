@@ -39,3 +39,11 @@ The following is a planned feature list that will be included in the 1.0 release
 - [ ] Single Checkbox field
 - [ ] Currency field
 - [ ] Web Address field
+
+## Credits
+
+WCForms was created and is written by [Will Clarke](https://www.willclarke.net). Follow him on [Facebook](http://facebook.com/willclarkedotnet) or [Twitter](https://twitter.com/willclarke)
+
+## License
+
+WCForms is released under the [Apache License Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
