@@ -11,33 +11,31 @@ Forms are complex, from both a user perspective and a development one. They take
 
 ## Features
 
-The following is a planned feature list that will be included in the 1.0 release. Completed items 
+The following is a planned feature list that will be included in the 1.0 release. Checked items are completed, unchecked ones are planned.
 
 - [x] Subclassable form controller that supports read-only and edit modes
-- [-] Form field types
--- [x] Text field
--- [x] Boolean (yes/no) field
--- [x] Integer field
--- [x] Date field
--- [ ] Email field
--- [ ] Text Area field
--- [ ] Decimal number field
--- [ ] Phone field
--- [ ] Option field
--- [ ] Multi-option field
--- [ ] Button field
--- [ ] Password field
--- [ ] Time field
--- [ ] Date & Time field
--- [ ] Time Interval field
--- [ ] Single Checkbox field
--- [ ] Currency field
--- [ ] Web Address field
-- [-] Common appearances for fields
--- [x] Right Detail
--- [x] Stacked
--- [x] Stacked Caption
--- [ ] Left Detail
+- [x] Right Detail appearance for fields
+- [x] Stacked appearance for fields
+- [x] Stacked Caption appearance for fields
+- [ ] Left Detail appearance for fields
 - [x] Ability to make fields read-only when the form is editable
 - [x] Keyboard accessory for navigating between fields
 - [ ] Accessibility
+- [x] Text field
+- [x] Boolean (yes/no) field
+- [x] Integer field
+- [x] Date field
+- [ ] Email field
+- [ ] Text Area field
+- [ ] Decimal number field
+- [ ] Phone field
+- [ ] Option field
+- [ ] Multi-option field
+- [ ] Button field
+- [ ] Password field
+- [ ] Time field
+- [ ] Date & Time field
+- [ ] Time Interval field
+- [ ] Single Checkbox field
+- [ ] Currency field
+- [ ] Web Address field
