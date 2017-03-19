@@ -34,12 +34,25 @@ internal class WCIntFieldSliderCell: UITableViewCell {
     /// - Parameter sender: The slider that changed.
     @IBAction func intSliderValueChanged(_ sender: UISlider) {
         let delegateValue = delegate?.fieldValue
-        let newValue = Int(round(sender.value))
+        var newValue = Int(round(sender.value))
+        if let validDelegate = delegate {
+            if let minimumValue = validDelegate.minimumValue, newValue < minimumValue {
+                newValue = minimumValue
+            }
+            if let maximumValue = validDelegate.maximumValue, newValue > maximumValue {
+                newValue = maximumValue
+            }
+        }
+
         if delegateValue == nil || delegateValue! != newValue {
             delegate?.viewDidUpdateValue(newValue: newValue)
         }
-        
-        fieldValueLabel.text = String(newValue)
+        if let validDelegate = delegate {
+            let parsedValue = validDelegate.parseValue(forUserInput: String(newValue), withInsertionIndex: nil)
+            fieldValueLabel.text = parsedValue.display
+        } else {
+            fieldValueLabel.text = String(newValue)
+        }
     }
 
 }
