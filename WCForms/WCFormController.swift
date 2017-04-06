@@ -137,7 +137,7 @@ open class WCFormController: UITableViewController {
 
         super.viewDidLoad()
 
-        clearsSelectionOnViewWillAppear = false
+        clearsSelectionOnViewWillAppear = true
 
         editFormButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.edit, target: self, action: #selector(editFormButtonTapped(_:)))
         cancelEditingFormButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelEditingButtonTapped(_:)))
@@ -287,12 +287,18 @@ open class WCFormController: UITableViewController {
     }
 
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         guard let formModel = formModel else {
+            tableView.deselectRow(at: indexPath, animated: true)
             return
         }
         guard let field = formModel.field(for: indexPath, whenEditingForm: isEditing) else {
+            tableView.deselectRow(at: indexPath, animated: true)
             return
+        }
+        if let selectableField = field as? WCEditableSelectableField {
+            selectableField.didSelectField(in: self)
+        } else {
+            tableView.deselectRow(at: indexPath, animated: true)
         }
         if let inputField = field as? WCInputField, isEditing && field.isEditable && inputField.canBecomeFirstResponder {
             inputField.becomeFirstResponder()
@@ -374,7 +380,7 @@ open class WCFormController: UITableViewController {
                         let fieldWasVisible = field.isVisible(whenEditingForm: !editing)
                         if fieldIsVisible && !fieldWasVisible {
                             //field is visible but wasn't before, we want to insert it
-                            indexPathsToInsert.append(IndexPath(row: formerVisibleFieldIndex, section: formerVisibleSectionIndex))
+                            indexPathsToInsert.append(IndexPath(row: currentVisibleFieldIndex, section: formerVisibleSectionIndex))
                         } else if !fieldIsVisible && fieldWasVisible {
                             //field was visible but isn't now, we want to delete it
                             indexPathsToDelete.append(IndexPath(row: formerVisibleFieldIndex, section: formerVisibleSectionIndex))

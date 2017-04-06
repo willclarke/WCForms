@@ -116,7 +116,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             if let dateValue = fieldValue {
                 dateCell.valueLabel.text = dateDisplayFormatter.string(from: dateValue)
             } else {
-                dateCell.valueLabel.text = NSLocalizedString("None", tableName: "WCForms", comment: "Displayed when there is no value for a field")
+                dateCell.valueLabel.text = emptyValueLabelText
             }
         }
         lastLoadedEditableCell = nil

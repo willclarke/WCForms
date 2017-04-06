@@ -183,3 +183,14 @@ public protocol WCTypedInputField: WCInputField {
     var onValueChange: ((InputValueType?) -> Void)? { get set }
 
 }
+
+/// Protocol for an editable field that can be selected
+public protocol WCEditableSelectableField: WCField {
+
+    /// The user selected a field in a form controller.
+    ///
+    /// - Parameter formController: The form controller containing the field that the user selected. Use this view controller to push any dependent view 
+    ///   controllers.
+    func didSelectField(in formController: WCFormController)
+
+}

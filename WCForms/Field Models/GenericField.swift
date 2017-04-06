@@ -86,6 +86,9 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellAppea
     /// The pre-edit value of the field.
     internal var previousValue: ValueType?
 
+    /// The text to appear on the field when no value has been set.
+    public var emptyValueLabelText: String = NSLocalizedString("None", tableName: "WCForms", comment: "Displayed when there is no value for a field")
+
 
     // MARK: - Initialization
 
@@ -382,11 +385,11 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellAppea
                     readOnlyCell.valueLabel.text = stringConvertableValue.description
                 } else {
                     readOnlyCell.valueLabel.textColor = appearance.preferredEmptyFieldValueColor
-                    readOnlyCell.valueLabel.text = NSLocalizedString("None", tableName: "WCForms", comment: "Displayed when there is no value for a field")
+                    readOnlyCell.valueLabel.text = emptyValueLabelText
                 }
             } else {
                 readOnlyCell.valueLabel.textColor = appearance.preferredEmptyFieldValueColor
-                readOnlyCell.valueLabel.text = NSLocalizedString("None", tableName: "WCForms", comment: "Displayed when there is no value for a field")
+                readOnlyCell.valueLabel.text = emptyValueLabelText
             }
         }
     }
