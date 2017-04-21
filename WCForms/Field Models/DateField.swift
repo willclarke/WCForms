@@ -105,18 +105,13 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
     ///
     /// - Parameter cell: the table view cell.
     public override func setupCell(_ cell: UITableViewCell) {
-        if isAbleToCopy && copyValue != nil {
-            cell.selectionStyle = .default
-        } else {
-            cell.selectionStyle = .none
-        }
+        super.setupCell(cell)
 
         if let dateCell = cell as? WCGenericFieldWithFieldNameCell {
-            dateCell.fieldNameLabel.text = fieldName
             if let dateValue = fieldValue {
-                dateCell.valueLabel.text = dateDisplayFormatter.string(from: dateValue)
+                dateCell.valueLabelText = dateDisplayFormatter.string(from: dateValue)
             } else {
-                dateCell.valueLabel.text = emptyValueLabelText
+                dateCell.valueLabelText = emptyValueLabelText
             }
         }
         lastLoadedEditableCell = nil

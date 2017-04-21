@@ -52,7 +52,7 @@ public enum WCTextFieldAppearance: FieldCellAppearance {
     /// The preferred color for the field name label
     public var preferredFieldNameColor: UIColor {
         switch self {
-        case .stackedCaption:
+        case .stackedCaption, .fieldNameAsPlaceholder:
             return UIColor.darkGray
         default:
             return UIColor.black
@@ -141,6 +141,15 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
     /// - Parameter cell: the table view cell.
     public override func setupCell(_ cell: UITableViewCell) {
         super.setupCell(cell)
+        if let cell = cell as? WCGenericFieldCell, appearance == .fieldNameAsPlaceholder {
+            if let fieldValue = fieldValue, fieldValue != "" {
+                cell.valueLabelText = fieldValue
+                cell.valueLabelColor = appearance.preferredFieldValueColor
+            } else {
+                cell.valueLabelText = fieldName
+                cell.valueLabelColor = appearance.preferredFieldNameColor
+            }
+        }
         lastLoadedEditableCell = nil
     }
 
@@ -155,17 +164,19 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
             editableTextCell.fieldValueTextField.autocorrectionType = autocorrectionType
             editableTextCell.fieldValueTextField.spellCheckingType = spellCheckingType
         }
-        if let editableTextCell = cell as? WCTextFieldNoFieldNameLabelCell {
-            editableTextCell.fieldValueTextField.text = fieldValue
-            editableTextCell.fieldValueTextField.placeholder = placeholderText ?? fieldName
-            editableTextCell.delegate = self
-        }
         if let editableTextCell = cell as? WCTextFieldCell {
             editableTextCell.fieldNameLabel.text = fieldName
             editableTextCell.fieldValueTextField.text = fieldValue
             if let placeholderText = placeholderText {
                 editableTextCell.fieldValueTextField.placeholder = placeholderText
+            } else {
+                editableTextCell.fieldValueTextField.placeholder = emptyValueLabelText
             }
+            editableTextCell.delegate = self
+        }
+        if let editableTextCell = cell as? WCTextFieldNoFieldNameLabelCell {
+            editableTextCell.fieldValueTextField.text = fieldValue
+            editableTextCell.fieldValueTextField.placeholder = placeholderText ?? fieldName
             editableTextCell.delegate = self
         }
     }

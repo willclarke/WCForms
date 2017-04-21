@@ -81,8 +81,20 @@ public enum WCOptionFieldAppearance: FieldCellAppearance {
 
 }
 
+/// A protocol for objects whose appearance and editable appearance can be set.
+public protocol WCOptionAppearanceSettable: class {
+
+    var appearance: WCOptionFieldAppearance { get set }
+
+    var editableAppearance: WCOptionFieldAppearance? { get set }
+
+}
+
 /// Protocol for items that can be selected in an option picker field. It is recommended to use an enum for option picker fields, but classes or structs are ok.
-public protocol OptionFieldItem: Equatable {
+public protocol OptionFieldItem: Hashable {
+
+    /// An identifier for this option item that will be used for comparison and hashing purposes.
+    var optionIdentifier: String { get }
 
     /// An abbreviation for the option field item. The abbreviation will be used in some cases when space is tight. If unspecified, this will default to the
     /// localizedValue of the option field item.
@@ -96,28 +108,75 @@ public protocol OptionFieldItem: Equatable {
 
 }
 
-public extension OptionFieldItem {
+extension OptionFieldItem {
 
     /// Default implementation of the localized abbreviation that returns the `localizedValue`.
-    var localizedAbbreviation: String {
+    public var localizedAbbreviation: String {
         return localizedValue
     }
 
     /// Default implementation of the localized description that returns `nil`.
-    var localizedDescription: String? {
+    public var localizedDescription: String? {
         return nil
+    }
+
+    /// Default implementation of the option identifier.
+    public var optionIdentifier: String {
+        return localizedAbbreviation + localizedValue + (localizedDescription ?? "")
+    }
+
+    /// Default implementation of `Hashable`.
+    public var hashValue: Int {
+        return optionIdentifier.hashValue
+    }
+
+    /// Default implementation of `Equatable`.
+    ///
+    /// - Parameters:
+    ///   - lhs: One `OptionFieldItem` object to compare.
+    ///   - rhs: Another `OptionFieldItem` object to compare.
+    /// - Returns: Whether or not the two objects are equal.
+    public static func ==(lhs: Self, rhs: Self) -> Bool {
+        return lhs.optionIdentifier == rhs.optionIdentifier
     }
 
 }
 
+//public protocol MultipleOptionFieldItem: OptionFieldItem, Hashable { }
+//
+//extension MultipleOptionFieldItem {
+//
+//    static func == (lhs: Self, rhs: Self) -> Bool {
+//        return (lhs.localizedValue == rhs.localizedValue) && (lhs.localizedDescription == rhs.localizedDescription)
+//    }
+//
+//    public var hashValue: Int {
+//        var uniqueString = "\(localizedAbbreviation) \(localizedValue)"
+//        if let localizedDescription = localizedDescription {
+//            uniqueString += localizedDescription
+//        }
+//        return uniqueString.hashValue
+//    }
+//
+//}
+
 /// Delegate protocol for an option item selecting view controller that selects a single option item.
-internal protocol WCOptionItemSingleSelectionDelegate: class {
+internal protocol WCOptionItemSelectionDelegate: class {
 
     /// The type of option item that the option field uses
     associatedtype SelectionItemType: OptionFieldItem
 
+    /// The type of value that the option field uses
+    associatedtype SelectionValueType: Equatable
+
     /// The currently selected item of the option field.
-    var selectedItem: SelectionItemType? { get }
+    var selectedValue: SelectionValueType? { get }
+
+    /// Returns whether or not a specific option item should be marked as selected.
+    ///
+    /// - Parameter optionItem: The option item to check.
+    /// - Returns: Whether or not the item is currently selected in the field.
+    func isSelected(optionItem: SelectionItemType) -> Bool
     
     /// The item for an index path in an option picker.
     ///
@@ -129,8 +188,20 @@ internal protocol WCOptionItemSingleSelectionDelegate: class {
     ///
     /// - Parameters:
     ///   - picker: The option picker controller in which the user has selected the option item.
-    ///   - selectedItem: The item that has been selected.
-    func optionPicker(picker: WCOptionPickerTableViewController<SelectionItemType>, didSelectItem selectedItem: SelectionItemType?)
+    ///   - newItem: The new item that has been selected.
+    func optionPicker(_ picker: WCOptionPickerTableViewController<SelectionItemType, SelectionValueType>, didSelectItem newItem: SelectionItemType)
+
+    /// Called when the user has deselected an option item in an option item picker controller.
+    ///
+    /// - Parameters:
+    ///   - picker: The option picker controller in which the user has deselected the option item.
+    ///   - deselectedItem: The item that has been deselected.
+    func optionPicker(_ picker: WCOptionPickerTableViewController<SelectionItemType, SelectionValueType>, didDeselectItem deselectedItem: SelectionItemType)
+
+    /// Called when the option picker clears the selection.
+    ///
+    /// - Parameter picker: The option picker controller in which the user has cleared the value.
+    func optionPickerDidClearValue(_ picker: WCOptionPickerTableViewController<SelectionItemType, SelectionValueType>)
 
 }
 
@@ -139,6 +210,12 @@ internal protocol WCOptionItemSelectionDataSource: class {
 
     /// The number of option groups in the option field.
     var numberOfOptionGroups: Int { get }
+
+    /// Whether or not the field currently has a value selected.
+    var hasSelection: Bool { get }
+
+    /// A localized summary of the current selection.
+    var localizedSelectionSummary: String? { get }
 
     /// The number of option items in a section.
     ///
@@ -197,79 +274,49 @@ public enum WCOptionItemSelectionBehavior {
 }
 
 /// A field with a value that can come from a collection of preset options.
-public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, WCOptionFieldAppearance>, WCEditableSelectableField,
-                                                       WCOptionItemSingleSelectionDelegate, WCOptionItemSelectionDataSource
+internal class WCOptionField<ItemType: OptionFieldItem, ValueType: Equatable>: WCGenericField<ValueType, WCOptionFieldAppearance>,
+                                                                               WCEditableSelectableField,
+                                                                               WCOptionItemSelectionDelegate,
+                                                                               WCOptionItemSelectionDataSource,
+                                                                               WCOptionAppearanceSettable
 {
 
-    /// The behavior when an item is selected.
-    public var selectionBehavior: WCOptionItemSelectionBehavior = .returnToForm
-
-    /// Whether or not the option field allows the user to deselect items. If `false`, once the user has made a selection, they can change the selection but
-    /// can not clear or deselect that option. Defaults to `true`.
-    public var allowsDeselection = true {
-        didSet {
-            if let controller = optionPickerController {
-                controller.allowsDeselection = allowsDeselection
-            }
-        }
-    }
-
     /// The groups of options that the user can pick from.
-    private var optionGroups = [OptionFieldGroup<ItemType>]()
+    internal var optionGroups = [OptionFieldGroup<ItemType>]()
 
     /// The controller that is used to select the option item.
-    private var optionPickerController: WCOptionPickerTableViewController<ItemType>? = nil
+    internal var optionPickerController: WCOptionPickerTableViewController<ItemType, ValueType>? = nil
 
     /// The last loaded editable cell
     weak var lastLoadedEditableCell: WCOptionFieldCell? = nil
 
-    /// Presents an option picker controller for the user to select an option item. Called when the user has selected this field in a form.
-    ///
-    /// - Parameter formController: The form controller on which the user selected the option field.
-    public func didSelectField(in formController: WCFormController) {
-        guard let navigationController = formController.navigationController else {
-            NSLog("Error: WCOptionField \(fieldName) is on a form not embedded in a UINavigationController, so it can not present a picker view controller.")
-            return
+    /// Whether or not the option field allows the user to deselect items. If `false`, once the user has made a selection, they can change the selection but
+    /// can not clear or deselect that option. Defaults to `true`.
+    internal var pickerAllowsDeselection = true {
+        didSet {
+            if let controller = optionPickerController {
+                controller.allowsDeselection = pickerAllowsDeselection
+            }
         }
-        let pickerTableViewStyle: UITableViewStyle = optionGroups.count == 1 ? optionGroups.first!.preferredTableViewStyle : .grouped
-        let optionPickerController = WCOptionPickerTableViewController<ItemType>(style: pickerTableViewStyle)
-        optionPickerController.allowsDeselection = allowsDeselection
-        optionPickerController.navigationItem.title = fieldName
-        optionPickerController.delegate = self
-        optionPickerController.dataSource = self
-        navigationController.pushViewController(optionPickerController, animated: true)
-        self.optionPickerController = optionPickerController
     }
 
-
-    // MARK: - Cell setup
+    override var fieldValue: ValueType? {
+        didSet {
+            guard fieldValue != oldValue else {
+                return
+            }
+            guard let formController = formSection?.form?.formController else {
+                return
+            }
+            formController.reloadIndexPath(for: self, with: .none)
+        }
+    }
     
-    /// Set up the read-only version of this cell. By default this will set up a `WCGenericFieldWithFieldNameCell` or `WCGenericFieldCell` -
-    /// override this function in subclasses to customize behavior.
-    ///
-    /// - Parameter cell: The UITableViewCell for the field.
-    public override func setupCell(_ cell: UITableViewCell) {
-        super.setupCell(cell)
-        if let readOnlyCell = cell as? WCGenericFieldCell, let fieldValue = fieldValue {
-            readOnlyCell.valueLabel.textColor = appearance.preferredFieldValueColor
-            readOnlyCell.valueLabel.text = fieldValue.localizedAbbreviation
-        }
-    }
+    // MARK: Conformance to WCEditableSelectableField
 
-    /// Sets up the editable version of the cell for this field.
-    ///
-    /// - Parameter cell: the table view cell.
-    public override func setupEditableCell(_ cell: UITableViewCell) {
-        super.setupEditableCell(cell)
-        if let editableCell = cell as? WCOptionFieldCell {
-            editableCell.selectionStyle = .default
-            lastLoadedEditableCell = editableCell
-            updateLastLoadedCellWithValue()
-        } else {
-            lastLoadedEditableCell = nil
-        }
+    public func didSelectField(in formController: WCFormController) {
+        return
     }
-
 
     // MARK: - Initialization
     
@@ -321,7 +368,7 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - fieldName: The user facing, localized field name of the field.
     ///   - initialValue: The initial value for the field.
     ///   - allOptions: An array of items that should appear as options for the field.
-    public convenience init(fieldName: String, initialValue: ItemType?, allOptions: [ItemType]) {
+    public convenience init(fieldName: String, initialValue: ValueType?, allOptions: [ItemType]) {
         self.init(fieldName: fieldName, initialValue: initialValue)
         self.optionGroups = [OptionFieldGroup<ItemType>(items: allOptions)]
     }
@@ -332,7 +379,7 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - fieldName: The user facing, localized field name of the field.
     ///   - initialValue: The initial value for the field.
     ///   - optionGroups: An array of option groups that should appear as options for the field.
-    public convenience init(fieldName: String, initialValue: ItemType?, optionGroups: [OptionFieldGroup<ItemType>]) {
+    public convenience init(fieldName: String, initialValue: ValueType?, optionGroups: [OptionFieldGroup<ItemType>]) {
         self.init(fieldName: fieldName, initialValue: initialValue)
         self.optionGroups = optionGroups
     }
@@ -344,7 +391,7 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - initialValue: The initial value for the field.
     ///   - allOptions: An array of items that should appear as options for the field.
     ///   - isRequired: Whether or not the field is required.
-    public convenience init(fieldName: String, initialValue: ItemType?, allOptions: [ItemType], isRequired: Bool) {
+    public convenience init(fieldName: String, initialValue: ValueType?, allOptions: [ItemType], isRequired: Bool) {
         self.init(fieldName: fieldName, initialValue: initialValue, isRequired: isRequired)
         self.optionGroups = [OptionFieldGroup<ItemType>(items: allOptions)]
     }
@@ -356,7 +403,7 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - initialValue: The initial value for the field.
     ///   - optionGroups: An array of option groups that should appear as options for the field.
     ///   - isRequired: Whether or not the field is required.
-    public convenience init(fieldName: String, initialValue: ItemType?, optionGroups: [OptionFieldGroup<ItemType>], isRequired: Bool) {
+    public convenience init(fieldName: String, initialValue: ValueType?, optionGroups: [OptionFieldGroup<ItemType>], isRequired: Bool) {
         self.init(fieldName: fieldName, initialValue: initialValue, isRequired: isRequired)
         self.optionGroups = optionGroups
     }
@@ -368,7 +415,7 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - initialValue: The initial value for the field.
     ///   - allOptions: An array of items that should appear as options for the field.
     ///   - onValueChange: A block to be called when the field changes its value.
-    public convenience init(fieldName: String, initialValue: ItemType?, allOptions: [ItemType], onValueChange: @escaping ((ItemType?) -> Void)) {
+    public convenience init(fieldName: String, initialValue: ValueType?, allOptions: [ItemType], onValueChange: @escaping ((ValueType?) -> Void)) {
         self.init(fieldName: fieldName, initialValue: initialValue, onValueChange: onValueChange)
         self.optionGroups = [OptionFieldGroup<ItemType>(items: allOptions)]
     }
@@ -381,9 +428,9 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - optionGroups: An array of option groups that should appear as options for the field.
     ///   - onValueChange: A block to be called when the field changes its value.
     public convenience init(fieldName: String,
-                            initialValue: ItemType?,
+                            initialValue: ValueType?,
                             optionGroups: [OptionFieldGroup<ItemType>],
-                            onValueChange: @escaping ((ItemType?) -> Void))
+                            onValueChange: @escaping ((ValueType?) -> Void))
     {
         self.init(fieldName: fieldName, initialValue: initialValue, onValueChange: onValueChange)
         self.optionGroups = optionGroups
@@ -398,9 +445,9 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - onValueChange: A block to be called when the field changes its value.
     ///   - isRequired: Whether or not the field is required.
     public convenience init(fieldName: String,
-                            initialValue: ItemType?,
+                            initialValue: ValueType?,
                             allOptions: [ItemType],
-                            onValueChange: @escaping ((ItemType?) -> Void),
+                            onValueChange: @escaping ((ValueType?) -> Void),
                             isRequired: Bool)
     {
         self.init(fieldName: fieldName, initialValue: initialValue, onValueChange: onValueChange, isRequired: isRequired)
@@ -416,9 +463,9 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - onValueChange: A block to be called when the field changes its value.
     ///   - isRequired: Whether or not the field is required.
     public convenience init(fieldName: String,
-                            initialValue: ItemType?,
+                            initialValue: ValueType?,
                             optionGroups: [OptionFieldGroup<ItemType>],
-                            onValueChange: @escaping ((ItemType?) -> Void),
+                            onValueChange: @escaping ((ValueType?) -> Void),
                             isRequired: Bool)
     {
         self.init(fieldName: fieldName, initialValue: initialValue, onValueChange: onValueChange, isRequired: isRequired)
@@ -432,7 +479,7 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - initialValue: The initial value for the field.
     ///   - allOptions: An array of items that should appear as options for the field.
     ///   - appearance: The appearance for this field.
-    public convenience init(fieldName: String, initialValue: ItemType?, allOptions: [ItemType], appearance: WCOptionFieldAppearance) {
+    public convenience init(fieldName: String, initialValue: ValueType?, allOptions: [ItemType], appearance: WCOptionFieldAppearance) {
         self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance)
         self.optionGroups = [OptionFieldGroup<ItemType>(items: allOptions)]
     }
@@ -444,7 +491,7 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - initialValue: The initial value for the field.
     ///   - optionGroups: An array of option groups that should appear as options for the field.
     ///   - appearance: The appearance for this field.
-    public convenience init(fieldName: String, initialValue: ItemType?, optionGroups: [OptionFieldGroup<ItemType>], appearance: WCOptionFieldAppearance) {
+    public convenience init(fieldName: String, initialValue: ValueType?, optionGroups: [OptionFieldGroup<ItemType>], appearance: WCOptionFieldAppearance) {
         self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance)
         self.optionGroups = optionGroups
     }
@@ -457,7 +504,7 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - allOptions: An array of items that should appear as options for the field.
     ///   - appearance: The appearance for this field.
     ///   - isRequired: Whether or not the field is required.
-    public convenience init(fieldName: String, initialValue: ItemType?, allOptions: [ItemType], appearance: WCOptionFieldAppearance, isRequired: Bool) {
+    public convenience init(fieldName: String, initialValue: ValueType?, allOptions: [ItemType], appearance: WCOptionFieldAppearance, isRequired: Bool) {
         self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance, isRequired: isRequired)
         self.optionGroups = [OptionFieldGroup<ItemType>(items: allOptions)]
     }
@@ -471,7 +518,7 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - appearance: The appearance for this field.
     ///   - isRequired: Whether or not the field is required.
     public convenience init(fieldName: String,
-                            initialValue: ItemType?,
+                            initialValue: ValueType?,
                             optionGroups: [OptionFieldGroup<ItemType>],
                             appearance: WCOptionFieldAppearance,
                             isRequired: Bool)
@@ -489,10 +536,10 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - appearance: The appearance for this field.
     ///   - onValueChange: A block to be called when the field changes its value.
     public convenience init(fieldName: String,
-                            initialValue: ItemType?,
+                            initialValue: ValueType?,
                             allOptions: [ItemType],
                             appearance: WCOptionFieldAppearance,
-                            onValueChange: @escaping ((ItemType?) -> Void))
+                            onValueChange: @escaping ((ValueType?) -> Void))
     {
         self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance, onValueChange: onValueChange)
         self.optionGroups = [OptionFieldGroup<ItemType>(items: allOptions)]
@@ -507,10 +554,10 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - appearance: The appearance for this field.
     ///   - onValueChange: A block to be called when the field changes its value.
     public convenience init(fieldName: String,
-                            initialValue: ItemType?,
+                            initialValue: ValueType?,
                             optionGroups: [OptionFieldGroup<ItemType>],
                             appearance: WCOptionFieldAppearance,
-                            onValueChange: @escaping ((ItemType?) -> Void))
+                            onValueChange: @escaping ((ValueType?) -> Void))
     {
         self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance, onValueChange: onValueChange)
         self.optionGroups = optionGroups
@@ -526,10 +573,10 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - onValueChange: A block to be called when the field changes its value.
     ///   - isRequired: Whether or not the field is required.
     public convenience init(fieldName: String,
-                            initialValue: ItemType,
+                            initialValue: ValueType,
                             allOptions: [ItemType],
                             appearance: WCOptionFieldAppearance,
-                            onValueChange: @escaping ((ItemType?) -> Void),
+                            onValueChange: @escaping ((ValueType?) -> Void),
                             isRequired: Bool)
     {
         self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance, onValueChange: onValueChange, isRequired: isRequired)
@@ -546,27 +593,14 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     ///   - onValueChange: A block to be called when the field changes its value.
     ///   - isRequired: Whether or not the field is required.
     public convenience init(fieldName: String,
-                            initialValue: ItemType,
+                            initialValue: ValueType,
                             optionGroups: [OptionFieldGroup<ItemType>],
                             appearance: WCOptionFieldAppearance,
-                            onValueChange: @escaping ((ItemType?) -> Void),
+                            onValueChange: @escaping ((ValueType?) -> Void),
                             isRequired: Bool)
     {
         self.init(fieldName: fieldName, initialValue: initialValue, appearance: appearance, onValueChange: onValueChange, isRequired: isRequired)
         self.optionGroups = optionGroups
-    }
-
-    func updateLastLoadedCellWithValue() {
-        let appearance = self.editableAppearance ?? self.appearance
-        if let lastLoadedEditableCell = lastLoadedEditableCell {
-            if let validValue = fieldValue {
-                lastLoadedEditableCell.valueLabel.text = validValue.localizedAbbreviation
-                lastLoadedEditableCell.valueLabel.textColor = appearance.preferredFieldValueColor
-            } else {
-                lastLoadedEditableCell.valueLabel.text = emptyValueLabelText
-                lastLoadedEditableCell.valueLabel.textColor = appearance.preferredEmptyFieldValueColor
-            }
-        }
     }
 
 
@@ -575,6 +609,16 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     /// The number of option groups from which the user can choose.
     public var numberOfOptionGroups: Int {
         return optionGroups.count
+    }
+    
+    /// Whether or not the field currently has a value selected.
+    var hasSelection: Bool {
+        return fieldValue != nil
+    }
+
+    /// A localized summary of the current selection.
+    var localizedSelectionSummary: String? {
+        return hasSelection ? "" : nil
     }
 
     /// Gets the number of option items in a particular option group.
@@ -602,14 +646,24 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
     }
 
 
-    // MARK: - Conformance to WCOptionItemSingleSelectionDelegate
-
+    // MARK: - Conformance to WCOptionItemSelectionDelegate
+    
     /// The item type being selected by the option item selector.
     public typealias SelectionItemType = ItemType
 
+    public typealias SelectionValueType = ValueType
+    
     /// The item that is currently selected.
-    public var selectedItem: ItemType? {
+    public var selectedValue: ValueType? {
         return fieldValue
+    }
+
+    /// Returns whether or not a specific option item should be marked as selected.
+    ///
+    /// - Parameter optionItem: The option item to check.
+    /// - Returns: Whether or not the item is currently selected in the field.
+    func isSelected(optionItem: SelectionItemType) -> Bool {
+        return false
     }
 
     /// Gets an option item associated with a specified `IndexPath`.
@@ -620,21 +674,73 @@ public class WCOptionField<ItemType: OptionFieldItem>: WCGenericField<ItemType, 
         return optionGroups[indexPath.section].items[indexPath.row]
     }
 
-    /// A user has selected a new item in an option picker.
+    /// Called when the user has selected an option item in an option item picker controller.
     ///
     /// - Parameters:
-    ///   - picker: The picker view controller in which the user selected the option.
-    ///   - selectedItem: The item that the user selected.
-    public func optionPicker(picker: WCOptionPickerTableViewController<ItemType>, didSelectItem selectedItem: ItemType?) {
-        if allowsDeselection == false && selectedItem == nil {
-            return
-        }
-        if fieldValue != selectedItem {
-            viewDidUpdateValue(newValue: selectedItem)
+    ///   - picker: The option picker controller in which the user has selected the option item.
+    ///   - newItem: The new item that has been selected.
+    func optionPicker(_ picker: WCOptionPickerTableViewController<SelectionItemType, SelectionValueType>, didSelectItem newItem: SelectionItemType) {
+        return
+    }
+
+    /// Called when the user has deselected an option item in an option item picker controller.
+    ///
+    /// - Parameters:
+    ///   - picker: The option picker controller in which the user has deselected the option item.
+    ///   - deselectedItem: The item that has been deselected.
+    func optionPicker(_ picker: WCOptionPickerTableViewController<SelectionItemType, SelectionValueType>, didDeselectItem deselectedItem: SelectionItemType) {
+        return
+    }
+
+    /// Called when the option picker clears the selection.
+    ///
+    /// - Parameter picker: The option picker controller in which the user has cleared the value.
+    func optionPickerDidClearValue(_ picker: WCOptionPickerTableViewController<SelectionItemType, SelectionValueType>) {
+        if pickerAllowsDeselection && fieldValue != nil {
+            viewDidUpdateValue(newValue: nil)
         }
         updateLastLoadedCellWithValue()
-        if selectionBehavior == .returnToForm && selectedItem != nil {
-            picker.navigationController?.popViewController(animated: true)
+    }
+
+    func updateLastLoadedCellWithValue() {
+        let appearance = self.editableAppearance ?? self.appearance
+        if let lastLoadedEditableCell = lastLoadedEditableCell {
+            if hasSelection {
+                lastLoadedEditableCell.valueLabelText = localizedSelectionSummary
+                lastLoadedEditableCell.valueLabelColor = appearance.preferredFieldValueColor
+            } else {
+                lastLoadedEditableCell.valueLabelText = emptyValueLabelText
+                lastLoadedEditableCell.valueLabelColor = appearance.preferredEmptyFieldValueColor
+            }
+        }
+    }
+
+
+    // MARK: - Cell setup
+    
+    /// Set up the read-only version of this cell. By default this will set up a `WCGenericFieldWithFieldNameCell` or `WCGenericFieldCell` -
+    /// override this function in subclasses to customize behavior.
+    ///
+    /// - Parameter cell: The UITableViewCell for the field.
+    public override func setupCell(_ cell: UITableViewCell) {
+        super.setupCell(cell)
+        if let readOnlyCell = cell as? WCGenericFieldCell, hasSelection {
+            readOnlyCell.valueLabelColor = appearance.preferredFieldValueColor
+            readOnlyCell.valueLabelText = localizedSelectionSummary
+        }
+    }
+    
+    /// Sets up the editable version of the cell for this field.
+    ///
+    /// - Parameter cell: the table view cell.
+    public override func setupEditableCell(_ cell: UITableViewCell) {
+        super.setupEditableCell(cell)
+        if let editableCell = cell as? WCOptionFieldCell {
+            editableCell.selectionStyle = .default
+            lastLoadedEditableCell = editableCell
+            updateLastLoadedCellWithValue()
+        } else {
+            lastLoadedEditableCell = nil
         }
     }
 

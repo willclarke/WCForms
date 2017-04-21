@@ -115,9 +115,9 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
 
         if let readOnlyCell = cell as? WCGenericFieldWithFieldNameCell {
             let boolValue = fieldValue ?? false
-            readOnlyCell.fieldNameLabel.text = fieldName
-            readOnlyCell.valueLabel.textColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor
-            readOnlyCell.valueLabel.text = boolValue ? onDisplayValue : offDisplayValue
+            readOnlyCell.fieldNameLabelText = fieldName
+            readOnlyCell.valueLabelColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor
+            readOnlyCell.valueLabelText = boolValue ? onDisplayValue : offDisplayValue
         }
     }
 
@@ -145,6 +145,7 @@ public class WCBoolField: WCGenericField<Bool, WCBoolFieldAppearance> {
                 stackedBoolCell.offDisplayValueLabel.textColor = activeColor
             }
             stackedBoolCell.delegate = self
+            stackedBoolCell.updateStackViewConstraints()
         }
     }
 

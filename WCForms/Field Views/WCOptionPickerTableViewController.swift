@@ -8,8 +8,12 @@
 
 import UIKit
 
+enum OptionPickerSelectionMode {
+    case single, multiple
+}
+
 /// A picker for an option field.
-public class WCOptionPickerTableViewController<SelectionItemType: OptionFieldItem>: UITableViewController {
+public class WCOptionPickerTableViewController<SelectionItemType: OptionFieldItem, ValueType: Equatable>: UITableViewController {
     
     /// The cell identifier and nib name of a table view cell representing an option item.
     let optionItemIdentifier = "WCOptionItemTableViewCell"
@@ -28,14 +32,15 @@ public class WCOptionPickerTableViewController<SelectionItemType: OptionFieldIte
         }
     }
 
+    var selectionMode: OptionPickerSelectionMode = .single
+
+    var checkedIndexPaths = Set<IndexPath>()
+
     /// The delegate for handling selection actions.
-    weak var delegate: WCOptionField<SelectionItemType>? = nil
+    weak var delegate: WCOptionField<SelectionItemType, ValueType>? = nil
 
     /// The data source for retrieving option items
     weak var dataSource: WCOptionItemSelectionDataSource? = nil
-
-    /// The last selected cell.
-    weak var selectedCell: WCOptionItemTableViewCell? = nil
 
     /// Sets up the option picker.
     override public func viewDidLoad() {
@@ -45,7 +50,7 @@ public class WCOptionPickerTableViewController<SelectionItemType: OptionFieldIte
         super.viewDidLoad()
         let clearText = NSLocalizedString("Clear", tableName: "WCForms", comment: "Button to clear the value of a field")
         let clearButton = UIBarButtonItem(title: clearText, style: .plain, target: self, action: #selector(clearButtonTapped(_:)))
-        if delegate?.selectedItem == nil {
+        if dataSource?.hasSelection == false {
             clearButton.isEnabled = false
         }
         self.clearButton = clearButton
@@ -66,10 +71,10 @@ public class WCOptionPickerTableViewController<SelectionItemType: OptionFieldIte
             return
         }
         if allowsDeselection {
-            selectedCell?.accessoryType = .none
-            selectedCell = nil
             clearButton.isEnabled = false
-            delegate.optionPicker(picker: self, didSelectItem: nil)
+            delegate.optionPickerDidClearValue(self)
+            tableView.reloadRows(at: Array(checkedIndexPaths), with: .fade)
+            checkedIndexPaths = Set<IndexPath>()
         }
     }
 
@@ -99,10 +104,13 @@ public class WCOptionPickerTableViewController<SelectionItemType: OptionFieldIte
             cell.descriptionLabel.isHidden = true
             cell.descriptionLabel.text = nil
         }
-        if let selectedItem = delegate?.selectedItem, selectedItem == optionItem {
-            selectedCell = cell
+        if delegate?.isSelected(optionItem: optionItem) == true {
+            if !checkedIndexPaths.contains(indexPath) {
+                checkedIndexPaths.insert(indexPath)
+            }
             cell.accessoryType = .checkmark
         } else {
+            checkedIndexPaths.remove(indexPath)
             cell.accessoryType = .none
         }
         return cell
@@ -121,21 +129,29 @@ public class WCOptionPickerTableViewController<SelectionItemType: OptionFieldIte
         guard let delegate = delegate else {
             return
         }
-        let selectedItem = delegate.optionItem(for: indexPath)
-        if let previouslySelectedItem = delegate.selectedItem, previouslySelectedItem == selectedItem {
+        let tappedItem = delegate.optionItem(for: indexPath)
+        if delegate.isSelected(optionItem: tappedItem) {
             if allowsDeselection {
-                selectedCell?.accessoryType = .none
-                selectedCell = nil
-                clearButton.isEnabled = false
-                delegate.optionPicker(picker: self, didSelectItem: nil)
+                delegate.optionPicker(self, didDeselectItem: tappedItem)
+                checkedIndexPaths.remove(indexPath)
+                tableView.reloadRows(at: [indexPath], with: .fade)
             }
-        } else if let newlySelectedCell = tableView.cellForRow(at: indexPath) as? WCOptionItemTableViewCell {
-            selectedCell?.accessoryType = .none
-            newlySelectedCell.accessoryType = .checkmark
-            clearButton.isEnabled = true
-            selectedCell = newlySelectedCell
-            delegate.optionPicker(picker: self, didSelectItem: selectedItem)
+        } else {
+            delegate.optionPicker(self, didSelectItem: tappedItem)
+            switch selectionMode {
+            case .single:
+                var indexPathsToReload = Array(checkedIndexPaths)
+                indexPathsToReload.append(indexPath)
+                tableView.reloadRows(at: indexPathsToReload, with: .fade)
+                checkedIndexPaths = [indexPath]
+            case .multiple:
+                if !checkedIndexPaths.contains(indexPath) {
+                    checkedIndexPaths.insert(indexPath)
+                }
+                tableView.reloadRows(at: [indexPath], with: .fade)
+            }
         }
+        clearButton.isEnabled = delegate.hasSelection
     }
 
 }

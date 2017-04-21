@@ -32,7 +32,8 @@ internal class WCTextFieldNoFieldNameLabelCell: WCGenericTextFieldCell {
     ///
     /// - Parameter sender: The text field being changed.
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
-        delegate?.viewDidUpdateValue(newValue: sender.text)
+        let newValue = sender.text == "" ? nil : sender.text
+        delegate?.viewDidUpdateValue(newValue: newValue)
     }
 
     /// Delegate function to resign first responder when the return button is pressed.
@@ -70,7 +71,8 @@ internal class WCTextFieldCell: WCGenericTextFieldAndLabelCell {
     ///
     /// - Parameter sender: The text field that changed.
     @IBAction func textFieldEditingChanged(_ sender: UITextField) {
-        delegate?.viewDidUpdateValue(newValue: sender.text)
+        let newValue = sender.text == "" ? nil : sender.text
+        delegate?.viewDidUpdateValue(newValue: newValue)
     }
 
     /// Delegate function for when a text field has returned.

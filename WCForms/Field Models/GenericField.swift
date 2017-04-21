@@ -78,10 +78,32 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellAppea
     // MARK: - Instance variables
 
     /// The appearance of this field. This appearance will determine both the read-only and editable appearance, unless a custom `editableAppearance` is set.
-    public var appearance: AppearanceType
+    public var appearance: AppearanceType {
+        didSet {
+            // If we are in a form and the appearance has changed, we need to reload the view.
+            guard let formController = formSection?.form?.formController else {
+                return
+            }
+            let isEditing = formController.isEditing
+            if !isEditing || (isEditing && editableAppearance == nil) {
+                formController.reloadIndexPath(for: self, with: .automatic)
+            }
+        }
+    }
 
     /// A custom appearance to use when the field is being edited, in case the default editable appearance is not desired.
-    public var editableAppearance: AppearanceType?
+    public var editableAppearance: AppearanceType? {
+        didSet {
+            // If we are in a form and the appearance has changed, we need to reload the view.
+            guard let formController = formSection?.form?.formController else {
+                return
+            }
+            let isEditing = formController.isEditing
+            if isEditing {
+                formController.reloadIndexPath(for: self, with: .automatic)
+            }
+        }
+    }
 
     /// The pre-edit value of the field.
     internal var previousValue: ValueType?
@@ -375,21 +397,21 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellAppea
         }
         
         if let readOnlyCell = cell as? WCGenericFieldWithFieldNameCell {
-            readOnlyCell.fieldNameLabel.textColor = appearance.preferredFieldNameColor
-            readOnlyCell.fieldNameLabel.text = fieldName
+            readOnlyCell.fieldNameLabelColor = appearance.preferredFieldNameColor
+            readOnlyCell.fieldNameLabelText = fieldName
         }
         if let readOnlyCell = cell as? WCGenericFieldCell {
             if let stringConvertableValue = fieldValue as? CustomStringConvertible {
                 if stringConvertableValue.description != "" {
-                    readOnlyCell.valueLabel.textColor = appearance.preferredFieldValueColor
-                    readOnlyCell.valueLabel.text = stringConvertableValue.description
+                    readOnlyCell.valueLabelColor = appearance.preferredFieldValueColor
+                    readOnlyCell.valueLabelText = stringConvertableValue.description
                 } else {
-                    readOnlyCell.valueLabel.textColor = appearance.preferredEmptyFieldValueColor
-                    readOnlyCell.valueLabel.text = emptyValueLabelText
+                    readOnlyCell.valueLabelColor = appearance.preferredEmptyFieldValueColor
+                    readOnlyCell.valueLabelText = emptyValueLabelText
                 }
             } else {
-                readOnlyCell.valueLabel.textColor = appearance.preferredEmptyFieldValueColor
-                readOnlyCell.valueLabel.text = emptyValueLabelText
+                readOnlyCell.valueLabelColor = appearance.preferredEmptyFieldValueColor
+                readOnlyCell.valueLabelText = emptyValueLabelText
             }
         }
     }

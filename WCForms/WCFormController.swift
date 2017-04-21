@@ -19,6 +19,7 @@ public enum WCFormControllerMode {
     case editableOnly
 }
 
+
 // MARK: - WCFormController class definition
 
 /// A UITableViewController that displays a WCForm
@@ -76,17 +77,17 @@ open class WCFormController: UITableViewController {
     // MARK: - Instance variables
 
     /// The form that the controller displays.
-    public var formModel: WCForm? = nil {
+    public var formModel: WCForm = WCForm() {
         didSet {
             registerNibsForModel()
             if isEditing {
-                formModel?.beginEditing()
+                formModel.beginEditing()
             }
-            if let formTitle = formModel?.formTitle {
+            if let formTitle = formModel.formTitle {
                 navigationItem.title = formTitle
             }
-            formModel?.formController = self
-            if isViewLoaded && oldValue != nil {
+            formModel.formController = self
+            if isViewLoaded {
                 tableView.reloadData()
             }
         }
@@ -188,16 +189,10 @@ open class WCFormController: UITableViewController {
     // MARK: - Table view data source
 
     override open func numberOfSections(in tableView: UITableView) -> Int {
-        guard let formModel = formModel else {
-            return 0
-        }
         return formModel.numberOfVisibleSections(whenEditingForm: isEditing)
     }
 
     override open func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let formModel = formModel else {
-            return 0
-        }
         guard section < formModel.formSections.count else {
             return 0
         }
@@ -205,9 +200,6 @@ open class WCFormController: UITableViewController {
     }
 
     override open func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let formModel = formModel else {
-            return UITableViewCell()
-        }
         if let formField = formModel.field(for: indexPath, whenEditingForm: isEditing) {
             return formField.dequeueCell(from: tableView, for: indexPath, isEditing: isEditing)
         } else {
@@ -216,11 +208,11 @@ open class WCFormController: UITableViewController {
     }
 
     open override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return formModel?.section(forVisibleSection: section, whenEditingForm: isEditing)?.headerTitle
+        return formModel.section(forVisibleSection: section, whenEditingForm: isEditing)?.headerTitle
     }
 
     open override func tableView(_ tableView: UITableView, titleForFooterInSection section: Int) -> String? {
-        let footerTitle = formModel?.section(forVisibleSection: section, whenEditingForm: isEditing)?.footerTitle
+        let footerTitle = formModel.section(forVisibleSection: section, whenEditingForm: isEditing)?.footerTitle
         if tableView.style == .plain {
             return ""
         }
@@ -239,9 +231,6 @@ open class WCFormController: UITableViewController {
     }
 
     open override func tableView(_ tableView: UITableView, shouldShowMenuForRowAt indexPath: IndexPath) -> Bool {
-        guard let formModel = formModel else {
-            return false
-        }
         guard let field = formModel.field(for: indexPath, whenEditingForm: isEditing) else {
             return false
         }
@@ -253,9 +242,6 @@ open class WCFormController: UITableViewController {
     }
 
     open override func tableView(_ tableView: UITableView, canPerformAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) -> Bool {
-        guard let formModel = formModel else {
-            return false
-        }
         guard let field = formModel.field(for: indexPath, whenEditingForm: isEditing) else {
             return false
         }
@@ -271,9 +257,6 @@ open class WCFormController: UITableViewController {
     }
 
     open override func tableView(_ tableView: UITableView, performAction action: Selector, forRowAt indexPath: IndexPath, withSender sender: Any?) {
-        guard let formModel = formModel else {
-            return
-        }
         guard let field = formModel.field(for: indexPath, whenEditingForm: isEditing) else {
             return
         }
@@ -287,10 +270,6 @@ open class WCFormController: UITableViewController {
     }
 
     open override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let formModel = formModel else {
-            tableView.deselectRow(at: indexPath, animated: true)
-            return
-        }
         guard let field = formModel.field(for: indexPath, whenEditingForm: isEditing) else {
             tableView.deselectRow(at: indexPath, animated: true)
             return
@@ -309,9 +288,6 @@ open class WCFormController: UITableViewController {
         guard tableView.style == .plain else {
             return UITableViewAutomaticDimension
         }
-        guard let formModel = formModel else {
-            return UITableViewAutomaticDimension
-        }
         guard let section = formModel.section(forVisibleSection: section, whenEditingForm: isEditing) else {
             return UITableViewAutomaticDimension
         }
@@ -324,9 +300,6 @@ open class WCFormController: UITableViewController {
 
     open override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         guard tableView.style == .plain else {
-            return nil
-        }
-        guard let formModel = formModel else {
             return nil
         }
         guard let section = formModel.section(forVisibleSection: section, whenEditingForm: isEditing) else {
@@ -347,7 +320,7 @@ open class WCFormController: UITableViewController {
     // MARK: - Override superclass editing
 
     override final public func setEditing(_ editing: Bool, animated: Bool) {
-        guard let formModel = formModel, isEditing != editing else {
+        guard isEditing != editing else {
             super.setEditing(editing, animated: animated)
             return
         }
@@ -367,12 +340,12 @@ open class WCFormController: UITableViewController {
                 let sectionWasVisible = section.isVisible(whenEditingForm: !editing)
                 if sectionIsVisible && !sectionWasVisible {
                     //section is now visible but wasn't before, we want to add it
-                    sectionsToInsert.insert(formerVisibleSectionIndex)
+                    sectionsToInsert.insert(currentVisibleSectionIndex)
                 } else if !sectionIsVisible && sectionWasVisible {
                     //section was visible but isn't now, we want to delete it
                     sectionsToDelete.insert(formerVisibleSectionIndex)
                 }
-                if sectionIsVisible {
+                if sectionIsVisible && sectionWasVisible {
                     var formerVisibleFieldIndex = 0
                     var currentVisibleFieldIndex = 0
                     for field in section.formFields {
@@ -380,7 +353,7 @@ open class WCFormController: UITableViewController {
                         let fieldWasVisible = field.isVisible(whenEditingForm: !editing)
                         if fieldIsVisible && !fieldWasVisible {
                             //field is visible but wasn't before, we want to insert it
-                            indexPathsToInsert.append(IndexPath(row: currentVisibleFieldIndex, section: formerVisibleSectionIndex))
+                            indexPathsToInsert.append(IndexPath(row: currentVisibleFieldIndex, section: currentVisibleSectionIndex))
                         } else if !fieldIsVisible && fieldWasVisible {
                             //field was visible but isn't now, we want to delete it
                             indexPathsToDelete.append(IndexPath(row: formerVisibleFieldIndex, section: formerVisibleSectionIndex))
@@ -394,10 +367,12 @@ open class WCFormController: UITableViewController {
                             formerVisibleFieldIndex += 1
                         }
                     }
-                    currentVisibleSectionIndex += 1
                 }
                 if sectionWasVisible {
                     formerVisibleSectionIndex += 1
+                }
+                if sectionIsVisible {
+                    currentVisibleSectionIndex += 1
                 }
             }
             tableView.beginUpdates()
@@ -420,9 +395,6 @@ open class WCFormController: UITableViewController {
         guard isEditing == false else {
             return
         }
-        guard let formModel = formModel else {
-            return
-        }
         previousRightBarButtonItems = navigationItem.rightBarButtonItems
         previousLeftBarButtonItems = navigationItem.leftBarButtonItems
         previousLeftItemsSupplementBackButtonSetting = navigationItem.leftItemsSupplementBackButton
@@ -435,9 +407,6 @@ open class WCFormController: UITableViewController {
 
     final func doneEditingFormButtonTapped(_ sender: UIBarButtonItem) {
         guard isEditing == true else {
-            return
-        }
-        guard let formModel = formModel else {
             return
         }
         view.endEditing(true)
@@ -475,9 +444,6 @@ open class WCFormController: UITableViewController {
         guard isEditing else {
             return
         }
-        guard let formModel = formModel else {
-            return
-        }
         view.endEditing(true)
         if formModel.hasFieldChanges {
             let confirmationTitle = NSLocalizedString("Are you sure?",
@@ -493,14 +459,14 @@ open class WCFormController: UITableViewController {
             let discardAction = UIAlertAction(title: discardTitle, style: .destructive, handler: { (action: UIAlertAction) in
                 if self.formMode == .default {
                     self.restoreBarButtonsAfterCompletion()
-                    formModel.cancelEditing()
+                    self.formModel.cancelEditing()
                     self.formDidCancelEditing()
                     self.setEditing(false, animated: true)
                 } else if self.formMode == .editableOnly {
-                    formModel.cancelEditing()
+                    self.formModel.cancelEditing()
                     self.formDidCancelEditing()
                     self.tableView.reloadData()
-                    formModel.beginEditing()
+                    self.formModel.beginEditing()
                 }
             })
             confirmationAlert.addAction(discardAction)
@@ -554,9 +520,6 @@ open class WCFormController: UITableViewController {
 
 
     private func registerNibsForModel() {
-        guard let formModel = formModel else {
-            return
-        }
         let nibBundle = Bundle(for: CustomPlainFooterView.self)
         let footerNib = UINib(nibName: customFooterIdentifier, bundle: nibBundle)
         tableView.register(footerNib, forHeaderFooterViewReuseIdentifier: customFooterIdentifier)
@@ -581,6 +544,13 @@ open class WCFormController: UITableViewController {
         present(errorAlert, animated: true) { 
             self.tableView.scrollToRow(at: formError.indexPath, at: .middle, animated: true)
         }
+    }
+
+    public func reloadIndexPath(for formField: WCField, with animation: UITableViewRowAnimation) {
+        guard let indexPath = formModel.visibleIndexPath(for: formField, whenEditingForm: isEditing) else {
+            return
+        }
+        tableView.reloadRows(at: [indexPath], with: animation)
     }
 
 }

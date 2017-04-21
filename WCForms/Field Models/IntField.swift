@@ -133,7 +133,7 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
         if let readOnlyCell = cell as? WCGenericFieldCell {
             if let intValue = fieldValue {
                 let parsedValue = parseValue(forUserInput: String(intValue), withInsertionIndex: nil)
-                readOnlyCell.valueLabel.text = parsedValue.display
+                readOnlyCell.valueLabelText = parsedValue.display
             }
         }
         lastLoadedEditableCell = nil
@@ -154,6 +154,8 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
             if let intValue = fieldValue {
                 let parsedValue = parseValue(forUserInput: String(intValue), withInsertionIndex: nil)
                 editableIntCell.fieldValueTextField.text = parsedValue.display
+            } else {
+                editableIntCell.fieldValueTextField.text = nil
             }
             if let placeholderText = placeholderText {
                 editableIntCell.fieldValueTextField.placeholder = placeholderText

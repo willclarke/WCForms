@@ -27,8 +27,11 @@ open class WCForm {
     }
 
     /// The sections in the form.
-    internal var formSections: [WCFormSection] = [WCFormSection]() {
+    public internal(set) var formSections: [WCFormSection] = [WCFormSection]() {
         didSet {
+            for oldSection in oldValue {
+                oldSection.form = nil
+            }
             for section in formSections {
                 section.form = self
             }
@@ -221,6 +224,25 @@ open class WCForm {
         return nil
     }
 
+    /// Gets the `IndexPath` for a specified field in the form, if it exists in the form.
+    ///
+    /// - Parameters:
+    ///   - formField: The form field of which to get the index.
+    ///   - isEditing: Whether the returned `IndexPath` should be for when the form is being edited or not.
+    /// - Returns: The `IndexPath` of the requested field, if it could be found. Otherwise, `nil`.
+    internal func visibleIndexPath(for formField: WCField, whenEditingForm isEditing: Bool) -> IndexPath? {
+        var visibleSectionIndex = 0
+        for section in formSections {
+            if section.isVisible(whenEditingForm: isEditing) {
+                if let visibleRowIndex = section.visibleRowIndex(for: formField, whenEditingForm: isEditing) {
+                    return IndexPath(row: visibleRowIndex, section: visibleSectionIndex)
+                }
+                visibleSectionIndex += 1
+            }
+        }
+        return nil
+    }
+
 }
 
 /// A generic typed object form. Subclass this and override setupFormSections() to initialize your own form.
@@ -245,7 +267,16 @@ public class WCFormSection {
     public var headerTitle: String? = nil
 
     /// An array of fields contained in the form
-    public private(set) var formFields = [WCField]()
+    public internal(set) var formFields = [WCField]() {
+        didSet {
+            for oldField in oldValue {
+                oldField.formSection = nil
+            }
+            for field in formFields {
+                field.formSection = self
+            }
+        }
+    }
 
     /// Footer text for the section.
     public var footerTitle: String? = nil
@@ -324,4 +355,24 @@ public class WCFormSection {
             }
         }
     }
+
+    /// Gets the row index for a specified field in the form section, if it exists in the form section.
+    ///
+    /// - Parameters:
+    ///   - searchField: The form field of which to get the index.
+    ///   - isEditing: Whether the returned `IndexPath` should be for when the form is being edited or not.
+    /// - Returns: The index of the requested field, if it could be found. Otherwise, `nil`.
+    func visibleRowIndex(for searchField: WCField, whenEditingForm isEditing: Bool) -> Int? {
+        var visibleRowIndex = 0
+        for field in formFields {
+            if field.isVisible(whenEditingForm: isEditing) {
+                if field === searchField {
+                    return visibleRowIndex
+                }
+                visibleRowIndex += 1
+            }
+        }
+        return nil
+    }
+    
 }
