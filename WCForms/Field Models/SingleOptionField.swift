@@ -74,6 +74,9 @@ public class WCSingleOptionField<ItemType: OptionFieldItem>: WCOptionField<ItemT
     public override func didSelectField(in formController: WCFormController) {
         guard formController.isEditing && self.isEditable else {
             //We only want to be able to select the single option field when it's editable
+            if let indexPathForRow = formController.tableView.indexPathForSelectedRow {
+                formController.tableView.deselectRow(at: indexPathForRow, animated: true)
+            }
             return
         }
         guard let navigationController = formController.navigationController else {
