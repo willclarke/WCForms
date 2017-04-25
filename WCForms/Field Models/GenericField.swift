@@ -333,8 +333,7 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellAppea
     ///   - isEditing: The current editing mode of the form.
     /// - Returns: A valid UITableViewCell for the reqested IndexPath, dequeued from the specified UITableView.
     public final func dequeueCell(from tableView: UITableView, for indexPath: IndexPath, isEditing: Bool) -> UITableViewCell {
-        let editableCellIdentifier = editableAppearance?.editableCellIdentifier ?? appearance.editableCellIdentifier
-        let cellIdentifier = isEditing && isEditable ? editableCellIdentifier : appearance.cellIdentifier
+        let cellIdentifier = preferredCellIdentifier(whenEditing: isEditing)
         let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
         if isEditing && isEditable {
             self.setupEditableCell(cell)
@@ -342,6 +341,16 @@ public class WCGenericField<ValueType: Equatable, AppearanceType: FieldCellAppea
             self.setupCell(cell)
         }
         return cell
+    }
+
+    /// The preferred cell identifier for the cell when the form is in a particular editing mode. By default, this will return the cell identifier
+    /// for the field's appearance. If overridden, make sure the specified cell identifier has a nib registered with the form's table view.
+    ///
+    /// - Parameter isEditing: Whether or not the form is being edited.
+    /// - Returns: The cell identifier for the cell.
+    public func preferredCellIdentifier(whenEditing isEditing: Bool) -> String {
+        let editableCellIdentifier = editableAppearance?.editableCellIdentifier ?? appearance.editableCellIdentifier
+        return isEditing && isEditable ? editableCellIdentifier : appearance.cellIdentifier
     }
 
     /// Registers the nibs/cell reuse identifiers for field based on the field's `AppearanceType`.
