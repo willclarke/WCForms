@@ -168,6 +168,7 @@ internal class WCGenericFieldRightDetailCell: WCGenericFieldWithFieldNameCell, L
     override func prepareForReuse() {
         super.prepareForReuse()
         clearLabelWidthConstraints()
+        fieldNameAndValueStackView.alignment = .firstBaseline
     }
 
     override func awakeFromNib() {
