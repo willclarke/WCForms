@@ -55,6 +55,7 @@
 		8AB50DC81E7214340057C249 /* WCGenericFieldStackedCaptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AB50DC61E7214340057C249 /* WCGenericFieldStackedCaptionCell.xib */; };
 		8AB50DCC1E7215F60057C249 /* WCTextFieldStackedCaptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AB50DCA1E7215F60057C249 /* WCTextFieldStackedCaptionCell.xib */; };
 		8ABE45711E85B79100A0B8BE /* OptionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE45701E85B79100A0B8BE /* OptionField.swift */; };
+		8ACC7BAE1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACC7BAD1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift */; };
 		8AF4D3B81E96F74900A8156E /* SingleOptionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4D3B71E96F74900A8156E /* SingleOptionField.swift */; };
 		8AF4D3BA1E96F77700A8156E /* MultipleOptionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4D3B91E96F77700A8156E /* MultipleOptionField.swift */; };
 /* End PBXBuildFile section */
@@ -110,6 +111,7 @@
 		8AB50DC61E7214340057C249 /* WCGenericFieldStackedCaptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCGenericFieldStackedCaptionCell.xib; path = "Field Views/WCGenericFieldStackedCaptionCell.xib"; sourceTree = "<group>"; };
 		8AB50DCA1E7215F60057C249 /* WCTextFieldStackedCaptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCTextFieldStackedCaptionCell.xib; path = "Field Views/WCTextFieldStackedCaptionCell.xib"; sourceTree = "<group>"; };
 		8ABE45701E85B79100A0B8BE /* OptionField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OptionField.swift; path = "Field Models/OptionField.swift"; sourceTree = "<group>"; };
+		8ACC7BAD1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WCOptionSelectionDetailTableViewController.swift; path = "Field Views/WCOptionSelectionDetailTableViewController.swift"; sourceTree = "<group>"; };
 		8AF4D3B71E96F74900A8156E /* SingleOptionField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleOptionField.swift; path = "Field Models/SingleOptionField.swift"; sourceTree = "<group>"; };
 		8AF4D3B91E96F77700A8156E /* MultipleOptionField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipleOptionField.swift; path = "Field Models/MultipleOptionField.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -178,6 +180,7 @@
 				8A111F721E8EE11C004AC07E /* WCOptionPickerTableViewController.swift */,
 				8A111F741E8F29A8004AC07E /* WCOptionItemTableViewCell.swift */,
 				8A111F751E8F29A8004AC07E /* WCOptionItemTableViewCell.xib */,
+				8ACC7BAD1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift */,
 			);
 			name = "Fields Views";
 			sourceTree = "<group>";
@@ -336,6 +339,7 @@
 				8A3907C41E6BC26000BE1A20 /* IntField.swift in Sources */,
 				8AB190201E64667C00AE13AF /* FormProtocols.swift in Sources */,
 				8A9FA4091E67969F00C16C26 /* WCBoolFieldCell.swift in Sources */,
+				8ACC7BAE1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift in Sources */,
 				8AB50DC21E704F350057C249 /* InputAccessoryView.swift in Sources */,
 				8A9FA3FF1E66D29E00C16C26 /* WCGenericFieldCell.swift in Sources */,
 				8A3907C21E6BC25000BE1A20 /* DateField.swift in Sources */,
