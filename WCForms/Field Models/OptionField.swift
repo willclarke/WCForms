@@ -71,12 +71,36 @@ public enum WCOptionFieldAppearance: FieldCellAppearance {
 
     /// Returns `rightDetail`, the default Option field appearance.
     public static var `default`: WCOptionFieldAppearance {
-        return WCOptionFieldAppearance.rightDetail
+        return WCOptionFieldAppearance.stacked
     }
 
     /// Returns all values of the Option field appearance.
     public static var allValues: [WCOptionFieldAppearance] {
         return [.stacked, .stackedCaption, .rightDetail]
+    }
+
+    /// The default multiple option summary style for the appearance.
+    public var preferredSummaryStyle: MultipleOptionSummaryStyle {
+        switch self {
+        case .rightDetail:
+            // Since the space for the value on right detail appearance is constrained, display a count.
+            return .count
+        case .stacked, .stackedCaption:
+            // Space on stacked cells are not constrained, so show all selected options.
+            return .all
+        }
+    }
+    
+    /// The default behavior for when a multiple option cell is selected for the appearance.
+    public var preferredReadOnlySelectionBehavior: MultipleOptionReadOnlySelectionBehavior {
+        switch self {
+        case .rightDetail:
+            // Since we are displaying a count by default, tapping the cell should push a detail VC onto the navigation stack.
+            return .showDetail
+        case .stacked, .stackedCaption:
+            // Space on stacked cells are not constrained, so show all selected options.
+            return .none
+        }
     }
 
 }

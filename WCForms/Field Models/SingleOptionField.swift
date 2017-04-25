@@ -27,6 +27,10 @@ public class WCSingleOptionField<ItemType: OptionFieldItem>: WCOptionField<ItemT
         return fieldValue?.localizedAbbreviation
     }
 
+    override public var copyValue: String? {
+        return fieldValue?.localizedValue
+    }
+
     /// Returns whether or not a specific option item should be marked as selected.
     ///
     /// - Parameter optionItem: The option item to check.
