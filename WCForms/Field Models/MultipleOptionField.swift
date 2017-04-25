@@ -57,6 +57,10 @@ public enum MultipleOptionSummaryOrder {
     case with(comparator: Comparator)
 }
 
+/// The selection behavior for multiple option fields in read only mode.
+///
+/// - showDetail: If selections have been made, a new detail view controller should be pushed onto the navigation stack to display the user's selections.
+/// - none: No action should be taken. The cell will be immediately deselected after
 public enum MultipleOptionReadOnlySelectionBehavior {
     case showDetail, none
 }
