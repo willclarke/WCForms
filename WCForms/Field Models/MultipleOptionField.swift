@@ -173,7 +173,7 @@ public class WCMultipleOptionField<ItemType: OptionFieldItem>: WCOptionField<Ite
 
     public override func preferredCellIdentifier(whenEditing isEditing: Bool) -> String {
         if (!isEditing || !isEditable) && preferredReadOnlySelectionBehavior == .showDetail && !isEmpty {
-            return "WCOptionFieldCell"
+            return appearance.editableCellIdentifier
         } else {
             return super.preferredCellIdentifier(whenEditing: isEditing)
         }
