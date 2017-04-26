@@ -48,6 +48,7 @@ class WCOptionSelectionDetailTableViewController<SelectionItemType: OptionFieldI
             cell.descriptionLabel.isHidden = true
             cell.descriptionLabel.text = nil
         }
+        cell.accessoryType = .checkmark
         cell.selectionStyle = .none
         return cell
     }
