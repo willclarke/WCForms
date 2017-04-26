@@ -36,6 +36,36 @@ public class WCOptionPickerTableViewController<SelectionItemType: OptionFieldIte
 
     var checkedIndexPaths = Set<IndexPath>()
 
+    /// Items that have currently been selected, but are not in the field's options, so they can only be deselected and not re-selected.
+    /// For example, if the available options are Apples, Oranges, and Bananas, and current selection is Grapefruits (perhaps because Grapefruits was 
+    /// previously available as an option, but no longer), then this would contain that option. If deselected, the option should go away and not be selectable 
+    /// or even visible again.
+    var selectedDeprecatedItems: [SelectionItemType]? = nil {
+        didSet {
+            if selectedDeprecatedItems == nil && oldValue != nil {
+                // there used to be items, and now there aren't. We need to move all the checkedIndexPaths down by one
+                var indexPathsToRemove = [IndexPath]()
+                for var indexPath in checkedIndexPaths {
+                    if indexPath.section > 0 {
+                        indexPath.section -= 1
+                    } else {
+                        indexPathsToRemove.append(indexPath)
+                    }
+                }
+                for indexPath in indexPathsToRemove {
+                    checkedIndexPaths.remove(indexPath)
+                }
+            } else if let newItems = selectedDeprecatedItems, oldValue == nil {
+                for var indexPath in checkedIndexPaths {
+                    indexPath.section += 1
+                }
+                for (newIndex, _) in newItems.enumerated() {
+                    checkedIndexPaths.insert(IndexPath(row: newIndex, section: 0))
+                }
+            }
+        }
+    }
+
     /// The delegate for handling selection actions.
     weak var delegate: WCOptionField<SelectionItemType, ValueType>? = nil
 
@@ -82,15 +112,41 @@ public class WCOptionPickerTableViewController<SelectionItemType: OptionFieldIte
     // MARK: - Table view data source
 
     override public func numberOfSections(in tableView: UITableView) -> Int {
-        return dataSource?.numberOfOptionGroups ?? 0
+        var numberOfSections = dataSource?.numberOfOptionGroups ?? 0
+        if let selectedDeprecatedItems = self.selectedDeprecatedItems, selectedDeprecatedItems.count > 0 {
+            numberOfSections += 1
+        }
+        return numberOfSections
     }
 
     override public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dataSource?.numberOfOptionItems(forSection: section) ?? 0
+        var adjustedSection = section
+        if let selectedDeprecatedItems = self.selectedDeprecatedItems, selectedDeprecatedItems.count > 0 {
+            if section == 0 {
+                return selectedDeprecatedItems.count
+            } else {
+                adjustedSection += 1
+            }
+        }
+        return dataSource?.numberOfOptionItems(forSection: adjustedSection) ?? 0
     }
 
     override public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let optionItem = delegate?.optionItem(for: indexPath) else {
+        var adjustedIndexPath = indexPath
+        
+        var optionItemToDisplay: SelectionItemType? = nil
+        if let selectedDeprecatedItems = self.selectedDeprecatedItems, selectedDeprecatedItems.count > 0 {
+            if indexPath.section == 0 {
+                optionItemToDisplay = selectedDeprecatedItems[indexPath.row]
+            } else {
+                adjustedIndexPath.section += 1
+            }
+        }
+        if optionItemToDisplay == nil {
+            optionItemToDisplay = delegate?.optionItem(for: adjustedIndexPath)
+        }
+        
+        guard let optionItem = optionItemToDisplay else {
             return UITableViewCell()
         }
         guard let cell = tableView.dequeueReusableCell(withIdentifier: optionItemIdentifier, for: indexPath) as? WCOptionItemTableViewCell else {
