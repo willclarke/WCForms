@@ -127,62 +127,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		8A3907BA1E6BC1E000BE1A20 /* Field Models */ = {
+		8A9FA3FC1E66D27200C16C26 /* Form Views */ = {
 			isa = PBXGroup;
 			children = (
-				8A9FA4051E676C1800C16C26 /* WCFields.swift */,
-				8AB50DC31E717E9D0057C249 /* GenericField.swift */,
-				8A3907BF1E6BC24200BE1A20 /* TextField.swift */,
-				8A3907BD1E6BC22300BE1A20 /* BoolField.swift */,
-				8A3907C11E6BC25000BE1A20 /* DateField.swift */,
-				8A3907C31E6BC26000BE1A20 /* IntField.swift */,
-				8ABE45701E85B79100A0B8BE /* OptionField.swift */,
-				8AF4D3B71E96F74900A8156E /* SingleOptionField.swift */,
-				8AF4D3B91E96F77700A8156E /* MultipleOptionField.swift */,
-			);
-			name = "Field Models";
-			sourceTree = "<group>";
-		};
-		8A9FA3FC1E66D27200C16C26 /* Fields Views */ = {
-			isa = PBXGroup;
-			children = (
-				8A9FA3FD1E66D29E00C16C26 /* WCGenericFieldCell.swift */,
-				8AB50DBA1E6C613E0057C249 /* WCGenericFieldCell.xib */,
-				8A9FA3FE1E66D29E00C16C26 /* WCGenericFieldStackedCell.xib */,
-				8AB50DC61E7214340057C249 /* WCGenericFieldStackedCaptionCell.xib */,
-				8A4BA4811E686BB3004F7089 /* WCGenericFieldRightDetailTableViewCell.xib */,
-				8A9FA4011E676A6200C16C26 /* WCTextFieldCell.swift */,
-				8A6801501E6BF7A900227ABC /* WCTextFieldNoFieldNameLabelCell.xib */,
-				8A9FA4021E676A6200C16C26 /* WCTextFieldCell.xib */,
-				8AB50DCA1E7215F60057C249 /* WCTextFieldStackedCaptionCell.xib */,
-				8A4BA4851E686DEC004F7089 /* WCTextFieldRightDetailCell.xib */,
-				8A9FA4071E67969F00C16C26 /* WCBoolFieldCell.swift */,
-				8A9FA4081E67969F00C16C26 /* WCBoolFieldCell.xib */,
-				8A4BA4881E688C73004F7089 /* WCBoolFieldStackedCell.swift */,
-				8A4BA4891E688C73004F7089 /* WCBoolFieldStackedCell.xib */,
-				8A0E4D0C1E72248400BAEC17 /* WCBoolFieldStackedCaptionCell.xib */,
-				8A9FA40B1E67980B00C16C26 /* WCDateFieldCell.swift */,
-				8A9FA40C1E67980B00C16C26 /* WCDateFieldCell.xib */,
-				8A0E4D101E730FCB00BAEC17 /* WCDateFieldStackedCaptionCell.xib */,
-				8A4BA4951E68F966004F7089 /* WCDateFieldRightDetailCell.xib */,
-				8A9FA40F1E67A1B800C16C26 /* WCIntFieldCell.swift */,
-				8A9FA4101E67A1B800C16C26 /* WCIntFieldCell.xib */,
-				8A0E4D141E7335B700BAEC17 /* WCIntFieldStackedCaptionCell.xib */,
-				8A4BA48D1E6892F5004F7089 /* WCIntFieldRightDetailCell.xib */,
-				8A4BA4901E68F80B004F7089 /* WCIntFieldSliderCell.swift */,
-				8A4BA4911E68F80B004F7089 /* WCIntFieldSliderCell.xib */,
 				8A0E4D191E73547300BAEC17 /* CustomPlainFooterView.swift */,
 				8A0E4D171E73543400BAEC17 /* CustomPlainFooterView.xib */,
-				8A2A7ED51E87163800594E89 /* WCOptionFieldCell.swift */,
-				8A2A7ED61E87163800594E89 /* WCOptionFieldCell.xib */,
-				8A2A7EDA1E87165E00594E89 /* WCOptionFieldStackedCell.xib */,
-				8A2A7EDE1E8716AE00594E89 /* WCOptionFieldStackedCaptionCell.xib */,
-				8A111F721E8EE11C004AC07E /* WCOptionPickerTableViewController.swift */,
-				8A111F741E8F29A8004AC07E /* WCOptionItemTableViewCell.swift */,
-				8A111F751E8F29A8004AC07E /* WCOptionItemTableViewCell.xib */,
-				8ACC7BAD1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift */,
 			);
-			name = "Fields Views";
+			name = "Form Views";
 			sourceTree = "<group>";
 		};
 		8AB18FC61E64023E00AE13AF = {
@@ -211,11 +162,116 @@
 				8AB50DC11E704F350057C249 /* InputAccessoryView.swift */,
 				8AB50DBD1E6F935F0057C249 /* InputAccessoryView.xib */,
 				8AB50DBF1E6F953B0057C249 /* Icons.xcassets */,
-				8A3907BA1E6BC1E000BE1A20 /* Field Models */,
-				8A9FA3FC1E66D27200C16C26 /* Fields Views */,
+				8ADCA1D41EB26514002720AF /* Fields */,
+				8A9FA3FC1E66D27200C16C26 /* Form Views */,
 				8AB18FD41E64023E00AE13AF /* Info.plist */,
 			);
 			path = WCForms;
+			sourceTree = "<group>";
+		};
+		8ADCA1D41EB26514002720AF /* Fields */ = {
+			isa = PBXGroup;
+			children = (
+				8A9FA4051E676C1800C16C26 /* WCFields.swift */,
+				8ADCA1DB1EB27734002720AF /* Generic Field */,
+				8ADCA1D51EB26521002720AF /* Text Field */,
+				8ADCA1D61EB26544002720AF /* Bool Field */,
+				8ADCA1D81EB265BD002720AF /* Int Field */,
+				8ADCA1D71EB265B4002720AF /* Date Field */,
+				8ADCA1D91EB265CD002720AF /* Option Field */,
+			);
+			name = Fields;
+			sourceTree = "<group>";
+		};
+		8ADCA1D51EB26521002720AF /* Text Field */ = {
+			isa = PBXGroup;
+			children = (
+				8A3907BF1E6BC24200BE1A20 /* TextField.swift */,
+				8A9FA4011E676A6200C16C26 /* WCTextFieldCell.swift */,
+				8A6801501E6BF7A900227ABC /* WCTextFieldNoFieldNameLabelCell.xib */,
+				8A9FA4021E676A6200C16C26 /* WCTextFieldCell.xib */,
+				8AB50DCA1E7215F60057C249 /* WCTextFieldStackedCaptionCell.xib */,
+				8A4BA4851E686DEC004F7089 /* WCTextFieldRightDetailCell.xib */,
+			);
+			name = "Text Field";
+			sourceTree = "<group>";
+		};
+		8ADCA1D61EB26544002720AF /* Bool Field */ = {
+			isa = PBXGroup;
+			children = (
+				8A3907BD1E6BC22300BE1A20 /* BoolField.swift */,
+				8A9FA4071E67969F00C16C26 /* WCBoolFieldCell.swift */,
+				8A9FA4081E67969F00C16C26 /* WCBoolFieldCell.xib */,
+				8A4BA4881E688C73004F7089 /* WCBoolFieldStackedCell.swift */,
+				8A4BA4891E688C73004F7089 /* WCBoolFieldStackedCell.xib */,
+				8A0E4D0C1E72248400BAEC17 /* WCBoolFieldStackedCaptionCell.xib */,
+			);
+			name = "Bool Field";
+			sourceTree = "<group>";
+		};
+		8ADCA1D71EB265B4002720AF /* Date Field */ = {
+			isa = PBXGroup;
+			children = (
+				8A3907C11E6BC25000BE1A20 /* DateField.swift */,
+				8A9FA40B1E67980B00C16C26 /* WCDateFieldCell.swift */,
+				8A9FA40C1E67980B00C16C26 /* WCDateFieldCell.xib */,
+				8A0E4D101E730FCB00BAEC17 /* WCDateFieldStackedCaptionCell.xib */,
+				8A4BA4951E68F966004F7089 /* WCDateFieldRightDetailCell.xib */,
+			);
+			name = "Date Field";
+			sourceTree = "<group>";
+		};
+		8ADCA1D81EB265BD002720AF /* Int Field */ = {
+			isa = PBXGroup;
+			children = (
+				8A3907C31E6BC26000BE1A20 /* IntField.swift */,
+				8A9FA40F1E67A1B800C16C26 /* WCIntFieldCell.swift */,
+				8A9FA4101E67A1B800C16C26 /* WCIntFieldCell.xib */,
+				8A0E4D141E7335B700BAEC17 /* WCIntFieldStackedCaptionCell.xib */,
+				8A4BA48D1E6892F5004F7089 /* WCIntFieldRightDetailCell.xib */,
+				8A4BA4901E68F80B004F7089 /* WCIntFieldSliderCell.swift */,
+				8A4BA4911E68F80B004F7089 /* WCIntFieldSliderCell.xib */,
+			);
+			name = "Int Field";
+			sourceTree = "<group>";
+		};
+		8ADCA1D91EB265CD002720AF /* Option Field */ = {
+			isa = PBXGroup;
+			children = (
+				8ABE45701E85B79100A0B8BE /* OptionField.swift */,
+				8AF4D3B71E96F74900A8156E /* SingleOptionField.swift */,
+				8AF4D3B91E96F77700A8156E /* MultipleOptionField.swift */,
+				8A2A7ED51E87163800594E89 /* WCOptionFieldCell.swift */,
+				8A2A7ED61E87163800594E89 /* WCOptionFieldCell.xib */,
+				8A2A7EDA1E87165E00594E89 /* WCOptionFieldStackedCell.xib */,
+				8A2A7EDE1E8716AE00594E89 /* WCOptionFieldStackedCaptionCell.xib */,
+				8ADCA1DA1EB27707002720AF /* Associated Controllers */,
+			);
+			name = "Option Field";
+			sourceTree = "<group>";
+		};
+		8ADCA1DA1EB27707002720AF /* Associated Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A111F721E8EE11C004AC07E /* WCOptionPickerTableViewController.swift */,
+				8A111F741E8F29A8004AC07E /* WCOptionItemTableViewCell.swift */,
+				8A111F751E8F29A8004AC07E /* WCOptionItemTableViewCell.xib */,
+				8ACC7BAD1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift */,
+			);
+			name = "Associated Controllers";
+			sourceTree = "<group>";
+		};
+		8ADCA1DB1EB27734002720AF /* Generic Field */ = {
+			isa = PBXGroup;
+			children = (
+				8AB50DC31E717E9D0057C249 /* GenericField.swift */,
+				8A9FA3FD1E66D29E00C16C26 /* WCGenericFieldCell.swift */,
+				8AB50DBA1E6C613E0057C249 /* WCGenericFieldCell.xib */,
+				8A9FA3FE1E66D29E00C16C26 /* WCGenericFieldStackedCell.xib */,
+				8AB50DC61E7214340057C249 /* WCGenericFieldStackedCaptionCell.xib */,
+				8A4BA4811E686BB3004F7089 /* WCGenericFieldRightDetailTableViewCell.xib */,
+			);
+			name = "Generic Field";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
