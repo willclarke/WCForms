@@ -338,7 +338,7 @@ internal class WCOptionField<ItemType: OptionFieldItem, ValueType: Equatable>: W
     
     // MARK: Conformance to WCEditableSelectableField
 
-    public func didSelectField(in formController: WCFormController) {
+    public func didSelectField(in formController: WCFormController, at indexPath: IndexPath) {
         return
     }
 

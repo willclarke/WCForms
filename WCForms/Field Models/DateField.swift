@@ -70,8 +70,18 @@ public enum WCDateFieldAppearance: FieldCellAppearance {
 
 }
 
+/// Delegate for a date field model to respond to view changes.
+public protocol WCDatePickerInputDelegate: class {
+
+    /// A UIDatePicker has updated the field's date.
+    ///
+    /// - Parameter picker: The picker view that was updated by the user.
+    func viewDidUpdateDatePicker(picker: UIDatePicker)
+
+}
+
 /// A date field for a specific day.
-public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
+public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePickerInputDelegate {
 
     /// Formatter to use to display the date to the user. By default, this will use a `dateStyle` of `DateFormatter.Style.medium` (and no `timeStyle`)
     public var dateDisplayFormatter = DateFormatter()
@@ -141,7 +151,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
             if let placeholderText = placeholderText {
                 editableDateCell.fieldValueTextField.placeholder = placeholderText
             }
-            editableDateCell.delegate = self
+            editableDateCell.datePickerDelegate = self
         }
     }
 
@@ -191,6 +201,16 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance> {
                 throw WCFieldValidationError.outOfBounds(fieldName: fieldName, boundsError: errorString)
             }
         }
+    }
+
+
+    // MARK: - Confromance to WCDatePickerInputDelegate
+
+    /// A UIDatePicker has updated the field's date.
+    ///
+    /// - Parameter picker: The picker view that was updated by the user.
+    public func viewDidUpdateDatePicker(picker: UIDatePicker) {
+        viewDidUpdateValue(newValue: picker.date)
     }
 
 }

@@ -71,19 +71,17 @@ public class WCSingleOptionField<ItemType: OptionFieldItem>: WCOptionField<ItemT
     /// Presents an option picker controller for the user to select an option item. Called when the user has selected this field in a form.
     ///
     /// - Parameter formController: The form controller on which the user selected the option field.
-    public override func didSelectField(in formController: WCFormController) {
+    public override func didSelectField(in formController: WCFormController, at indexPath: IndexPath) {
         guard formController.isEditing && self.isEditable else {
             //We only want to be able to select the single option field when it's editable
-            if let indexPathForRow = formController.tableView.indexPathForSelectedRow {
-                formController.tableView.deselectRow(at: indexPathForRow, animated: true)
-            }
+            formController.tableView.deselectRow(at: indexPath, animated: true)
             return
         }
         guard let navigationController = formController.navigationController else {
             NSLog("Error: WCOptionField \(fieldName) is on a form not embedded in a UINavigationController, so it can not present a picker view controller.")
             return
         }
-        super.didSelectField(in: formController)
+        super.didSelectField(in: formController, at: indexPath)
         let pickerTableViewStyle: UITableViewStyle = optionGroups.count == 1 ? optionGroups.first!.preferredTableViewStyle : .grouped
         let optionPickerController = WCOptionPickerTableViewController<ItemType, ItemType>(style: pickerTableViewStyle)
         optionPickerController.allowsDeselection = allowsDeselection

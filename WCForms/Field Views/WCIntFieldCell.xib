@@ -31,7 +31,7 @@
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                         <connections>
-                            <action selector="intTextFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="xLc-nh-HJf"/>
+                            <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="xLc-nh-HJf"/>
                             <outlet property="delegate" destination="KGk-i7-Jjw" id="sY8-a7-TiK"/>
                         </connections>
                     </textField>

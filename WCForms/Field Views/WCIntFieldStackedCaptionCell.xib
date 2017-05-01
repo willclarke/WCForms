@@ -30,7 +30,7 @@
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
                         <connections>
-                            <action selector="intTextFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="rfi-vw-vvP"/>
+                            <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="rfi-vw-vvP"/>
                             <outlet property="delegate" destination="-1" id="eQn-ll-qIt"/>
                         </connections>
                     </textField>

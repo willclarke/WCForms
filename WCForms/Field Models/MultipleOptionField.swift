@@ -134,15 +134,13 @@ public class WCMultipleOptionField<ItemType: OptionFieldItem>: WCOptionField<Ite
     /// Presents an option picker controller for the user to select an option item. Called when the user has selected this field in a form.
     ///
     /// - Parameter formController: The form controller on which the user selected the option field.
-    public override func didSelectField(in formController: WCFormController) {
+    public override func didSelectField(in formController: WCFormController, at indexPath: IndexPath) {
         guard let navigationController = formController.navigationController else {
             NSLog("Error: WCOptionField \(fieldName) is on a form not embedded in a UINavigationController, so it can not present a picker view controller.")
-            if let indexPathForRow = formController.tableView.indexPathForSelectedRow {
-                formController.tableView.deselectRow(at: indexPathForRow, animated: true)
-            }
+            formController.tableView.deselectRow(at: indexPath, animated: true)
             return
         }
-        super.didSelectField(in: formController)
+        super.didSelectField(in: formController, at: indexPath)
         let isFieldInEditMode = formController.isEditing && isEditable
         let shouldPushSelectionSummary = !isFieldInEditMode && preferredReadOnlySelectionBehavior == .showDetail
         if isFieldInEditMode {

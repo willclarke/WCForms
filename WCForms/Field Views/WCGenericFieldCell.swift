@@ -73,11 +73,12 @@ internal protocol LabelBalancingStackViewCell: class {
     
     weak var fieldNameAndValueStackView: UIStackView! { get }
     weak var fieldNameLabel: UILabel! { get }
-    weak var valueLabel: UILabel! { get }
+    weak var valueView: UIView! { get }
     var contentView: UIView { get }
     
     var stackViewMarginSpacing: CGFloat { get }
     var minimumLabelWidth: CGFloat { get }
+    var valueIsEmpty: Bool { get }
     
 }
 
@@ -91,19 +92,19 @@ extension LabelBalancingStackViewCell {
             fieldNameLabel.removeConstraint(fieldNameMinimumWidthConstraint)
         }
         if let fieldValueMinimumWidthConstraint = fieldValueMinimumWidthConstraint {
-            valueLabel.removeConstraint(fieldValueMinimumWidthConstraint)
+            valueView.removeConstraint(fieldValueMinimumWidthConstraint)
         }
     }
     
     func updateLabelWidthConstraints() {
-        guard fieldNameLabel.text != nil && valueLabel.text != nil else {
+        guard fieldNameLabel.text != nil && !valueIsEmpty else {
             clearLabelWidthConstraints()
             return //we don't need constraints if the one of the labels is empty
         }
         let preferredFieldNameSize = fieldNameLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude,
                                                                         height: CGFloat.greatestFiniteMagnitude))
-        let preferredFieldValueSize = valueLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude,
-                                                                     height: CGFloat.greatestFiniteMagnitude))
+        let preferredFieldValueSize = valueView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude,
+                                                                    height: CGFloat.greatestFiniteMagnitude))
         let availableStackSpace = contentView.frame.size.width - contentView.layoutMargins.left - contentView.layoutMargins.right
             - fieldNameAndValueStackView.spacing - stackViewMarginSpacing
         guard preferredFieldNameSize.width + preferredFieldValueSize.width > availableStackSpace else {
@@ -120,7 +121,7 @@ extension LabelBalancingStackViewCell {
                                                                     multiplier: 1.0,
                                                                     constant: min(minimumLabelWidth, preferredFieldNameSize.width))
         
-        let newMinimumFieldValueWidthConstraint = NSLayoutConstraint(item: valueLabel,
+        let newMinimumFieldValueWidthConstraint = NSLayoutConstraint(item: valueView,
                                                                      attribute: .width,
                                                                      relatedBy: .greaterThanOrEqual,
                                                                      toItem: nil,
@@ -135,7 +136,7 @@ extension LabelBalancingStackViewCell {
         let newProportionalConstraint = NSLayoutConstraint(item: fieldNameLabel,
                                                            attribute: .width,
                                                            relatedBy: .equal,
-                                                           toItem: valueLabel,
+                                                           toItem: valueView,
                                                            attribute: .width,
                                                            multiplier: fieldNameToValueMultiplier,
                                                            constant: 0.0)
@@ -144,7 +145,7 @@ extension LabelBalancingStackViewCell {
         clearLabelWidthConstraints()
         
         fieldNameLabel.addConstraint(newMinimumFieldNameWidthConstraint)
-        valueLabel.addConstraint(newMinimumFieldValueWidthConstraint)
+        valueView.addConstraint(newMinimumFieldValueWidthConstraint)
         fieldNameAndValueStackView.addConstraint(newProportionalConstraint)
         
         fieldNameMinimumWidthConstraint = newMinimumFieldNameWidthConstraint
@@ -161,6 +162,13 @@ internal class WCGenericFieldRightDetailCell: WCGenericFieldWithFieldNameCell, L
     var proportionalWidthConstraint: NSLayoutConstraint? = nil
     var fieldNameMinimumWidthConstraint: NSLayoutConstraint? = nil
     var fieldValueMinimumWidthConstraint: NSLayoutConstraint? = nil
+
+    var valueView: UIView! {
+        return valueLabel
+    }
+    var valueIsEmpty: Bool {
+        return valueLabel.text == nil || valueLabel.text == ""
+    }
 
     let minimumLabelWidth: CGFloat = 90.0
     let stackViewMarginSpacing: CGFloat = 16.0

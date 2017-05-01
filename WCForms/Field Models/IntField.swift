@@ -92,7 +92,7 @@ public enum WCIntFieldAppearance: FieldCellAppearance {
 }
 
 /// An integer field.
-public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
+public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldInputDelegate {
 
     /// The minimum value allowed for the int. A field value less than this will generate a validation error when the user attempts to complete
     /// the form. This value is also used to set the `minimumValue` of the UISlider when the `slider` appearance is chosen. If this property is set to nil, no
@@ -160,7 +160,7 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
             if let placeholderText = placeholderText {
                 editableIntCell.fieldValueTextField.placeholder = placeholderText
             }
-            editableIntCell.delegate = self
+            editableIntCell.textFieldDelegate = self
         }
         if let sliderCell = cell as? WCIntFieldSliderCell {
             let sliderMinimum = minimumValue ?? 0
@@ -282,4 +282,36 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance> {
             }
         }
     }
+
+
+    // MARK: - Confromance to WCTextFieldInputDelegate
+
+    public func viewDidUpdateTextField(textField: UITextField) {
+        if let userInput = textField.text {
+            var insertionIndex: String.Index? = nil
+            if let validRange = textField.selectedTextRange {
+                let offset = textField.offset(from: textField.beginningOfDocument, to: validRange.end)
+                insertionIndex = userInput.index(userInput.startIndex, offsetBy: offset)
+            }
+            let parsedValue = parseValue(forUserInput: userInput, withInsertionIndex: insertionIndex)
+            if fieldValue != parsedValue.value {
+                viewDidUpdateValue(newValue: parsedValue.value)
+            }
+            textField.text = parsedValue.display
+            if let newInsertionIndex = parsedValue.newInsertionIndex {
+                let newOffset = parsedValue.display.distance(from: parsedValue.display.startIndex, to: newInsertionIndex)
+                if let newTextPosition = textField.position(from: textField.beginningOfDocument, offset: newOffset) {
+                    let newTextRange = textField.textRange(from: newTextPosition, to: newTextPosition)
+                    textField.selectedTextRange = newTextRange
+                } else {
+                    textField.selectedTextRange = nil
+                }
+            } else {
+                textField.selectedTextRange = nil
+            }
+        } else {
+            viewDidUpdateValue(newValue: nil)
+        }
+    }
+
 }

@@ -86,8 +86,14 @@ public enum WCTextFieldAppearance: FieldCellAppearance {
 
 }
 
+public protocol WCTextFieldInputDelegate: class {
+
+    func viewDidUpdateTextField(textField: UITextField)
+
+}
+
 /// A text field for a single line of text.
-public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
+public class WCTextField: WCGenericField<String, WCTextFieldAppearance>, WCTextFieldInputDelegate {
 
     /// The minimum length allowed for the text. A string shorter than the minimum length will generate a validation error when the user attempts to complete 
     /// the form. If this property is set to nil, no minimum length will be enforced.
@@ -158,26 +164,26 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
     /// - Parameter cell: the table view cell.
     public override func setupEditableCell(_ cell: UITableViewCell) {
         if let editableTextCell = cell as? WCGenericTextFieldCell {
-            lastLoadedEditableCell = editableTextCell
             editableTextCell.fieldValueTextField.inputAccessoryView = self.fieldInputAccessory
             editableTextCell.fieldValueTextField.autocapitalizationType = autocapitalizationType
             editableTextCell.fieldValueTextField.autocorrectionType = autocorrectionType
             editableTextCell.fieldValueTextField.spellCheckingType = spellCheckingType
-        }
-        if let editableTextCell = cell as? WCTextFieldCell {
-            editableTextCell.fieldNameLabel.text = fieldName
             editableTextCell.fieldValueTextField.text = fieldValue
             if let placeholderText = placeholderText {
                 editableTextCell.fieldValueTextField.placeholder = placeholderText
             } else {
                 editableTextCell.fieldValueTextField.placeholder = emptyValueLabelText
             }
-            editableTextCell.delegate = self
+            editableTextCell.textFieldDelegate = self
+            lastLoadedEditableCell = editableTextCell
+        } else {
+            lastLoadedEditableCell = nil
+        }
+        if let editableTextCell = cell as? WCGenericTextFieldAndLabelCell {
+            editableTextCell.fieldNameLabel.text = fieldName
         }
         if let editableTextCell = cell as? WCTextFieldNoFieldNameLabelCell {
-            editableTextCell.fieldValueTextField.text = fieldValue
             editableTextCell.fieldValueTextField.placeholder = placeholderText ?? fieldName
-            editableTextCell.delegate = self
         }
     }
 
@@ -218,6 +224,14 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance> {
                 throw WCFieldValidationError.outOfBounds(fieldName: fieldName, boundsError: errorString)
             }
         }
+    }
+
+
+    // MARK: - WCTextFieldInputDelegate conformance
+
+    public func viewDidUpdateTextField(textField: UITextField) {
+        let newValue = textField.text == "" ? nil : textField.text
+        viewDidUpdateValue(newValue: newValue)
     }
 
 }

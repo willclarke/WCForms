@@ -275,7 +275,7 @@ open class WCFormController: UITableViewController {
             return
         }
         if let selectableField = field as? WCEditableSelectableField {
-            selectableField.didSelectField(in: self)
+            selectableField.didSelectField(in: self, at: indexPath)
         } else {
             tableView.deselectRow(at: indexPath, animated: true)
         }

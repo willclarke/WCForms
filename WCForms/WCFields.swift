@@ -191,6 +191,6 @@ public protocol WCEditableSelectableField: WCField {
     ///
     /// - Parameter formController: The form controller containing the field that the user selected. Use this view controller to push any dependent view 
     ///   controllers.
-    func didSelectField(in formController: WCFormController)
+    func didSelectField(in formController: WCFormController, at indexPath: IndexPath)
 
 }
