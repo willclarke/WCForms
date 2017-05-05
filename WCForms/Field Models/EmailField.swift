@@ -9,13 +9,120 @@
 import Foundation
 import MessageUI
 
+/// A custom appearance description allowing
+public struct WCFieldAppearanceDescription {
+
+    /// Private storage for the cell identifier specified by the API user. Needs to be kept separate from the `cellIdentifier` property because that may return
+    /// the `userSpecifiedNibName` if this is unspecified.
+    private var userSpecifiedCellIdentifier: String? = nil
+
+    /// The cell identifier for the read-only version of the field. If it's not specified, but a `nibName` is, then it will be assumed that the cell identifier
+    /// and the nib name are the same.
+    public var cellIdentifier: String? {
+        get {
+            return userSpecifiedCellIdentifier ?? userSpecifiedNibName
+        }
+        set (newIdentifier) {
+            userSpecifiedCellIdentifier = newIdentifier
+        }
+    }
+
+    /// Private storage for the nib name specified by the API user. Needs to be kept separate from the `nibName` property because that may return the 
+    /// `userSpecifiedCellIdentifier` if this is unspecified.
+    private var userSpecifiedNibName: String? = nil
+
+    /// The NIB name for the read-only version of the field. If it's not specified, but a `cellIdentifier` is, then it will be assumed that the nib name and
+    /// the cell identifier are the same.
+    public var nibName: String? {
+        get {
+            return userSpecifiedNibName ?? userSpecifiedCellIdentifier
+        }
+        set (newNibName) {
+            userSpecifiedNibName = newNibName
+        }
+    }
+
+    /// Private storage for the editable cell identifier specified by the API user. Needs to be kept separate from the `editableCellIdentifier` property 
+    /// because that may return the `userSpecifiedEditableNibName` if this is unspecified.
+    private var userSpecifiedEditableCellIdentifier: String? = nil
+
+    /// The cell identifier for the editable version of the field. If it's not specified, but an `editableNibName` is, then it will be assumed that the
+    /// editable cell identifier and the editable nib name are the same.
+    public var editableCellIdentifier: String? {
+        get {
+            return userSpecifiedEditableCellIdentifier ?? userSpecifiedEditableNibName
+        }
+        set (newEditableCellIdentifier) {
+            userSpecifiedEditableCellIdentifier = newEditableCellIdentifier
+        }
+    }
+
+    /// Private storage for the editable nib name specified by the API user. Needs to be kept separate from the `editableNibName` property because that may 
+    /// return the `userSpecifiedEditableCellIdentifier` if this is unspecified.
+    private var userSpecifiedEditableNibName: String? = nil
+
+    /// The NIB name for the editable version of the field. If it's not specified, but an `editableCellIdentifier` is, then it will be assumed that the
+    /// editable nib name and the editable cell identifier are the same.
+    public var editableNibName: String? {
+        get {
+            return userSpecifiedEditableNibName ?? userSpecifiedEditableCellIdentifier
+        }
+        set (newEditableNibName) {
+            userSpecifiedEditableNibName = newEditableNibName
+        }
+    }
+
+    /// Initialize a custom appearance descriptor for a read only field.
+    ///
+    /// - Parameters:
+    ///   - nibName: The nib name to initialize a cell with with the appearance. This nib should be registered for cell reuse in the form's table view.
+    ///   - cellIdentifier: The cell identifier for the cell specified in the Nib. If nil, it will assume the cellIdentifier is the same as the nib name.
+    public init(nibName: String, cellIdentifier: String? = nil) {
+        self.cellIdentifier = cellIdentifier
+        self.nibName = nibName
+    }
+
+    /// Initialize a custom appearance descriptor for an editable field.
+    ///
+    /// - Parameters:
+    ///   - editableNibName: The nib name to initialize an editable cell with with the appearance. This nib should be registered for cell reuse in the form's 
+    ///                      table view.
+    ///   - editableCellIdentifier: The cell identifier for the editable cell specified in the Nib. If nil, it will assume the `editableCellIdentifier` is the 
+    ///                             same as the nib name.
+    public init(editableNibName: String, editableCellIdentifier: String? = nil) {
+        self.editableCellIdentifier = editableCellIdentifier
+        self.editableNibName = editableNibName
+    }
+
+    /// Initialize a custom appearance for a field that is both editable and viewable. Initialization is done by nib names, assuming the cell identifiers
+    /// are the same as the nib names.
+    ///
+    /// - Parameters:
+    ///   - nibName: The nib name to initialize a cell with with the appearance. This nib should be registered for cell reuse in the form's table view.
+    ///   - editableNibName: The nib name to initialize an editable cell with with the appearance. This nib should be registered for cell reuse in the form's
+    ///                      table view.
+    public init(nibName: String, editableNibName: String) {
+        self.nibName = nibName
+        self.editableNibName = editableNibName
+    }
+
+}
+
 /// The possible appearances for email fields.
+///
+/// - stacked: The field name is stacked above the field value.
+/// - stackedCaption: The field name is stacked above the field value, using the `caption` text style.
+/// - rightDetail: The field value is to the right of the field name.
+/// - fieldNameAsPlaceholder: The field name appears as placeholder text while editing, and is only visible in read-only mode when the field value is empty.
+/// - custom: The field should use the views specified in the `descriptor` associated value. If certain values aren't specified, fall back to the field 
+///           appearance specified in the `basedOn` associated value.
 public enum WCEmailFieldAppearance: FieldCellAppearance {
 
     case stacked
     case stackedCaption
     case rightDetail
     case fieldNameAsPlaceholder
+    indirect case custom(descriptor: WCFieldAppearanceDescription, basedOn: WCEmailFieldAppearance)
 
     /// The nib name for the read-only version of a field in this appearance.
     public var nibName: String {
@@ -28,6 +135,18 @@ public enum WCEmailFieldAppearance: FieldCellAppearance {
             return "WCGenericButtonStackedCell"
         case .stackedCaption:
             return "WCGenericButtonStackedCaptionCell"
+        case .custom(let descriptor, let baseAppearance):
+            return descriptor.nibName ?? baseAppearance.nibName
+        }
+    }
+
+    /// The cell identifier for the read-only version of a field in this appearance.
+    public var cellIdentifier: String {
+        switch self {
+        case .custom(let descriptor, let baseAppearance):
+            return descriptor.cellIdentifier ?? baseAppearance.cellIdentifier
+        default:
+            return nibName
         }
     }
 
@@ -42,6 +161,18 @@ public enum WCEmailFieldAppearance: FieldCellAppearance {
             return "WCTextFieldCell"
         case .stackedCaption:
             return "WCTextFieldStackedCaptionCell"
+        case .custom(let descriptor, let baseAppearance):
+            return descriptor.editableNibName ?? baseAppearance.editableNibName
+        }
+    }
+
+    /// The cell identifier for the editable version of a field in this appearance.
+    public var editableCellIdentifier: String {
+        switch self {
+        case .custom(let descriptor, let baseAppearance):
+            return descriptor.editableCellIdentifier ?? baseAppearance.editableCellIdentifier
+        default:
+            return editableNibName
         }
     }
 
