@@ -123,7 +123,7 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
     internal lazy var prohibitedCharacters = CharacterSet(charactersIn: "0123456789").inverted
 
     /// The last loaded editable int field cell.
-    weak var lastLoadedEditableCell: WCGenericTextFieldAndLabelCell? = nil
+    weak var lastLoadedEditableTextCell: WCGenericTextFieldCellEditable? = nil
 
     /// Sets up the read-only version of the cell for this field.
     ///
@@ -136,31 +136,27 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
                 readOnlyCell.valueLabelText = parsedValue.display
             }
         }
-        lastLoadedEditableCell = nil
+        lastLoadedEditableTextCell = nil
     }
 
     /// Sets up the editable version of the cell for this field.
     ///
     /// - Parameter cell: the table view cell.
     public override func setupEditableCell(_ cell: UITableViewCell) {
-        if let editableIntCell = cell as? WCGenericTextFieldAndLabelCell {
-            lastLoadedEditableCell = editableIntCell
-            editableIntCell.fieldValueTextField.inputAccessoryView = self.fieldInputAccessory
-        } else {
-            lastLoadedEditableCell = nil
-        }
-        if let editableIntCell = cell as? WCIntFieldCell {
-            editableIntCell.fieldNameLabel.text = fieldName
+        if let editableIntCell = cell as? WCGenericTextFieldCellEditable {
+            editableIntCell.fieldNameText = fieldName
             if let intValue = fieldValue {
                 let parsedValue = parseValue(forUserInput: String(intValue), withInsertionIndex: nil)
-                editableIntCell.fieldValueTextField.text = parsedValue.display
+                editableIntCell.valueTextField.text = parsedValue.display
             } else {
-                editableIntCell.fieldValueTextField.text = nil
+                editableIntCell.valueTextField.text = nil
             }
-            if let placeholderText = placeholderText {
-                editableIntCell.fieldValueTextField.placeholder = placeholderText
-            }
+            editableIntCell.valueTextField.placeholder = placeholderText ?? emptyValueLabelText
+            editableIntCell.valueTextField.inputAccessoryView = fieldInputAccessory
             editableIntCell.textFieldDelegate = self
+            lastLoadedEditableTextCell = editableIntCell
+        } else {
+            lastLoadedEditableTextCell = nil
         }
         if let sliderCell = cell as? WCIntFieldSliderCell {
             let sliderMinimum = minimumValue ?? 0
@@ -246,15 +242,15 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
 
     /// Attempt to make this field to become the first responder.
     public override func becomeFirstResponder() {
-        if let lastLoadedEditableCell = lastLoadedEditableCell {
-            lastLoadedEditableCell.fieldValueTextField.becomeFirstResponder()
+        if let lastLoadedEditableCell = lastLoadedEditableTextCell {
+            lastLoadedEditableCell.valueTextField.becomeFirstResponder()
         }
     }
 
     /// Attempt to make this field resign its first responder status.
     public override func resignFirstResponder() {
-        if let lastLoadedEditableCell = lastLoadedEditableCell {
-            lastLoadedEditableCell.fieldValueTextField.resignFirstResponder()
+        if let lastLoadedEditableCell = lastLoadedEditableTextCell {
+            lastLoadedEditableCell.valueTextField.resignFirstResponder()
         }
     }
 

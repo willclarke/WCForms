@@ -81,7 +81,7 @@ public protocol WCDatePickerInputDelegate: class {
 }
 
 /// A date field for a specific day.
-public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePickerInputDelegate {
+public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePickerInputDelegate, WCTextFieldInputDelegate {
 
     /// Formatter to use to display the date to the user. By default, this will use a `dateStyle` of `DateFormatter.Style.medium` (and no `timeStyle`)
     public var dateDisplayFormatter = DateFormatter()
@@ -100,7 +100,16 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
     public var placeholderText: String? = nil
 
     /// The last loaded editable date field cell.
-    weak var lastLoadedEditableCell: WCGenericTextFieldAndLabelCell? = nil
+    weak var lastLoadedEditableCell: WCGenericDateFieldEditable? = nil
+
+    /// The date that should be displayed for the field. This should just be the current fiueld value, formatted with the date formatter, or `nil` if there is no value.
+    public var displayedDate: String? {
+        if let fieldValue = fieldValue {
+            return dateDisplayFormatter.string(from: fieldValue)
+        } else {
+            return nil
+        }
+    }
 
     /// Initializer that sets the initial date formatter style.
     ///
@@ -131,41 +140,34 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
     ///
     /// - Parameter cell: the table view cell.
     public override func setupEditableCell(_ cell: UITableViewCell) {
-        if let editableDateCell = cell as? WCGenericTextFieldAndLabelCell {
-            lastLoadedEditableCell = editableDateCell
-            editableDateCell.fieldValueTextField.inputAccessoryView = self.fieldInputAccessory
-        }
-        if let editableDateCell = cell as? WCDateFieldCell {
+        if let editableCell = cell as? WCGenericDateFieldEditable {
             let dateValue: Date = fieldValue ?? Date()
-            editableDateCell.inactiveValueColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor
-            editableDateCell.fieldNameLabel.text = fieldName
-            editableDateCell.datePickerKeyboard.date = dateValue
-            editableDateCell.datePickerKeyboard.minimumDate = minimumDate
-            editableDateCell.datePickerKeyboard.maximumDate = maximumDate
-            editableDateCell.dateDisplayFormatter = dateDisplayFormatter
-            if let initialValue = fieldValue {
-                editableDateCell.fieldValueTextField.text = dateDisplayFormatter.string(from: initialValue)
-            } else {
-                editableDateCell.fieldValueTextField.text = nil
-            }
-            if let placeholderText = placeholderText {
-                editableDateCell.fieldValueTextField.placeholder = placeholderText
-            }
-            editableDateCell.datePickerDelegate = self
+            editableCell.fieldNameText = fieldName
+            editableCell.valueTextField.text = displayedDate
+            editableCell.valueTextField.placeholder = placeholderText ?? emptyValueLabelText
+            editableCell.valueTextField.inputAccessoryView = fieldInputAccessory
+            editableCell.textFieldDelegate = nil
+            editableCell.datePickerDelegate = self
+            editableCell.inactiveValueColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor
+            editableCell.updateDatePicker(withDate: dateValue, minimumDate: minimumDate, maximumDate: maximumDate)
+            editableCell.dateDisplayFormatter = dateDisplayFormatter
+            lastLoadedEditableCell = editableCell
+        } else {
+            lastLoadedEditableCell = nil
         }
     }
 
     /// Attempt to make this field to become the first responder.
     public override func becomeFirstResponder() {
         if let lastLoadedEditableCell = lastLoadedEditableCell {
-            lastLoadedEditableCell.fieldValueTextField.becomeFirstResponder()
+            lastLoadedEditableCell.valueTextField.becomeFirstResponder()
         }
     }
 
     /// Attempt to make this field resign its first responder status.
     public override func resignFirstResponder() {
         if let lastLoadedEditableCell = lastLoadedEditableCell {
-            lastLoadedEditableCell.fieldValueTextField.resignFirstResponder()
+            lastLoadedEditableCell.valueTextField.resignFirstResponder()
         }
     }
 
@@ -211,6 +213,14 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
     /// - Parameter picker: The picker view that was updated by the user.
     public func viewDidUpdateDatePicker(picker: UIDatePicker) {
         viewDidUpdateValue(newValue: picker.date)
+    }
+
+
+    // MARK: - WCTextFieldInputDelegate conformance
+
+    public func viewDidUpdateTextField(textField: UITextField) {
+        //We want to ignore potential input by an externally connected keyboard. Reset the text field to the current value of the date.
+        textField.text = displayedDate
     }
 
 }

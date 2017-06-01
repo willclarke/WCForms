@@ -8,8 +8,31 @@
 
 import UIKit
 
+/// A protocol for views that can be used to display a date field.
+public protocol WCGenericDateFieldEditable: WCGenericTextFieldCellEditable {
+
+    /// The delegate that should be called when the user picks a new date.
+    var datePickerDelegate: WCDatePickerInputDelegate? { get set }
+
+    /// The formatter that should be used to display the chosen date to the user.
+    var dateDisplayFormatter: DateFormatter { get set }
+
+    /// The color of the text field when the field is not first responder.
+    var inactiveValueColor: UIColor { get set }
+
+    /// Update the date picker with date parameters.
+    ///
+    /// - Parameters:
+    ///   - date: The currently selected date.
+    ///   - minimumDate: The minimum date that can be selected by the picker.
+    ///   - maximumDate: The maximum date that can be selected by the picker.
+    func updateDatePicker(withDate date: Date, minimumDate: Date?, maximumDate: Date?)
+
+}
+
+
 /// A table view cell for an editable date field.
-internal class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
+internal class WCDateFieldCell: WCGenericTextFieldAndLabelCell, WCGenericDateFieldEditable {
 
     /// The delegate for when the date picker changes the date.
     var datePickerDelegate: WCDatePickerInputDelegate? = nil
@@ -23,10 +46,14 @@ internal class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
     /// The color to make the date text when the field is not active.
     public var inactiveValueColor: UIColor = UIColor.darkGray
 
+    var isEmpty: Bool {
+        return fieldValueTextField.text?.isEmpty ?? true
+    }
+
     /// Set up the view when the cell awakes from the nib.
     public override func awakeFromNib() {
         super.awakeFromNib()
-        fieldValueTextField.tintColor = UIColor.clear
+        fieldValueTextField.tintColor = self.tintColor
         datePickerKeyboard.datePickerMode = .date
         datePickerKeyboard.addTarget(self, action: #selector(dateChanged(sender:)), for: UIControlEvents.valueChanged)
         datePickerKeyboard.autoresizingMask = .flexibleWidth
@@ -38,6 +65,7 @@ internal class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
     /// - Parameter sender: The date picker that changed.
     func dateChanged(sender: UIDatePicker) {
         fieldValueTextField.text = dateDisplayFormatter.string(from: sender.date)
+        fieldValueTextField.tintColor = self.isEmpty ? self.tintColor : UIColor.clear
         datePickerDelegate?.viewDidUpdateDatePicker(picker: sender)
     }
 
@@ -52,6 +80,7 @@ internal class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
     ///
     /// - Parameter textField: The text field that began editing.
     public func textFieldDidBeginEditing(_ textField: UITextField) {
+        fieldValueTextField.tintColor = self.isEmpty ? self.tintColor : UIColor.clear
         fieldValueTextField.textColor = self.tintColor
     }
 
@@ -62,6 +91,22 @@ internal class WCDateFieldCell: WCGenericTextFieldAndLabelCell {
     ///   - reason: The reason the text field ended editing.
     public func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         fieldValueTextField.textColor = inactiveValueColor
+    }
+
+    /// Update the date picker with date parameters.
+    ///
+    /// - Parameters:
+    ///   - date: The currently selected date.
+    ///   - minimumDate: The minimum date that can be selected by the picker.
+    ///   - maximumDate: The maximum date that can be selected by the picker.
+    public func updateDatePicker(withDate date: Date, minimumDate: Date? = nil, maximumDate: Date? = nil) {
+        datePickerKeyboard.date = date
+        if let minimumDate = minimumDate {
+            datePickerKeyboard.minimumDate = minimumDate
+        }
+        if let maximumDate = maximumDate {
+            datePickerKeyboard.maximumDate = maximumDate
+        }
     }
 
 }

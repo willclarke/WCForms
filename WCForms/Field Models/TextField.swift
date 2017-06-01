@@ -107,7 +107,7 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance>, WCTextF
     public var autocapitalizationType = UITextAutocapitalizationType.none {
         didSet {
             if let validCell = lastLoadedEditableCell {
-                validCell.fieldValueTextField.autocapitalizationType = autocapitalizationType
+                validCell.valueTextField.autocapitalizationType = autocapitalizationType
             }
         }
     }
@@ -116,7 +116,7 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance>, WCTextF
     public var autocorrectionType = UITextAutocorrectionType.default {
         didSet {
             if let validCell = lastLoadedEditableCell {
-                validCell.fieldValueTextField.autocorrectionType = autocorrectionType
+                validCell.valueTextField.autocorrectionType = autocorrectionType
             }
         }
     }
@@ -125,7 +125,7 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance>, WCTextF
     public var spellCheckingType = UITextSpellCheckingType.default {
         didSet {
             if let validCell = lastLoadedEditableCell {
-                validCell.fieldValueTextField.spellCheckingType = spellCheckingType
+                validCell.valueTextField.spellCheckingType = spellCheckingType
             }
         }
     }
@@ -134,13 +134,13 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance>, WCTextF
     public var placeholderText: String? = nil {
         didSet {
             if let validCell = lastLoadedEditableCell, let placeholderText = placeholderText {
-                validCell.fieldValueTextField.placeholder = placeholderText
+                validCell.valueTextField.placeholder = placeholderText
             }
         }
     }
 
     /// The last loaded editable text field cell.
-    weak var lastLoadedEditableCell: WCGenericTextFieldCell? = nil
+    weak var lastLoadedEditableCell: WCGenericTextFieldCellEditable? = nil
 
     /// Sets up the read-only version of the cell for this field.
     ///
@@ -163,41 +163,35 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance>, WCTextF
     ///
     /// - Parameter cell: the table view cell.
     public override func setupEditableCell(_ cell: UITableViewCell) {
-        if let editableTextCell = cell as? WCGenericTextFieldCell {
-            editableTextCell.fieldValueTextField.inputAccessoryView = self.fieldInputAccessory
-            editableTextCell.fieldValueTextField.autocapitalizationType = autocapitalizationType
-            editableTextCell.fieldValueTextField.autocorrectionType = autocorrectionType
-            editableTextCell.fieldValueTextField.spellCheckingType = spellCheckingType
-            editableTextCell.fieldValueTextField.text = fieldValue
-            if let placeholderText = placeholderText {
-                editableTextCell.fieldValueTextField.placeholder = placeholderText
-            } else {
-                editableTextCell.fieldValueTextField.placeholder = emptyValueLabelText
+        if let editableCell = cell as? WCGenericTextFieldCellEditable {
+            editableCell.fieldNameText = fieldName
+            editableCell.valueTextField.text = fieldValue
+            let appearance = self.editableAppearance ?? self.appearance
+            if appearance != .fieldNameAsPlaceholder {
+                editableCell.valueTextField.placeholder = placeholderText ?? emptyValueLabelText
             }
-            editableTextCell.textFieldDelegate = self
-            lastLoadedEditableCell = editableTextCell
+            editableCell.valueTextField.autocapitalizationType = autocapitalizationType
+            editableCell.valueTextField.autocorrectionType = autocorrectionType
+            editableCell.valueTextField.spellCheckingType = spellCheckingType
+            editableCell.valueTextField.inputAccessoryView = fieldInputAccessory
+            editableCell.textFieldDelegate = self
+            lastLoadedEditableCell = editableCell
         } else {
             lastLoadedEditableCell = nil
-        }
-        if let editableTextCell = cell as? WCGenericTextFieldAndLabelCell {
-            editableTextCell.fieldNameLabel.text = fieldName
-        }
-        if let editableTextCell = cell as? WCTextFieldNoFieldNameLabelCell {
-            editableTextCell.fieldValueTextField.placeholder = placeholderText ?? fieldName
         }
     }
 
     /// Attempt to make this field to become the first responder.
     public override func becomeFirstResponder() {
         if let lastLoadedEditableCell = lastLoadedEditableCell {
-            lastLoadedEditableCell.fieldValueTextField.becomeFirstResponder()
+            lastLoadedEditableCell.valueTextField.becomeFirstResponder()
         }
     }
 
     /// Attempt to make this field resign its first responder status.
     public override func resignFirstResponder() {
         if let lastLoadedEditableCell = lastLoadedEditableCell {
-            lastLoadedEditableCell.fieldValueTextField.resignFirstResponder()
+            lastLoadedEditableCell.valueTextField.resignFirstResponder()
         }
     }
 
