@@ -146,6 +146,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
             editableCell.valueTextField.text = displayedDate
             editableCell.valueTextField.placeholder = placeholderText ?? emptyValueLabelText
             editableCell.valueTextField.inputAccessoryView = fieldInputAccessory
+            editableCell.valueTextField.clearButtonMode = isRequired ? .never : .unlessEditing
             editableCell.textFieldDelegate = nil
             editableCell.datePickerDelegate = self
             editableCell.inactiveValueColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor

@@ -66,6 +66,7 @@ internal class WCGenericTextFieldCell: UITableViewCell, UITextFieldDelegate, WCG
     public override func prepareForReuse() {
         super.prepareForReuse()
         textFieldDelegate = nil
+        valueTextField.clearButtonMode = .never
     }
 
 
