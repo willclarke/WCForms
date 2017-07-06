@@ -1,0 +1,631 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8A6CBAA41F0EDFF6005DB9A6 /* WCForms.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A6CBAA31F0EDFD2005DB9A6 /* WCForms.framework */; };
+		8AAC1FB71E99BF3300C1D715 /* TextFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC1FB61E99BF3300C1D715 /* TextFieldController.swift */; };
+		8AAC1FB91E99C0E400C1D715 /* BoolFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC1FB81E99C0E400C1D715 /* BoolFieldController.swift */; };
+		8AAC1FBB1E99C17900C1D715 /* DateFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC1FBA1E99C17900C1D715 /* DateFieldController.swift */; };
+		8AAC1FBD1E99C25600C1D715 /* IntFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC1FBC1E99C25600C1D715 /* IntFieldController.swift */; };
+		8AAC1FBF1E99C28A00C1D715 /* SingleOptionFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC1FBE1E99C28A00C1D715 /* SingleOptionFieldController.swift */; };
+		8AAC1FC11E99C2A800C1D715 /* MultipleOptionFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC1FC01E99C2A800C1D715 /* MultipleOptionFieldController.swift */; };
+		8AAC1FC31E9A158400C1D715 /* OptionFieldTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC1FC21E9A158400C1D715 /* OptionFieldTypes.swift */; };
+		8AB18FE81E64028100AE13AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB18FE71E64028100AE13AF /* AppDelegate.swift */; };
+		8AB18FEF1E64028100AE13AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AB18FED1E64028100AE13AF /* Main.storyboard */; };
+		8AB18FF11E64028100AE13AF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8AB18FF01E64028100AE13AF /* Assets.xcassets */; };
+		8AB18FF41E64028100AE13AF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8AB18FF21E64028100AE13AF /* LaunchScreen.storyboard */; };
+		8AB18FFF1E64028200AE13AF /* WCFormsAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB18FFE1E64028200AE13AF /* WCFormsAppTests.swift */; };
+		8AB1900A1E64028200AE13AF /* WCFormsAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB190091E64028200AE13AF /* WCFormsAppUITests.swift */; };
+		8AB190241E64790200AE13AF /* FriendController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB190231E64790200AE13AF /* FriendController.swift */; };
+		8AB8A4D41EB48D6500B53E5C /* EmailFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB8A4D31EB48D6500B53E5C /* EmailFieldController.swift */; };
+		8AB8A4E71EB800FE00B53E5C /* CustomEmailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB8A4E51EB800FE00B53E5C /* CustomEmailTableViewCell.swift */; };
+		8AB8A4E81EB800FE00B53E5C /* CustomEmailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AB8A4E61EB800FE00B53E5C /* CustomEmailTableViewCell.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8A6CBAA21F0EDFD2005DB9A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8A6CBA9E1F0EDFD1005DB9A6 /* WCForms.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8AB18FD01E64023E00AE13AF;
+			remoteInfo = WCForms;
+		};
+		8AB18FFB1E64028200AE13AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8AB18FDC1E64028100AE13AF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8AB18FE31E64028100AE13AF;
+			remoteInfo = WCFormsApp;
+		};
+		8AB190061E64028200AE13AF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 8AB18FDC1E64028100AE13AF /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8AB18FE31E64028100AE13AF;
+			remoteInfo = WCFormsApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		8AB190291E64792300AE13AF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		8A6CBA9E1F0EDFD1005DB9A6 /* WCForms.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WCForms.xcodeproj; path = ../../WCForms.xcodeproj; sourceTree = "<group>"; };
+		8AAC1FB61E99BF3300C1D715 /* TextFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldController.swift; sourceTree = "<group>"; };
+		8AAC1FB81E99C0E400C1D715 /* BoolFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolFieldController.swift; sourceTree = "<group>"; };
+		8AAC1FBA1E99C17900C1D715 /* DateFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFieldController.swift; sourceTree = "<group>"; };
+		8AAC1FBC1E99C25600C1D715 /* IntFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntFieldController.swift; sourceTree = "<group>"; };
+		8AAC1FBE1E99C28A00C1D715 /* SingleOptionFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleOptionFieldController.swift; sourceTree = "<group>"; };
+		8AAC1FC01E99C2A800C1D715 /* MultipleOptionFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultipleOptionFieldController.swift; sourceTree = "<group>"; };
+		8AAC1FC21E9A158400C1D715 /* OptionFieldTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OptionFieldTypes.swift; sourceTree = "<group>"; };
+		8AB18FE41E64028100AE13AF /* WCFormsApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WCFormsApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AB18FE71E64028100AE13AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		8AB18FEE1E64028100AE13AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		8AB18FF01E64028100AE13AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		8AB18FF31E64028100AE13AF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		8AB18FF51E64028100AE13AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8AB18FFA1E64028200AE13AF /* WCFormsAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WCFormsAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AB18FFE1E64028200AE13AF /* WCFormsAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCFormsAppTests.swift; sourceTree = "<group>"; };
+		8AB190001E64028200AE13AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8AB190051E64028200AE13AF /* WCFormsAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WCFormsAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AB190091E64028200AE13AF /* WCFormsAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCFormsAppUITests.swift; sourceTree = "<group>"; };
+		8AB1900B1E64028200AE13AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8AB190231E64790200AE13AF /* FriendController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FriendController.swift; sourceTree = "<group>"; };
+		8AB8A4D31EB48D6500B53E5C /* EmailFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailFieldController.swift; sourceTree = "<group>"; };
+		8AB8A4E51EB800FE00B53E5C /* CustomEmailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomEmailTableViewCell.swift; sourceTree = "<group>"; };
+		8AB8A4E61EB800FE00B53E5C /* CustomEmailTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomEmailTableViewCell.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		8AB18FE11E64028100AE13AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8A6CBAA41F0EDFF6005DB9A6 /* WCForms.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AB18FF71E64028200AE13AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AB190021E64028200AE13AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8A6CBA9F1F0EDFD1005DB9A6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8A6CBAA31F0EDFD2005DB9A6 /* WCForms.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8AB18FDB1E64028100AE13AF = {
+			isa = PBXGroup;
+			children = (
+				8AB18FE61E64028100AE13AF /* WCFormsApp */,
+				8AB18FFD1E64028200AE13AF /* WCFormsAppTests */,
+				8AB190081E64028200AE13AF /* WCFormsAppUITests */,
+				8AB18FE51E64028100AE13AF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8AB18FE51E64028100AE13AF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8AB18FE41E64028100AE13AF /* WCFormsApp.app */,
+				8AB18FFA1E64028200AE13AF /* WCFormsAppTests.xctest */,
+				8AB190051E64028200AE13AF /* WCFormsAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8AB18FE61E64028100AE13AF /* WCFormsApp */ = {
+			isa = PBXGroup;
+			children = (
+				8AB18FE71E64028100AE13AF /* AppDelegate.swift */,
+				8AB190231E64790200AE13AF /* FriendController.swift */,
+				8AAC1FB81E99C0E400C1D715 /* BoolFieldController.swift */,
+				8AAC1FB61E99BF3300C1D715 /* TextFieldController.swift */,
+				8AB8A4D31EB48D6500B53E5C /* EmailFieldController.swift */,
+				8AB8A4E51EB800FE00B53E5C /* CustomEmailTableViewCell.swift */,
+				8AB8A4E61EB800FE00B53E5C /* CustomEmailTableViewCell.xib */,
+				8AAC1FBC1E99C25600C1D715 /* IntFieldController.swift */,
+				8AAC1FBA1E99C17900C1D715 /* DateFieldController.swift */,
+				8AAC1FC21E9A158400C1D715 /* OptionFieldTypes.swift */,
+				8AAC1FBE1E99C28A00C1D715 /* SingleOptionFieldController.swift */,
+				8AAC1FC01E99C2A800C1D715 /* MultipleOptionFieldController.swift */,
+				8AB18FED1E64028100AE13AF /* Main.storyboard */,
+				8AB18FF01E64028100AE13AF /* Assets.xcassets */,
+				8AB18FF21E64028100AE13AF /* LaunchScreen.storyboard */,
+				8AB18FF51E64028100AE13AF /* Info.plist */,
+				8A6CBA9E1F0EDFD1005DB9A6 /* WCForms.xcodeproj */,
+			);
+			path = WCFormsApp;
+			sourceTree = "<group>";
+		};
+		8AB18FFD1E64028200AE13AF /* WCFormsAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				8AB18FFE1E64028200AE13AF /* WCFormsAppTests.swift */,
+				8AB190001E64028200AE13AF /* Info.plist */,
+			);
+			path = WCFormsAppTests;
+			sourceTree = "<group>";
+		};
+		8AB190081E64028200AE13AF /* WCFormsAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				8AB190091E64028200AE13AF /* WCFormsAppUITests.swift */,
+				8AB1900B1E64028200AE13AF /* Info.plist */,
+			);
+			path = WCFormsAppUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8AB18FE31E64028100AE13AF /* WCFormsApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AB1900E1E64028200AE13AF /* Build configuration list for PBXNativeTarget "WCFormsApp" */;
+			buildPhases = (
+				8AB18FE01E64028100AE13AF /* Sources */,
+				8AB18FE11E64028100AE13AF /* Frameworks */,
+				8AB18FE21E64028100AE13AF /* Resources */,
+				8AB190291E64792300AE13AF /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WCFormsApp;
+			productName = WCFormsApp;
+			productReference = 8AB18FE41E64028100AE13AF /* WCFormsApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		8AB18FF91E64028200AE13AF /* WCFormsAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AB190111E64028200AE13AF /* Build configuration list for PBXNativeTarget "WCFormsAppTests" */;
+			buildPhases = (
+				8AB18FF61E64028200AE13AF /* Sources */,
+				8AB18FF71E64028200AE13AF /* Frameworks */,
+				8AB18FF81E64028200AE13AF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8AB18FFC1E64028200AE13AF /* PBXTargetDependency */,
+			);
+			name = WCFormsAppTests;
+			productName = WCFormsAppTests;
+			productReference = 8AB18FFA1E64028200AE13AF /* WCFormsAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		8AB190041E64028200AE13AF /* WCFormsAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8AB190141E64028200AE13AF /* Build configuration list for PBXNativeTarget "WCFormsAppUITests" */;
+			buildPhases = (
+				8AB190011E64028200AE13AF /* Sources */,
+				8AB190021E64028200AE13AF /* Frameworks */,
+				8AB190031E64028200AE13AF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8AB190071E64028200AE13AF /* PBXTargetDependency */,
+			);
+			name = WCFormsAppUITests;
+			productName = WCFormsAppUITests;
+			productReference = 8AB190051E64028200AE13AF /* WCFormsAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		8AB18FDC1E64028100AE13AF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Will Clarke";
+				TargetAttributes = {
+					8AB18FE31E64028100AE13AF = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = TRSP4AA7VA;
+						ProvisioningStyle = Automatic;
+					};
+					8AB18FF91E64028200AE13AF = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = TRSP4AA7VA;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 8AB18FE31E64028100AE13AF;
+					};
+					8AB190041E64028200AE13AF = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = TRSP4AA7VA;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 8AB18FE31E64028100AE13AF;
+					};
+				};
+			};
+			buildConfigurationList = 8AB18FDF1E64028100AE13AF /* Build configuration list for PBXProject "WCFormsApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 8AB18FDB1E64028100AE13AF;
+			productRefGroup = 8AB18FE51E64028100AE13AF /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 8A6CBA9F1F0EDFD1005DB9A6 /* Products */;
+					ProjectRef = 8A6CBA9E1F0EDFD1005DB9A6 /* WCForms.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				8AB18FE31E64028100AE13AF /* WCFormsApp */,
+				8AB18FF91E64028200AE13AF /* WCFormsAppTests */,
+				8AB190041E64028200AE13AF /* WCFormsAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		8A6CBAA31F0EDFD2005DB9A6 /* WCForms.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = WCForms.framework;
+			remoteRef = 8A6CBAA21F0EDFD2005DB9A6 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8AB18FE21E64028100AE13AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AB18FF41E64028100AE13AF /* LaunchScreen.storyboard in Resources */,
+				8AB18FF11E64028100AE13AF /* Assets.xcassets in Resources */,
+				8AB18FEF1E64028100AE13AF /* Main.storyboard in Resources */,
+				8AB8A4E81EB800FE00B53E5C /* CustomEmailTableViewCell.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AB18FF81E64028200AE13AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AB190031E64028200AE13AF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		8AB18FE01E64028100AE13AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AAC1FBD1E99C25600C1D715 /* IntFieldController.swift in Sources */,
+				8AAC1FBB1E99C17900C1D715 /* DateFieldController.swift in Sources */,
+				8AAC1FB91E99C0E400C1D715 /* BoolFieldController.swift in Sources */,
+				8AAC1FC11E99C2A800C1D715 /* MultipleOptionFieldController.swift in Sources */,
+				8AAC1FBF1E99C28A00C1D715 /* SingleOptionFieldController.swift in Sources */,
+				8AB8A4E71EB800FE00B53E5C /* CustomEmailTableViewCell.swift in Sources */,
+				8AAC1FC31E9A158400C1D715 /* OptionFieldTypes.swift in Sources */,
+				8AAC1FB71E99BF3300C1D715 /* TextFieldController.swift in Sources */,
+				8AB18FE81E64028100AE13AF /* AppDelegate.swift in Sources */,
+				8AB190241E64790200AE13AF /* FriendController.swift in Sources */,
+				8AB8A4D41EB48D6500B53E5C /* EmailFieldController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AB18FF61E64028200AE13AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AB18FFF1E64028200AE13AF /* WCFormsAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8AB190011E64028200AE13AF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AB1900A1E64028200AE13AF /* WCFormsAppUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		8AB18FFC1E64028200AE13AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8AB18FE31E64028100AE13AF /* WCFormsApp */;
+			targetProxy = 8AB18FFB1E64028200AE13AF /* PBXContainerItemProxy */;
+		};
+		8AB190071E64028200AE13AF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8AB18FE31E64028100AE13AF /* WCFormsApp */;
+			targetProxy = 8AB190061E64028200AE13AF /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		8AB18FED1E64028100AE13AF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8AB18FEE1E64028100AE13AF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		8AB18FF21E64028100AE13AF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				8AB18FF31E64028100AE13AF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		8AB1900C1E64028200AE13AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8AB1900D1E64028200AE13AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8AB1900F1E64028200AE13AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = TRSP4AA7VA;
+				INFOPLIST_FILE = WCFormsApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.willclarke.WCFormsApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		8AB190101E64028200AE13AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = TRSP4AA7VA;
+				INFOPLIST_FILE = WCFormsApp/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.willclarke.WCFormsApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+		8AB190121E64028200AE13AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = TRSP4AA7VA;
+				INFOPLIST_FILE = WCFormsAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.willclarke.WCFormsAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WCFormsApp.app/WCFormsApp";
+			};
+			name = Debug;
+		};
+		8AB190131E64028200AE13AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = TRSP4AA7VA;
+				INFOPLIST_FILE = WCFormsAppTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.willclarke.WCFormsAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WCFormsApp.app/WCFormsApp";
+			};
+			name = Release;
+		};
+		8AB190151E64028200AE13AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = TRSP4AA7VA;
+				INFOPLIST_FILE = WCFormsAppUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.willclarke.WCFormsAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = WCFormsApp;
+			};
+			name = Debug;
+		};
+		8AB190161E64028200AE13AF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				DEVELOPMENT_TEAM = TRSP4AA7VA;
+				INFOPLIST_FILE = WCFormsAppUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = net.willclarke.WCFormsAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+				TEST_TARGET_NAME = WCFormsApp;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8AB18FDF1E64028100AE13AF /* Build configuration list for PBXProject "WCFormsApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AB1900C1E64028200AE13AF /* Debug */,
+				8AB1900D1E64028200AE13AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AB1900E1E64028200AE13AF /* Build configuration list for PBXNativeTarget "WCFormsApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AB1900F1E64028200AE13AF /* Debug */,
+				8AB190101E64028200AE13AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AB190111E64028200AE13AF /* Build configuration list for PBXNativeTarget "WCFormsAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AB190121E64028200AE13AF /* Debug */,
+				8AB190131E64028200AE13AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8AB190141E64028200AE13AF /* Build configuration list for PBXNativeTarget "WCFormsAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8AB190151E64028200AE13AF /* Debug */,
+				8AB190161E64028200AE13AF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 8AB18FDC1E64028100AE13AF /* Project object */;
+}
