@@ -29,12 +29,12 @@ The following is a planned feature list that will be included in the 1.0 release
 - [ ] Text Area field
 - [ ] Decimal number field
 - [ ] Phone field
-- [ ] Option field
-- [ ] Multi-option field
+- [x] Option field
+- [x] Multi-option field
 - [ ] Button field
 - [ ] Password field
-- [ ] Time field
-- [ ] Date & Time field
+- [x] Time field
+- [x] Date & Time field
 - [ ] Time Interval field
 - [ ] Single Checkbox field
 - [ ] Currency field
