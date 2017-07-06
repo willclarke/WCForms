@@ -17,6 +17,9 @@ public protocol WCGenericDateFieldEditable: WCGenericTextFieldCellEditable {
     /// The formatter that should be used to display the chosen date to the user.
     var dateDisplayFormatter: DateFormatter { get set }
 
+    /// The type of selection that the user should be making.
+    var dateSelectionType: WCDateFieldSelectionType { get set }
+
     /// The color of the text field when the field is not first responder.
     var inactiveValueColor: UIColor { get set }
 
@@ -45,6 +48,13 @@ internal class WCDateFieldCell: WCGenericTextFieldAndLabelCell, WCGenericDateFie
 
     /// The color to make the date text when the field is not active.
     public var inactiveValueColor: UIColor = UIColor.darkGray
+
+    /// The type of date selection to make.
+    public var dateSelectionType: WCDateFieldSelectionType = .date {
+        didSet {
+            datePickerKeyboard.datePickerMode = dateSelectionType.datePickerMode
+        }
+    }
 
     var isEmpty: Bool {
         return fieldValueTextField.text?.isEmpty ?? true

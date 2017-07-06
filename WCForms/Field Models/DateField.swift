@@ -80,11 +80,82 @@ public protocol WCDatePickerInputDelegate: class {
 
 }
 
+/// The type of date selection that the user should be able to make in a WCDateField.
+///
+/// - date: The user should only choose a calendar date.
+/// - dateAndTime: The user should select a date and time.
+/// - time: The user should only choose a time of day.
+public enum WCDateFieldSelectionType {
+
+    case date, dateAndTime, time
+
+    var datePickerMode: UIDatePickerMode {
+        switch self {
+        case .date:
+            return UIDatePickerMode.date
+        case .dateAndTime:
+            return UIDatePickerMode.dateAndTime
+        case .time:
+            return UIDatePickerMode.time
+        }
+    }
+
+    var dateStyle: DateFormatter.Style {
+        switch self {
+        case .date, .dateAndTime:
+            return DateFormatter.Style.medium
+        case .time:
+            return DateFormatter.Style.none
+        }
+    }
+
+    var timeStyle: DateFormatter.Style {
+        switch self {
+        case .date:
+            return DateFormatter.Style.none
+        case .time, .dateAndTime:
+            return DateFormatter.Style.short
+        }
+    }
+
+}
+
 /// A date field for a specific day.
 public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePickerInputDelegate, WCTextFieldInputDelegate {
 
-    /// Formatter to use to display the date to the user. By default, this will use a `dateStyle` of `DateFormatter.Style.medium` (and no `timeStyle`)
-    public var dateDisplayFormatter = DateFormatter()
+    /// Formatter set by the API user, which should override any selection type specific formatting.
+    private var _dateDisplayFormatter: DateFormatter? = nil
+
+    /// Formatter to use to display the date to the user. If none is set, it will use a date formatter with the specified date and time styles from the 
+    /// `dateSelectionType`.
+    public var dateDisplayFormatter: DateFormatter {
+        set {
+            _dateDisplayFormatter = newValue
+            if let lastLoadedEditableCell = lastLoadedEditableCell {
+                lastLoadedEditableCell.dateDisplayFormatter = newValue
+            }
+        }
+        get {
+            if let presetFormatter = _dateDisplayFormatter {
+                return presetFormatter
+            }
+            let typeSpecificFormatter = DateFormatter()
+            typeSpecificFormatter.dateStyle = dateSelectionType.dateStyle
+            typeSpecificFormatter.timeStyle = dateSelectionType.timeStyle
+            return typeSpecificFormatter
+        }
+    }
+
+    /// The type of selection to be made by the user.
+    public var dateSelectionType: WCDateFieldSelectionType = .date {
+        didSet {
+            guard let lastLoadedEditableCell = lastLoadedEditableCell else {
+                return
+            }
+            lastLoadedEditableCell.dateSelectionType = dateSelectionType
+            lastLoadedEditableCell.dateDisplayFormatter = dateDisplayFormatter
+        }
+    }
 
     /// The minimum date allowed for the field value. A date before this date will generate a validation error when the user attempts to complete
     /// the form. This date is also used to set the `minimumDate` of the UIDatePicker used to set the field. If this property is set to nil, no minimum date 
@@ -152,6 +223,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
             editableCell.inactiveValueColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor
             editableCell.updateDatePicker(withDate: dateValue, minimumDate: minimumDate, maximumDate: maximumDate)
             editableCell.dateDisplayFormatter = dateDisplayFormatter
+            editableCell.dateSelectionType = dateSelectionType
             lastLoadedEditableCell = editableCell
         } else {
             lastLoadedEditableCell = nil
