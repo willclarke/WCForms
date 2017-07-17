@@ -29,7 +29,7 @@ public protocol WCGenericDateFieldEditable: WCGenericTextFieldCellEditable {
     ///   - date: The currently selected date.
     ///   - minimumDate: The minimum date that can be selected by the picker.
     ///   - maximumDate: The maximum date that can be selected by the picker.
-    func updateDatePicker(withDate date: Date, minimumDate: Date?, maximumDate: Date?)
+    func updateDatePicker(withDate date: Date?, minimumDate: Date?, maximumDate: Date?, timeZone: TimeZone?)
 
 }
 
@@ -109,14 +109,13 @@ internal class WCDateFieldCell: WCGenericTextFieldAndLabelCell, WCGenericDateFie
     ///   - date: The currently selected date.
     ///   - minimumDate: The minimum date that can be selected by the picker.
     ///   - maximumDate: The maximum date that can be selected by the picker.
-    public func updateDatePicker(withDate date: Date, minimumDate: Date? = nil, maximumDate: Date? = nil) {
-        datePickerKeyboard.date = date
-        if let minimumDate = minimumDate {
-            datePickerKeyboard.minimumDate = minimumDate
+    public func updateDatePicker(withDate date: Date?, minimumDate: Date? = nil, maximumDate: Date? = nil, timeZone: TimeZone? = nil) {
+        if let setDate = date {
+            datePickerKeyboard.date = setDate
         }
-        if let maximumDate = maximumDate {
-            datePickerKeyboard.maximumDate = maximumDate
-        }
+        datePickerKeyboard.minimumDate = minimumDate
+        datePickerKeyboard.maximumDate = maximumDate
+        datePickerKeyboard.timeZone = timeZone
     }
 
 }

@@ -142,6 +142,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
             let typeSpecificFormatter = DateFormatter()
             typeSpecificFormatter.dateStyle = dateSelectionType.dateStyle
             typeSpecificFormatter.timeStyle = dateSelectionType.timeStyle
+            typeSpecificFormatter.timeZone = timeZone ?? TimeZone.current
             return typeSpecificFormatter
         }
     }
@@ -160,12 +161,28 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
     /// The minimum date allowed for the field value. A date before this date will generate a validation error when the user attempts to complete
     /// the form. This date is also used to set the `minimumDate` of the UIDatePicker used to set the field. If this property is set to nil, no minimum date 
     /// will be enforced.
-    public var minimumDate: Date? = nil
+    public var minimumDate: Date? = nil {
+        didSet {
+            updateLastLoadedCell()
+        }
+    }
 
     /// The maximum date allowed for the field value. A date after this date will generate a validation error when the user attempts to complete
     /// the form. This date is also used to set the `maximumDate` of the UIDatePicker used to set the field. If this property is set to nil, no maximum date
     /// will be enforced.
-    public var maximumDate: Date? = nil
+    public var maximumDate: Date? = nil {
+        didSet {
+            updateLastLoadedCell()
+        }
+    }
+
+    /// The time zone for the date field. If `nil`, it will assume the current device's time zone.
+    public var timeZone: TimeZone? = nil {
+        didSet {
+            dateDisplayFormatter.timeZone = timeZone ?? TimeZone.current
+            updateLastLoadedCell()
+        }
+    }
 
     /// Placeholder text to be set for the text field.
     public var placeholderText: String? = nil
@@ -199,7 +216,11 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
 
         if let dateCell = cell as? WCGenericFieldWithFieldNameCell {
             if let dateValue = fieldValue {
-                dateCell.valueLabelText = dateDisplayFormatter.string(from: dateValue)
+                var displayDate = dateDisplayFormatter.string(from: dateValue)
+                if let customTimeZone = timeZone, customTimeZone != TimeZone.current, let abbreviation = customTimeZone.abbreviation(for: dateValue) {
+                    displayDate += " (\(abbreviation))"
+                }
+                dateCell.valueLabelText = displayDate
             } else {
                 dateCell.valueLabelText = emptyValueLabelText
             }
@@ -221,7 +242,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
             editableCell.textFieldDelegate = nil
             editableCell.datePickerDelegate = self
             editableCell.inactiveValueColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor
-            editableCell.updateDatePicker(withDate: dateValue, minimumDate: minimumDate, maximumDate: maximumDate)
+            editableCell.updateDatePicker(withDate: dateValue, minimumDate: minimumDate, maximumDate: maximumDate, timeZone: timeZone)
             editableCell.dateDisplayFormatter = dateDisplayFormatter
             editableCell.dateSelectionType = dateSelectionType
             lastLoadedEditableCell = editableCell
@@ -276,6 +297,10 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
                 throw WCFieldValidationError.outOfBounds(fieldName: fieldName, boundsError: errorString)
             }
         }
+    }
+
+    func updateLastLoadedCell() {
+        lastLoadedEditableCell?.updateDatePicker(withDate: nil, minimumDate: minimumDate, maximumDate: maximumDate, timeZone: timeZone)
     }
 
 

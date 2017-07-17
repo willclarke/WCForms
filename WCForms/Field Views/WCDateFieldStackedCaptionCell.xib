@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -26,7 +26,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="NBp-IL-ZNz">
-                        <rect key="frame" x="16" y="29.5" width="288" height="23"/>
+                        <rect key="frame" x="16" y="30" width="296" height="22"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <textInputTraits key="textInputTraits"/>
                         <connections>
@@ -35,9 +35,9 @@
                     </textField>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="NBp-IL-ZNz" firstAttribute="trailing" secondItem="nnn-Uv-4Ku" secondAttribute="trailing" id="0Pl-U2-l4P"/>
                     <constraint firstItem="nnn-Uv-4Ku" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="1PV-gt-gMR"/>
                     <constraint firstItem="NBp-IL-ZNz" firstAttribute="top" secondItem="nnn-Uv-4Ku" secondAttribute="bottom" constant="6" id="FxB-jo-t2v"/>
+                    <constraint firstItem="NBp-IL-ZNz" firstAttribute="trailing" secondItem="H2p-sc-9uM" secondAttribute="trailingMargin" id="KM3-oH-VDF"/>
                     <constraint firstItem="NBp-IL-ZNz" firstAttribute="leading" secondItem="nnn-Uv-4Ku" secondAttribute="leading" id="ZO1-zg-000"/>
                     <constraint firstItem="nnn-Uv-4Ku" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="awT-5z-zF8"/>
                     <constraint firstAttribute="trailingMargin" secondItem="nnn-Uv-4Ku" secondAttribute="trailing" constant="8" id="iTo-Ld-pac"/>
@@ -48,7 +48,7 @@
                 <outlet property="fieldNameLabel" destination="nnn-Uv-4Ku" id="8Ef-PT-s8W"/>
                 <outlet property="fieldValueTextField" destination="NBp-IL-ZNz" id="rgC-Ct-Kwh"/>
             </connections>
-            <point key="canvasLocation" x="18" y="67"/>
+            <point key="canvasLocation" x="18" y="66.5"/>
         </tableViewCell>
     </objects>
 </document>
