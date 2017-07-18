@@ -239,7 +239,7 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
             editableCell.valueTextField.placeholder = placeholderText ?? emptyValueLabelText
             editableCell.valueTextField.inputAccessoryView = fieldInputAccessory
             editableCell.valueTextField.clearButtonMode = isRequired ? .never : .unlessEditing
-            editableCell.textFieldDelegate = nil
+            editableCell.textFieldDelegate = self
             editableCell.datePickerDelegate = self
             editableCell.inactiveValueColor = editableAppearance?.preferredFieldValueColor ?? appearance.preferredFieldValueColor
             editableCell.updateDatePicker(withDate: dateValue, minimumDate: minimumDate, maximumDate: maximumDate, timeZone: timeZone)
@@ -317,8 +317,12 @@ public class WCDateField: WCGenericField<Date, WCDateFieldAppearance>, WCDatePic
     // MARK: - WCTextFieldInputDelegate conformance
 
     public func viewDidUpdateTextField(textField: UITextField) {
-        //We want to ignore potential input by an externally connected keyboard. Reset the text field to the current value of the date.
-        textField.text = displayedDate
+        //We want to ignore potential input by an externally connected keyboard. If empty, reset the text field to the current value of the date.
+        if (textField.text == nil || textField.text!.trimmingCharacters(in: .whitespaces) == "") && !isRequired {
+            viewDidUpdateValue(newValue: nil)
+        } else {
+            textField.text = displayedDate
+        }
     }
 
 }
