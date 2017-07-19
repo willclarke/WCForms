@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WCDoubleFieldStackedCaptionCell" rowHeight="62" id="KGk-i7-Jjw" customClass="WCDoubleFieldCell" customModule="WCForms" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="62"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="61.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6WQ-31-IhU">
+                        <rect key="frame" x="16" y="9" width="288" height="14.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="zMd-DI-kAT">
+                        <rect key="frame" x="16" y="29.5" width="288" height="21"/>
+                        <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Prefix" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ipA-hH-Xwq">
+                                <rect key="frame" x="0.0" y="0.5" width="44" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="jbf-Zb-yqh">
+                                <rect key="frame" x="45" y="0.0" width="197.5" height="21"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="YKd-H0-TiY"/>
+                                    <outlet property="delegate" destination="KGk-i7-Jjw" id="P8P-IK-KGq"/>
+                                </connections>
+                            </textField>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Suffix" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hSC-tb-4gV">
+                                <rect key="frame" x="243.5" y="0.5" width="44.5" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="6WQ-31-IhU" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="6rw-M5-AEV"/>
+                    <constraint firstItem="6WQ-31-IhU" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="JOF-jV-Jx7"/>
+                    <constraint firstItem="zMd-DI-kAT" firstAttribute="trailing" secondItem="6WQ-31-IhU" secondAttribute="trailing" id="Jcf-zU-9fn"/>
+                    <constraint firstItem="zMd-DI-kAT" firstAttribute="top" secondItem="6WQ-31-IhU" secondAttribute="bottom" constant="6" id="LUE-YT-gvd"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="6WQ-31-IhU" secondAttribute="trailing" constant="8" id="OrU-Es-s2g"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="zMd-DI-kAT" secondAttribute="bottom" constant="3" id="XaA-tf-meT"/>
+                    <constraint firstItem="zMd-DI-kAT" firstAttribute="leading" secondItem="6WQ-31-IhU" secondAttribute="leading" id="iBP-Zn-fMQ"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="fieldNameLabel" destination="6WQ-31-IhU" id="5HW-oj-kQ4"/>
+                <outlet property="fieldValueTextField" destination="jbf-Zb-yqh" id="y2h-hZ-htJ"/>
+                <outlet property="prefixLabel" destination="ipA-hH-Xwq" id="ZET-lx-QNH"/>
+                <outlet property="suffixLabel" destination="hSC-tb-4gV" id="1nO-L2-yGl"/>
+            </connections>
+            <point key="canvasLocation" x="34" y="63.5"/>
+        </tableViewCell>
+    </objects>
+</document>
