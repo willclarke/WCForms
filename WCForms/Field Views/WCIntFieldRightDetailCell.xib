@@ -28,7 +28,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="YTG-8u-MWg">
-                        <rect key="frame" x="168.5" y="13" width="143.5" height="21"/>
+                        <rect key="frame" x="148" y="13" width="164" height="21"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Px" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KNf-5Y-680">
                                 <rect key="frame" x="0.0" y="0.0" width="19" height="20.5"/>
@@ -37,7 +37,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="right" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="asZ-fj-X1f">
-                                <rect key="frame" x="20" y="-3" width="103.5" height="24"/>
+                                <rect key="frame" x="20" y="-3" width="124" height="24"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
@@ -47,29 +47,27 @@
                                 </connections>
                             </textField>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Sx" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="90J-Bb-5Ku">
-                                <rect key="frame" x="124.5" y="0.0" width="19" height="20.5"/>
+                                <rect key="frame" x="145" y="0.0" width="19" height="20.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <constraints>
-                            <constraint firstItem="asZ-fj-X1f" firstAttribute="width" relation="greaterThanOrEqual" secondItem="YTG-8u-MWg" secondAttribute="width" multiplier="0.3" id="RUM-4o-KHm"/>
-                        </constraints>
                     </stackView>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dmM-bN-1lT">
-                        <rect key="frame" x="117" y="0.0" width="51.5" height="44"/>
+                        <rect key="frame" x="117" y="0.0" width="31" height="44"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Fja-kj-Tuy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="2tB-Ph-WnJ"/>
+                    <constraint firstAttribute="width" relation="lessThanOrEqual" secondItem="YTG-8u-MWg" secondAttribute="width" multiplier="3" id="7Sp-d8-Aci"/>
                     <constraint firstAttribute="trailing" secondItem="YTG-8u-MWg" secondAttribute="trailing" constant="8" id="LNj-lq-HL5"/>
                     <constraint firstItem="YTG-8u-MWg" firstAttribute="firstBaseline" secondItem="Fja-kj-Tuy" secondAttribute="firstBaseline" id="Rwb-Jx-aCb"/>
                     <constraint firstItem="dmM-bN-1lT" firstAttribute="leading" secondItem="Fja-kj-Tuy" secondAttribute="trailing" id="Siw-FX-mqZ"/>
                     <constraint firstItem="Fja-kj-Tuy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="Y1W-qD-cvh"/>
                     <constraint firstAttribute="bottom" secondItem="dmM-bN-1lT" secondAttribute="bottom" id="bEb-bv-C7P"/>
-                    <constraint firstItem="dmM-bN-1lT" firstAttribute="width" secondItem="asZ-fj-X1f" secondAttribute="width" multiplier="0.5" id="bfl-IA-f4e"/>
+                    <constraint firstItem="dmM-bN-1lT" firstAttribute="width" secondItem="asZ-fj-X1f" secondAttribute="width" multiplier="0.25" id="bfl-IA-f4e"/>
                     <constraint firstItem="dmM-bN-1lT" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="eGz-Kw-Ljh"/>
                     <constraint firstAttribute="bottomMargin" secondItem="Fja-kj-Tuy" secondAttribute="bottom" constant="2" id="gGb-LQ-LZH"/>
                     <constraint firstItem="YTG-8u-MWg" firstAttribute="leading" secondItem="dmM-bN-1lT" secondAttribute="trailing" id="lif-n2-NSc"/>
