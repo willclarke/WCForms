@@ -61,6 +61,11 @@
 		8AB8A4E41EB6CFA900B53E5C /* WCGenericButtonStackedCaptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AB8A4E21EB6CFA900B53E5C /* WCGenericButtonStackedCaptionCell.xib */; };
 		8ABE45711E85B79100A0B8BE /* OptionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE45701E85B79100A0B8BE /* OptionField.swift */; };
 		8ACC7BAE1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ACC7BAD1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift */; };
+		8ADB0F771F1E6018006CD2D3 /* DoubleField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB0F761F1E6018006CD2D3 /* DoubleField.swift */; };
+		8ADB0F7A1F1E69C6006CD2D3 /* WCDoubleFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADB0F781F1E69C6006CD2D3 /* WCDoubleFieldCell.swift */; };
+		8ADB0F7B1F1E69C6006CD2D3 /* WCDoubleFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB0F791F1E69C6006CD2D3 /* WCDoubleFieldCell.xib */; };
+		8ADB0F7F1F1E6C2F006CD2D3 /* WCDoubleFieldStackedCaptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB0F7D1F1E6C2F006CD2D3 /* WCDoubleFieldStackedCaptionCell.xib */; };
+		8ADB0F831F1E6C76006CD2D3 /* WCDoubleFieldRightDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ADB0F811F1E6C76006CD2D3 /* WCDoubleFieldRightDetailCell.xib */; };
 		8ADCA1DE1EB29150002720AF /* EmailField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ADCA1DD1EB29150002720AF /* EmailField.swift */; };
 		8AF4D3B81E96F74900A8156E /* SingleOptionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4D3B71E96F74900A8156E /* SingleOptionField.swift */; };
 		8AF4D3BA1E96F77700A8156E /* MultipleOptionField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4D3B91E96F77700A8156E /* MultipleOptionField.swift */; };
@@ -123,6 +128,11 @@
 		8AB8A4E21EB6CFA900B53E5C /* WCGenericButtonStackedCaptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCGenericButtonStackedCaptionCell.xib; path = "Field Views/WCGenericButtonStackedCaptionCell.xib"; sourceTree = "<group>"; };
 		8ABE45701E85B79100A0B8BE /* OptionField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = OptionField.swift; path = "Field Models/OptionField.swift"; sourceTree = "<group>"; };
 		8ACC7BAD1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WCOptionSelectionDetailTableViewController.swift; path = "Field Views/WCOptionSelectionDetailTableViewController.swift"; sourceTree = "<group>"; };
+		8ADB0F761F1E6018006CD2D3 /* DoubleField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DoubleField.swift; path = "Field Models/DoubleField.swift"; sourceTree = "<group>"; };
+		8ADB0F781F1E69C6006CD2D3 /* WCDoubleFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WCDoubleFieldCell.swift; path = "Field Views/WCDoubleFieldCell.swift"; sourceTree = "<group>"; };
+		8ADB0F791F1E69C6006CD2D3 /* WCDoubleFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCDoubleFieldCell.xib; path = "Field Views/WCDoubleFieldCell.xib"; sourceTree = "<group>"; };
+		8ADB0F7D1F1E6C2F006CD2D3 /* WCDoubleFieldStackedCaptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCDoubleFieldStackedCaptionCell.xib; path = "Field Views/WCDoubleFieldStackedCaptionCell.xib"; sourceTree = "<group>"; };
+		8ADB0F811F1E6C76006CD2D3 /* WCDoubleFieldRightDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCDoubleFieldRightDetailCell.xib; path = "Field Views/WCDoubleFieldRightDetailCell.xib"; sourceTree = "<group>"; };
 		8ADCA1DD1EB29150002720AF /* EmailField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmailField.swift; path = "Field Models/EmailField.swift"; sourceTree = "<group>"; };
 		8AF4D3B71E96F74900A8156E /* SingleOptionField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SingleOptionField.swift; path = "Field Models/SingleOptionField.swift"; sourceTree = "<group>"; };
 		8AF4D3B91E96F77700A8156E /* MultipleOptionField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MultipleOptionField.swift; path = "Field Models/MultipleOptionField.swift"; sourceTree = "<group>"; };
@@ -181,6 +191,18 @@
 			path = WCForms;
 			sourceTree = "<group>";
 		};
+		8ADB0F751F1E5F89006CD2D3 /* Double Field */ = {
+			isa = PBXGroup;
+			children = (
+				8ADB0F761F1E6018006CD2D3 /* DoubleField.swift */,
+				8ADB0F781F1E69C6006CD2D3 /* WCDoubleFieldCell.swift */,
+				8ADB0F791F1E69C6006CD2D3 /* WCDoubleFieldCell.xib */,
+				8ADB0F7D1F1E6C2F006CD2D3 /* WCDoubleFieldStackedCaptionCell.xib */,
+				8ADB0F811F1E6C76006CD2D3 /* WCDoubleFieldRightDetailCell.xib */,
+			);
+			name = "Double Field";
+			sourceTree = "<group>";
+		};
 		8ADCA1D41EB26514002720AF /* Fields */ = {
 			isa = PBXGroup;
 			children = (
@@ -189,6 +211,7 @@
 				8ADCA1D61EB26544002720AF /* Bool Field */,
 				8ADCA1D51EB26521002720AF /* Text Field */,
 				8ADCA1D81EB265BD002720AF /* Int Field */,
+				8ADB0F751F1E5F89006CD2D3 /* Double Field */,
 				8ADCA1D71EB265B4002720AF /* Date Field */,
 				8ADCA1DC1EB290FB002720AF /* Email Field */,
 				8ADCA1D91EB265CD002720AF /* Option Field */,
@@ -372,8 +395,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				8AB50DBE1E6F935F0057C249 /* InputAccessoryView.xib in Resources */,
+				8ADB0F7B1F1E69C6006CD2D3 /* WCDoubleFieldCell.xib in Resources */,
 				8A2A7EDC1E87165E00594E89 /* WCOptionFieldStackedCell.xib in Resources */,
 				8A4BA48B1E688C73004F7089 /* WCBoolFieldStackedCell.xib in Resources */,
+				8ADB0F7F1F1E6C2F006CD2D3 /* WCDoubleFieldStackedCaptionCell.xib in Resources */,
 				8A0E4D161E7335B700BAEC17 /* WCIntFieldStackedCaptionCell.xib in Resources */,
 				8A111F771E8F29A8004AC07E /* WCOptionItemTableViewCell.xib in Resources */,
 				8A0E4D181E73543400BAEC17 /* CustomPlainFooterView.xib in Resources */,
@@ -391,6 +416,7 @@
 				8AB50DBC1E6C613E0057C249 /* WCGenericFieldCell.xib in Resources */,
 				8A2A7EE01E8716AE00594E89 /* WCOptionFieldStackedCaptionCell.xib in Resources */,
 				8A4BA4831E686BB3004F7089 /* WCGenericFieldRightDetailTableViewCell.xib in Resources */,
+				8ADB0F831F1E6C76006CD2D3 /* WCDoubleFieldRightDetailCell.xib in Resources */,
 				8A4BA4871E686DEC004F7089 /* WCTextFieldRightDetailCell.xib in Resources */,
 				8A9FA4121E67A1B800C16C26 /* WCIntFieldCell.xib in Resources */,
 				8AB50DC81E7214340057C249 /* WCGenericFieldStackedCaptionCell.xib in Resources */,
@@ -432,7 +458,9 @@
 				8A9FA3FF1E66D29E00C16C26 /* WCGenericFieldCell.swift in Sources */,
 				8A3907C21E6BC25000BE1A20 /* DateField.swift in Sources */,
 				8AF4D3B81E96F74900A8156E /* SingleOptionField.swift in Sources */,
+				8ADB0F7A1F1E69C6006CD2D3 /* WCDoubleFieldCell.swift in Sources */,
 				8A3907BE1E6BC22300BE1A20 /* BoolField.swift in Sources */,
+				8ADB0F771F1E6018006CD2D3 /* DoubleField.swift in Sources */,
 				8A0E4D1A1E73547300BAEC17 /* CustomPlainFooterView.swift in Sources */,
 				8AF4D3BA1E96F77700A8156E /* MultipleOptionField.swift in Sources */,
 				8A9FA4111E67A1B800C16C26 /* WCIntFieldCell.swift in Sources */,
