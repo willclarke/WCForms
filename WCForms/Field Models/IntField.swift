@@ -107,6 +107,12 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
     /// Placeholder text to be set for the integer field when it's empty.
     public var placeholderText: String?
 
+    /// Text to prepend to the field value when displaying or inputting the value. This will only be shown if the field has a valid value.
+    public var prefixText: String? = nil
+
+    /// Text to append to the field value when displaying or inputting the value. This will only be shown if the field has a valid value.
+    public var suffixText: String? = nil
+
     /// A formatter for the integer. All "#" characters will be replaced with a number entered by the user; other characters will be used to format the
     /// display of the integer. For example, "###-##-####" would format a social security number. If the user does not enter enough numbers, a validation error
     /// will occur (if field validation is enabled for the form). Note: format masks can not contain numbers.
@@ -131,10 +137,7 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
     public override func setupCell(_ cell: UITableViewCell) {
         super.setupCell(cell)
         if let readOnlyCell = cell as? WCGenericFieldCell {
-            if let intValue = fieldValue {
-                let parsedValue = parseValue(forUserInput: String(intValue), withInsertionIndex: nil)
-                readOnlyCell.valueLabelText = parsedValue.display
-            }
+            readOnlyCell.valueLabelText = self.displayValue
         }
         lastLoadedEditableTextCell = nil
     }
@@ -158,6 +161,10 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
         } else {
             lastLoadedEditableTextCell = nil
         }
+        if let prefixableCell = cell as? WCTextEntryPrefixingAndSuffixing {
+            prefixableCell.prefixText = prefixText
+            prefixableCell.suffixText = suffixText
+        }
         if let sliderCell = cell as? WCIntFieldSliderCell {
             let sliderMinimum = minimumValue ?? 0
             let sliderMaximum = maximumValue ?? 100
@@ -170,9 +177,8 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
                 intValue = sliderMaximum
                 fieldValue = sliderMaximum
             }
-            let parsedValue = parseValue(forUserInput: String(intValue), withInsertionIndex: nil)
             sliderCell.fieldNameLabel.text = fieldName
-            sliderCell.fieldValueLabel.text = parsedValue.display
+            sliderCell.fieldValueLabel.text = displayValue
             sliderCell.fieldValueSlider.minimumValue = Float(sliderMinimum)
             sliderCell.fieldValueSlider.maximumValue = Float(sliderMaximum)
             sliderCell.fieldValueSlider.value = Float(intValue)
@@ -238,6 +244,20 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
             let emptyString = ""
             return (display: emptyString, value: nil, newInsertionIndex: emptyString.endIndex)
         }
+    }
+
+    /// The current valye that should be displayed as text to the user, formatted and with prefixes and suffixes appended.
+    private var displayValue: String? {
+        if let intValue = fieldValue {
+            let parsedValue = parseValue(forUserInput: String(intValue), withInsertionIndex: nil)
+            var displayValue = prefixText ?? ""
+            displayValue += parsedValue.display
+            displayValue += suffixText ?? ""
+            return displayValue
+        } else {
+            return nil
+        }
+
     }
 
     /// Attempt to make this field to become the first responder.
