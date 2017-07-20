@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8A6CBAA41F0EDFF6005DB9A6 /* WCForms.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A6CBAA31F0EDFD2005DB9A6 /* WCForms.framework */; };
+		8AA379D21F2126CE00CCC23D /* CurrencyFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA379D11F2126CE00CCC23D /* CurrencyFieldController.swift */; };
 		8AAC1FB71E99BF3300C1D715 /* TextFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC1FB61E99BF3300C1D715 /* TextFieldController.swift */; };
 		8AAC1FB91E99C0E400C1D715 /* BoolFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC1FB81E99C0E400C1D715 /* BoolFieldController.swift */; };
 		8AAC1FBB1E99C17900C1D715 /* DateFieldController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AAC1FBA1E99C17900C1D715 /* DateFieldController.swift */; };
@@ -66,6 +67,7 @@
 
 /* Begin PBXFileReference section */
 		8A6CBA9E1F0EDFD1005DB9A6 /* WCForms.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = WCForms.xcodeproj; path = ../../WCForms.xcodeproj; sourceTree = "<group>"; };
+		8AA379D11F2126CE00CCC23D /* CurrencyFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyFieldController.swift; sourceTree = "<group>"; };
 		8AAC1FB61E99BF3300C1D715 /* TextFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextFieldController.swift; sourceTree = "<group>"; };
 		8AAC1FB81E99C0E400C1D715 /* BoolFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoolFieldController.swift; sourceTree = "<group>"; };
 		8AAC1FBA1E99C17900C1D715 /* DateFieldController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFieldController.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				8AB8A4E51EB800FE00B53E5C /* CustomEmailTableViewCell.swift */,
 				8AB8A4E61EB800FE00B53E5C /* CustomEmailTableViewCell.xib */,
 				8AAC1FBC1E99C25600C1D715 /* IntFieldController.swift */,
+				8AA379D11F2126CE00CCC23D /* CurrencyFieldController.swift */,
 				8AAC1FBA1E99C17900C1D715 /* DateFieldController.swift */,
 				8AAC1FC21E9A158400C1D715 /* OptionFieldTypes.swift */,
 				8AAC1FBE1E99C28A00C1D715 /* SingleOptionFieldController.swift */,
@@ -345,6 +348,7 @@
 				8AAC1FBD1E99C25600C1D715 /* IntFieldController.swift in Sources */,
 				8AAC1FBB1E99C17900C1D715 /* DateFieldController.swift in Sources */,
 				8AAC1FB91E99C0E400C1D715 /* BoolFieldController.swift in Sources */,
+				8AA379D21F2126CE00CCC23D /* CurrencyFieldController.swift in Sources */,
 				8AAC1FC11E99C2A800C1D715 /* MultipleOptionFieldController.swift in Sources */,
 				8AAC1FBF1E99C28A00C1D715 /* SingleOptionFieldController.swift in Sources */,
 				8AB8A4E71EB800FE00B53E5C /* CustomEmailTableViewCell.swift in Sources */,

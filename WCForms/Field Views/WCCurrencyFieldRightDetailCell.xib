@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="WCCurrencyFieldRightDetailCell" id="KGk-i7-Jjw" customClass="WCCurrencyFieldCell" customModule="WCForms" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="right" adjustsFontForContentSizeCategory="YES" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="bgC-0R-cbf">
+                        <rect key="frame" x="125" y="13" width="179" height="21"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="decimalPad" returnKeyType="done"/>
+                        <connections>
+                            <outlet property="delegate" destination="KGk-i7-Jjw" id="Vp6-bJ-KUe"/>
+                        </connections>
+                    </textField>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="Field Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a6X-1k-pQs">
+                        <rect key="frame" x="16" y="10" width="101" height="23"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="bgC-0R-cbf" firstAttribute="leading" secondItem="a6X-1k-pQs" secondAttribute="trailing" constant="8" id="802-JG-pcM"/>
+                    <constraint firstItem="a6X-1k-pQs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="8tD-Os-85Y"/>
+                    <constraint firstItem="bgC-0R-cbf" firstAttribute="firstBaseline" secondItem="a6X-1k-pQs" secondAttribute="firstBaseline" id="Dlv-Nn-M5G"/>
+                    <constraint firstItem="a6X-1k-pQs" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="N9H-7N-MUH"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="bgC-0R-cbf" secondAttribute="trailing" constant="8" id="OnU-Rx-dJB"/>
+                    <constraint firstItem="a6X-1k-pQs" firstAttribute="width" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.25" id="kGE-I3-mUc"/>
+                    <constraint firstItem="a6X-1k-pQs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="lZe-Mn-Oag"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="a6X-1k-pQs" secondAttribute="bottom" constant="2" id="rnN-QN-MTg"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="fieldNameLabel" destination="a6X-1k-pQs" id="2wy-zX-en3"/>
+                <outlet property="fieldValueTextField" destination="bgC-0R-cbf" id="nd6-hd-usL"/>
+            </connections>
+        </tableViewCell>
+    </objects>
+</document>

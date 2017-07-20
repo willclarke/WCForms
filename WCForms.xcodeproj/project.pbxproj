@@ -43,6 +43,11 @@
 		8A9FA40E1E67980B00C16C26 /* WCDateFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A9FA40C1E67980B00C16C26 /* WCDateFieldCell.xib */; };
 		8A9FA4111E67A1B800C16C26 /* WCIntFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A9FA40F1E67A1B800C16C26 /* WCIntFieldCell.swift */; };
 		8A9FA4121E67A1B800C16C26 /* WCIntFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A9FA4101E67A1B800C16C26 /* WCIntFieldCell.xib */; };
+		8AA379C41F2042CB00CCC23D /* CurrencyField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA379C31F2042CB00CCC23D /* CurrencyField.swift */; };
+		8AA379C71F211D5000CCC23D /* WCCurrencyFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AA379C51F211D5000CCC23D /* WCCurrencyFieldCell.swift */; };
+		8AA379C81F211D5000CCC23D /* WCCurrencyFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AA379C61F211D5000CCC23D /* WCCurrencyFieldCell.xib */; };
+		8AA379CC1F211D8100CCC23D /* WCCurrencyFieldStackedCaptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AA379CA1F211D8100CCC23D /* WCCurrencyFieldStackedCaptionCell.xib */; };
+		8AA379D01F211DA700CCC23D /* WCCurrencyFieldRightDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AA379CE1F211DA700CCC23D /* WCCurrencyFieldRightDetailCell.xib */; };
 		8AB18FD51E64023E00AE13AF /* WCForms.h in Headers */ = {isa = PBXBuildFile; fileRef = 8AB18FD31E64023E00AE13AF /* WCForms.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		8AB1901E1E64637D00AE13AF /* WCFormController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB1901D1E64637D00AE13AF /* WCFormController.swift */; };
 		8AB190201E64667C00AE13AF /* FormProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AB1901F1E64667C00AE13AF /* FormProtocols.swift */; };
@@ -108,6 +113,11 @@
 		8A9FA40C1E67980B00C16C26 /* WCDateFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCDateFieldCell.xib; path = "Field Views/WCDateFieldCell.xib"; sourceTree = "<group>"; };
 		8A9FA40F1E67A1B800C16C26 /* WCIntFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WCIntFieldCell.swift; path = "Field Views/WCIntFieldCell.swift"; sourceTree = "<group>"; };
 		8A9FA4101E67A1B800C16C26 /* WCIntFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCIntFieldCell.xib; path = "Field Views/WCIntFieldCell.xib"; sourceTree = "<group>"; };
+		8AA379C31F2042CB00CCC23D /* CurrencyField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CurrencyField.swift; path = "Field Models/CurrencyField.swift"; sourceTree = "<group>"; };
+		8AA379C51F211D5000CCC23D /* WCCurrencyFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = WCCurrencyFieldCell.swift; path = "Field Views/WCCurrencyFieldCell.swift"; sourceTree = "<group>"; };
+		8AA379C61F211D5000CCC23D /* WCCurrencyFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCCurrencyFieldCell.xib; path = "Field Views/WCCurrencyFieldCell.xib"; sourceTree = "<group>"; };
+		8AA379CA1F211D8100CCC23D /* WCCurrencyFieldStackedCaptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCCurrencyFieldStackedCaptionCell.xib; path = "Field Views/WCCurrencyFieldStackedCaptionCell.xib"; sourceTree = "<group>"; };
+		8AA379CE1F211DA700CCC23D /* WCCurrencyFieldRightDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = WCCurrencyFieldRightDetailCell.xib; path = "Field Views/WCCurrencyFieldRightDetailCell.xib"; sourceTree = "<group>"; };
 		8AB18FD01E64023E00AE13AF /* WCForms.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = WCForms.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8AB18FD31E64023E00AE13AF /* WCForms.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WCForms.h; sourceTree = "<group>"; };
 		8AB18FD41E64023E00AE13AF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -156,6 +166,18 @@
 				8A0E4D171E73543400BAEC17 /* CustomPlainFooterView.xib */,
 			);
 			name = "Form Views";
+			sourceTree = "<group>";
+		};
+		8AA379C21F20429D00CCC23D /* Currency Field */ = {
+			isa = PBXGroup;
+			children = (
+				8AA379C31F2042CB00CCC23D /* CurrencyField.swift */,
+				8AA379C51F211D5000CCC23D /* WCCurrencyFieldCell.swift */,
+				8AA379C61F211D5000CCC23D /* WCCurrencyFieldCell.xib */,
+				8AA379CA1F211D8100CCC23D /* WCCurrencyFieldStackedCaptionCell.xib */,
+				8AA379CE1F211DA700CCC23D /* WCCurrencyFieldRightDetailCell.xib */,
+			);
+			name = "Currency Field";
 			sourceTree = "<group>";
 		};
 		8AB18FC61E64023E00AE13AF = {
@@ -212,6 +234,7 @@
 				8ADCA1D51EB26521002720AF /* Text Field */,
 				8ADCA1D81EB265BD002720AF /* Int Field */,
 				8ADB0F751F1E5F89006CD2D3 /* Double Field */,
+				8AA379C21F20429D00CCC23D /* Currency Field */,
 				8ADCA1D71EB265B4002720AF /* Date Field */,
 				8ADCA1DC1EB290FB002720AF /* Email Field */,
 				8ADCA1D91EB265CD002720AF /* Option Field */,
@@ -416,13 +439,16 @@
 				8AB50DBC1E6C613E0057C249 /* WCGenericFieldCell.xib in Resources */,
 				8A2A7EE01E8716AE00594E89 /* WCOptionFieldStackedCaptionCell.xib in Resources */,
 				8A4BA4831E686BB3004F7089 /* WCGenericFieldRightDetailTableViewCell.xib in Resources */,
+				8AA379CC1F211D8100CCC23D /* WCCurrencyFieldStackedCaptionCell.xib in Resources */,
 				8ADB0F831F1E6C76006CD2D3 /* WCDoubleFieldRightDetailCell.xib in Resources */,
 				8A4BA4871E686DEC004F7089 /* WCTextFieldRightDetailCell.xib in Resources */,
 				8A9FA4121E67A1B800C16C26 /* WCIntFieldCell.xib in Resources */,
 				8AB50DC81E7214340057C249 /* WCGenericFieldStackedCaptionCell.xib in Resources */,
 				8AB8A4DC1EB5486B00B53E5C /* WCGenericButtonRightDetailCell.xib in Resources */,
 				8AB8A4E41EB6CFA900B53E5C /* WCGenericButtonStackedCaptionCell.xib in Resources */,
+				8AA379C81F211D5000CCC23D /* WCCurrencyFieldCell.xib in Resources */,
 				8A4BA48F1E6892F5004F7089 /* WCIntFieldRightDetailCell.xib in Resources */,
+				8AA379D01F211DA700CCC23D /* WCCurrencyFieldRightDetailCell.xib in Resources */,
 				8AB8A4E01EB6CBE500B53E5C /* WCGenericButtonSingleLineCell.xib in Resources */,
 				8A6801521E6BF7A900227ABC /* WCTextFieldNoFieldNameLabelCell.xib in Resources */,
 				8A0E4D0E1E72248400BAEC17 /* WCBoolFieldStackedCaptionCell.xib in Resources */,
@@ -439,6 +465,7 @@
 				8A111F731E8EE11C004AC07E /* WCOptionPickerTableViewController.swift in Sources */,
 				8A111F761E8F29A8004AC07E /* WCOptionItemTableViewCell.swift in Sources */,
 				8A9FA40D1E67980B00C16C26 /* WCDateFieldCell.swift in Sources */,
+				8AA379C41F2042CB00CCC23D /* CurrencyField.swift in Sources */,
 				8ABE45711E85B79100A0B8BE /* OptionField.swift in Sources */,
 				8A9FA4061E676C1800C16C26 /* WCFields.swift in Sources */,
 				8AB8A4D71EB5484000B53E5C /* WCGenericButtonCell.swift in Sources */,
@@ -452,6 +479,7 @@
 				8AB50DC41E717E9D0057C249 /* GenericField.swift in Sources */,
 				8A3907C41E6BC26000BE1A20 /* IntField.swift in Sources */,
 				8AB190201E64667C00AE13AF /* FormProtocols.swift in Sources */,
+				8AA379C71F211D5000CCC23D /* WCCurrencyFieldCell.swift in Sources */,
 				8A9FA4091E67969F00C16C26 /* WCBoolFieldCell.swift in Sources */,
 				8ACC7BAE1EAFBD7200695962 /* WCOptionSelectionDetailTableViewController.swift in Sources */,
 				8AB50DC21E704F350057C249 /* InputAccessoryView.swift in Sources */,
