@@ -7,7 +7,6 @@
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -42,7 +41,7 @@
                     <constraint firstItem="bgC-0R-cbf" firstAttribute="leading" secondItem="a6X-1k-pQs" secondAttribute="trailing" constant="8" id="802-JG-pcM"/>
                     <constraint firstItem="a6X-1k-pQs" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="8tD-Os-85Y"/>
                     <constraint firstItem="bgC-0R-cbf" firstAttribute="firstBaseline" secondItem="a6X-1k-pQs" secondAttribute="firstBaseline" id="Dlv-Nn-M5G"/>
-                    <constraint firstItem="a6X-1k-pQs" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="centerX" id="N9H-7N-MUH"/>
+                    <constraint firstItem="a6X-1k-pQs" firstAttribute="trailing" relation="lessThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="trailing" multiplier="0.75" id="N9H-7N-MUH"/>
                     <constraint firstAttribute="trailingMargin" secondItem="bgC-0R-cbf" secondAttribute="trailing" constant="8" id="OnU-Rx-dJB"/>
                     <constraint firstItem="a6X-1k-pQs" firstAttribute="width" relation="greaterThanOrEqual" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.25" id="kGE-I3-mUc"/>
                     <constraint firstItem="a6X-1k-pQs" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="lZe-Mn-Oag"/>
