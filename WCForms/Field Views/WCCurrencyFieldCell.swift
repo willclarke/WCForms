@@ -66,6 +66,16 @@ class WCCurrencyFieldCell: WCGenericTextFieldAndLabelCell {
             return true
         } else {
             // it wasn't formatted properly, try to make a number out of just the numbers in the string
+            if let currencySymbol = currencyFormatter.locale.currencySymbol {
+                var currencySymbolSet = CharacterSet.whitespaces
+                currencySymbolSet.insert(charactersIn: currencySymbol + currencyFormatter.currencyDecimalSeparator + currencyFormatter.currencyGroupingSeparator)
+                if newText.trimmingCharacters(in: currencySymbolSet).isEmpty {
+                    //they have deleted all the numbers, so clear out the field
+                    textField.text = nil
+                    currencyFieldDelegate?.viewDidUpdateCurrencyValue(with: nil)
+                    return false
+                }
+            }
             var prohibitedCharacters = CharacterSet.decimalDigits.inverted
             if let decimalSeparator = currencyFormatter.locale.decimalSeparator {
                 prohibitedCharacters.subtract(CharacterSet(charactersIn: decimalSeparator))
@@ -90,8 +100,13 @@ class WCCurrencyFieldCell: WCGenericTextFieldAndLabelCell {
             return
         }
         if let newNumber = currencyFormatter.number(from: endingText) {
-            currencyFieldDelegate?.viewDidUpdateCurrencyValue(with: newNumber.doubleValue)
-            textField.text = currencyFormatter.string(from: newNumber)
+            if let formattedText = currencyFormatter.string(from: newNumber) {
+                textField.text = formattedText
+                currencyFieldDelegate?.viewDidUpdateCurrencyValue(with: currencyFormatter.number(from: formattedText)?.doubleValue)
+            } else {
+                textField.text = nil
+                currencyFieldDelegate?.viewDidUpdateCurrencyValue(with: nil)
+            }
         } else {
             textField.text = nil
             currencyFieldDelegate?.viewDidUpdateCurrencyValue(with: nil)
