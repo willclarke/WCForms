@@ -12,6 +12,9 @@ class WCCurrencyFieldCell: WCGenericTextFieldAndLabelCell {
 
     internal var currencyFormatter: NumberFormatter! {
         didSet {
+            guard oldValue != nil else {
+                return
+            }
             if !fieldValueTextField.isFirstResponder, let oldText = fieldValueTextField.text, let valueNumber = oldValue.number(from: oldText) {
                 fieldValueTextField.text = currencyFormatter.string(from: valueNumber)
             }
