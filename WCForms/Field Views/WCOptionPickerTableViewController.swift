@@ -96,7 +96,7 @@ public class WCOptionPickerTableViewController<SelectionItemType: OptionFieldIte
     /// Target action for when the user taps the `clearButton`
     ///
     /// - Parameter sender: The bar button item that was tapped. This should always be the `clearButton`
-    func clearButtonTapped(_ sender: UIBarButtonItem) {
+    @objc func clearButtonTapped(_ sender: UIBarButtonItem) {
         guard let delegate = delegate else {
             return
         }

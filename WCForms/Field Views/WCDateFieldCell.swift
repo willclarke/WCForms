@@ -73,7 +73,7 @@ internal class WCDateFieldCell: WCGenericTextFieldAndLabelCell, WCGenericDateFie
     /// Target action for when the date picker changes dates.
     ///
     /// - Parameter sender: The date picker that changed.
-    func dateChanged(sender: UIDatePicker) {
+    @objc func dateChanged(sender: UIDatePicker) {
         fieldValueTextField.text = dateDisplayFormatter.string(from: sender.date)
         fieldValueTextField.tintColor = self.isEmpty ? self.tintColor : UIColor.clear
         datePickerDelegate?.viewDidUpdateDatePicker(picker: sender)

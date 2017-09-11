@@ -193,7 +193,7 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
             var numberCharactersBeforeInsertionPoint: String = ""
             var newInsertionIndex: String.Index? = nil
             if let validInsertionIndex = insertionIndex {
-                numberCharactersBeforeInsertionPoint = userInput.substring(to: validInsertionIndex)
+                numberCharactersBeforeInsertionPoint = userInput[userInput.startIndex..<validInsertionIndex]
                                                                 .components(separatedBy: prohibitedCharacters)
                                                                 .joined(separator: "")
             }

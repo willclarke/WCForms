@@ -391,7 +391,7 @@ open class WCFormController: UITableViewController {
 
     // MARK: - Target actions for buttons
 
-    final func editFormButtonTapped(_ sender: UIBarButtonItem) {
+    @objc final func editFormButtonTapped(_ sender: UIBarButtonItem) {
         guard isEditing == false else {
             return
         }
@@ -405,7 +405,7 @@ open class WCFormController: UITableViewController {
         setEditing(true, animated: true)
     }
 
-    final func doneEditingFormButtonTapped(_ sender: UIBarButtonItem) {
+    @objc final func doneEditingFormButtonTapped(_ sender: UIBarButtonItem) {
         guard isEditing == true else {
             return
         }
@@ -440,7 +440,7 @@ open class WCFormController: UITableViewController {
         }
     }
 
-    final func cancelEditingButtonTapped(_ sender: UIBarButtonItem) {
+    @objc final func cancelEditingButtonTapped(_ sender: UIBarButtonItem) {
         guard isEditing else {
             return
         }

@@ -99,16 +99,16 @@ internal class WCBoolFieldStackedCell: WCBoolFieldCell {
             stackViewTrailingConstraint = nil
             onLabelWidthConstraint = nil
             offLabelWidthConstraint = nil
-            offDisplayValueLabel.setContentCompressionResistancePriority(1000, for: .horizontal)
-            onDisplayValueLabel.setContentCompressionResistancePriority(1000, for: .horizontal)
-            boolLabelStackView.setContentCompressionResistancePriority(1000, for: .horizontal)
+            offDisplayValueLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+            onDisplayValueLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+            boolLabelStackView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
         } else {
-            boolLabelStackView.setContentCompressionResistancePriority(750, for: .horizontal)
+            boolLabelStackView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
             if preferredOffLabelSize.width <= (maxFieldMultiplier * availableStackSpace) {
                 onLabelWidthConstraint = nil
                 proportionalWidthConstraint = nil
-                offDisplayValueLabel.setContentCompressionResistancePriority(1000, for: .horizontal)
-                onDisplayValueLabel.setContentCompressionResistancePriority(750, for: .horizontal)
+                offDisplayValueLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
+                onDisplayValueLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
                 offLabelWidthConstraint = NSLayoutConstraint(item: offDisplayValueLabel,
                                                              attribute: .width,
                                                              relatedBy: .equal,
@@ -119,8 +119,8 @@ internal class WCBoolFieldStackedCell: WCBoolFieldCell {
             } else if preferredOnLabelSize.width <= (maxFieldMultiplier * availableStackSpace) {
                 offLabelWidthConstraint = nil
                 proportionalWidthConstraint = nil
-                offDisplayValueLabel.setContentCompressionResistancePriority(750, for: .horizontal)
-                onDisplayValueLabel.setContentCompressionResistancePriority(1000, for: .horizontal)
+                offDisplayValueLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
+                onDisplayValueLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: .horizontal)
                 onLabelWidthConstraint = NSLayoutConstraint(item: onDisplayValueLabel,
                                                              attribute: .width,
                                                              relatedBy: .equal,
@@ -131,8 +131,8 @@ internal class WCBoolFieldStackedCell: WCBoolFieldCell {
             } else {
                 onLabelWidthConstraint = nil
                 offLabelWidthConstraint = nil
-                offDisplayValueLabel.setContentCompressionResistancePriority(750, for: .horizontal)
-                onDisplayValueLabel.setContentCompressionResistancePriority(750, for: .horizontal)
+                offDisplayValueLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
+                onDisplayValueLabel.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 750), for: .horizontal)
                 let onLabelArea = preferredOnLabelSize.height * preferredOnLabelSize.width
                 let offLabelArea = preferredOffLabelSize.height * preferredOffLabelSize.width
                 let onToOffLabelMultiplier = max(min(onLabelArea / offLabelArea, 1 / maxFieldMultiplier), maxFieldMultiplier)
