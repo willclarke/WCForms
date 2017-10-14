@@ -140,7 +140,7 @@ extension LabelBalancingStackViewCell {
                                                            attribute: .width,
                                                            multiplier: fieldNameToValueMultiplier,
                                                            constant: 0.0)
-        newProportionalConstraint.priority = 999 // We want the minimum width constraints to override this
+        newProportionalConstraint.priority = UILayoutPriority(rawValue: 999) // We want the minimum width constraints to override this
         
         clearLabelWidthConstraints()
         

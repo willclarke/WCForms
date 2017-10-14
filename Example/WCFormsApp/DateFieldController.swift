@@ -43,6 +43,9 @@ class DateFieldController: WCFormController {
         let dateTimeField = WCDateField(fieldName: "Date and Time field")
         dateTimeField.dateSelectionType = .dateAndTime
         dateTimeField.isVisibleWhenEmpty = true
+        let customTimeZoneField = WCDateField(fieldName: "Custom Time Zone", initialValue: currentDate)
+        customTimeZoneField.timeZone = TimeZone(identifier: "America/Chicago")
+        customTimeZoneField.isVisibleWhenEmpty = true
 
         let afterTodayField = WCDateField(fieldName: "Future date field", initialValue: currentDate)
         afterTodayField.minimumDate = currentDate
@@ -60,7 +63,7 @@ class DateFieldController: WCFormController {
         nextMonthField.isVisibleWhenEmpty = true
 
         let firstSection = WCFormSection(headerTitle: nil, formFields: [dateField, longDateField, requiredDateField, readOnlyField, defaultTodayField,
-                                                                        timeField, dateTimeField])
+                                                                        timeField, dateTimeField, customTimeZoneField])
         let secondSection = WCFormSection(headerTitle: "Fields with a date range",
                                           formFields: [afterTodayField, beforeTodayField, lastWeekField, nextMonthField])
         formModel = WCForm(formSections: [firstSection, secondSection])

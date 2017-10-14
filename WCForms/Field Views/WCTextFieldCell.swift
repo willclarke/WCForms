@@ -81,6 +81,12 @@ internal class WCGenericTextFieldCell: UITableViewCell, UITextFieldDelegate, WCG
         return true
     }
 
+    /// Called when the text field ends editing. This will call viewDidUpdateTextField one last time to make sure the text field wasn't changed by autocorrect
+    /// before dismissing.
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textFieldDelegate?.viewDidUpdateTextField(textField: textField)
+    }
+
 }
 
 /// A table view cell for an editable WCTextField with the `fieldNameAsPlaceholder` appearance.

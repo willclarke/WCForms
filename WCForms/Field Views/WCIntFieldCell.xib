@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,30 +25,49 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LkG-mg-dau">
-                        <rect key="frame" x="16" y="39" width="288" height="22"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
-                        <connections>
-                            <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="xLc-nh-HJf"/>
-                            <outlet property="delegate" destination="KGk-i7-Jjw" id="sY8-a7-TiK"/>
-                        </connections>
-                    </textField>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="eMz-6V-1Je">
+                        <rect key="frame" x="16" y="39" width="288" height="21"/>
+                        <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Prefix" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ryd-3w-IXk">
+                                <rect key="frame" x="0.0" y="0.5" width="44" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LkG-mg-dau">
+                                <rect key="frame" x="45" y="0.0" width="197.5" height="21"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="xLc-nh-HJf"/>
+                                    <outlet property="delegate" destination="KGk-i7-Jjw" id="sY8-a7-TiK"/>
+                                </connections>
+                            </textField>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Suffix" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0YL-gW-YUN">
+                                <rect key="frame" x="243.5" y="0.5" width="44.5" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="LkG-mg-dau" firstAttribute="leading" secondItem="eyT-Ci-Qny" secondAttribute="leading" id="8VV-QA-d74"/>
                     <constraint firstAttribute="trailingMargin" secondItem="eyT-Ci-Qny" secondAttribute="trailing" constant="8" id="BQu-ux-18P"/>
+                    <constraint firstItem="eMz-6V-1Je" firstAttribute="trailing" secondItem="eyT-Ci-Qny" secondAttribute="trailing" id="Lf4-K3-Lxy"/>
                     <constraint firstItem="eyT-Ci-Qny" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="NDr-ey-8Ji"/>
-                    <constraint firstItem="LkG-mg-dau" firstAttribute="trailing" secondItem="eyT-Ci-Qny" secondAttribute="trailing" id="RYL-Dk-dxN"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="LkG-mg-dau" secondAttribute="bottom" constant="0.5" id="f2T-MD-S0q"/>
+                    <constraint firstItem="eMz-6V-1Je" firstAttribute="leading" secondItem="eyT-Ci-Qny" secondAttribute="leading" id="R6Q-VY-XW5"/>
+                    <constraint firstItem="eMz-6V-1Je" firstAttribute="top" secondItem="eyT-Ci-Qny" secondAttribute="bottom" constant="6" id="V12-dd-9jq"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="eMz-6V-1Je" secondAttribute="bottom" constant="1.5" id="VJS-ZN-hfy"/>
                     <constraint firstItem="eyT-Ci-Qny" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="pb7-vo-yLC"/>
-                    <constraint firstItem="LkG-mg-dau" firstAttribute="top" secondItem="eyT-Ci-Qny" secondAttribute="bottom" constant="6" id="uDq-nD-ClS"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="fieldNameLabel" destination="eyT-Ci-Qny" id="CdU-On-jXG"/>
                 <outlet property="fieldValueTextField" destination="LkG-mg-dau" id="HBV-QZ-6ZC"/>
+                <outlet property="prefixLabel" destination="ryd-3w-IXk" id="DfU-eW-DjX"/>
+                <outlet property="suffixLabel" destination="0YL-gW-YUN" id="5e0-C1-8eG"/>
             </connections>
             <point key="canvasLocation" x="34" y="73"/>
         </tableViewCell>

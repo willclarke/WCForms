@@ -12,6 +12,13 @@ import UIKit
 /// UIBarButtonItems.
 public class InputAccessoryView: UIView {
 
+    public override func awakeFromNib() {
+        super.awakeFromNib()
+        if let appDelegate = UIApplication.shared.delegate, let mainWindow = appDelegate.window as? UIWindow {
+            self.tintColor = mainWindow.tintColor
+        }
+    }
+
     /// Outlet to the previous button.
     @IBOutlet weak var previousButton: UIBarButtonItem!
 

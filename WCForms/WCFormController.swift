@@ -391,7 +391,7 @@ open class WCFormController: UITableViewController {
 
     // MARK: - Target actions for buttons
 
-    final func editFormButtonTapped(_ sender: UIBarButtonItem) {
+    @objc final func editFormButtonTapped(_ sender: UIBarButtonItem) {
         guard isEditing == false else {
             return
         }
@@ -405,7 +405,7 @@ open class WCFormController: UITableViewController {
         setEditing(true, animated: true)
     }
 
-    final func doneEditingFormButtonTapped(_ sender: UIBarButtonItem) {
+    @objc final func doneEditingFormButtonTapped(_ sender: UIBarButtonItem) {
         guard isEditing == true else {
             return
         }
@@ -440,12 +440,12 @@ open class WCFormController: UITableViewController {
         }
     }
 
-    final func cancelEditingButtonTapped(_ sender: UIBarButtonItem) {
+    @objc final func cancelEditingButtonTapped(_ sender: UIBarButtonItem) {
         guard isEditing else {
             return
         }
         view.endEditing(true)
-        if formModel.hasFieldChanges {
+        if formModel.hasFieldChanges || formHasOtherUnsavedChanges {
             let confirmationTitle = NSLocalizedString("Are you sure?",
                                                       tableName: "WCForms",
                                                       comment: "Error message title to confirm a destructive action")
@@ -505,6 +505,12 @@ open class WCFormController: UITableViewController {
     /// Called after a form cancels editing. If changes were made to the form, the user was asked to confirm discarding any changes. Override this to perform 
     /// some action after completing, like dismissing the view.
     open func formDidCancelEditing() { }
+
+    /// Whether or not there are unsaved changes on fields other than those managed by the WCFormController. This will be used to determine if the user should
+    /// be warned when they try to tap the cancel button and they have unsaved changes.
+    open var formHasOtherUnsavedChanges: Bool {
+        return false
+    }
 
 
     // MARK: - Functions for updating UI

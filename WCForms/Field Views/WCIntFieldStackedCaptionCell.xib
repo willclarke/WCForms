@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16F2073" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,31 +25,48 @@
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5CD-LS-eCQ">
-                        <rect key="frame" x="16" y="29.5" width="288" height="21"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                        <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
-                        <connections>
-                            <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="rfi-vw-vvP"/>
-                            <outlet property="delegate" destination="-1" id="eQn-ll-qIt"/>
-                        </connections>
-                    </textField>
+                    <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="16b-b6-xNg">
+                        <rect key="frame" x="16" y="30" width="288" height="21"/>
+                        <subviews>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Prefix" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xvJ-K2-C4Y">
+                                <rect key="frame" x="0.0" y="0.5" width="44" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5CD-LS-eCQ">
+                                <rect key="frame" x="45" y="0.0" width="197.5" height="21"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                <connections>
+                                    <action selector="textFieldEditingChanged:" destination="KGk-i7-Jjw" eventType="editingChanged" id="rfi-vw-vvP"/>
+                                    <outlet property="delegate" destination="-1" id="eQn-ll-qIt"/>
+                                </connections>
+                            </textField>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Suffix" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="obo-gd-u2g">
+                                <rect key="frame" x="243.5" y="0.5" width="44.5" height="20.5"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                    </stackView>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="5CD-LS-eCQ" firstAttribute="leading" secondItem="X5e-yK-rZG" secondAttribute="leading" id="9eT-Li-PUu"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="5CD-LS-eCQ" secondAttribute="bottom" constant="3" id="JAH-6b-2xM"/>
+                    <constraint firstItem="16b-b6-xNg" firstAttribute="trailing" secondItem="X5e-yK-rZG" secondAttribute="trailing" id="IuN-dJ-obh"/>
                     <constraint firstAttribute="trailingMargin" secondItem="X5e-yK-rZG" secondAttribute="trailing" constant="8" id="O16-fD-Tco"/>
-                    <constraint firstItem="5CD-LS-eCQ" firstAttribute="trailing" secondItem="X5e-yK-rZG" secondAttribute="trailing" id="VRJ-Sz-2uO"/>
+                    <constraint firstItem="16b-b6-xNg" firstAttribute="leading" secondItem="X5e-yK-rZG" secondAttribute="leading" id="Obe-5Q-X1h"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="16b-b6-xNg" secondAttribute="bottom" constant="3" id="OdF-Kv-1fW"/>
+                    <constraint firstItem="16b-b6-xNg" firstAttribute="top" secondItem="X5e-yK-rZG" secondAttribute="bottom" constant="6" id="RgD-qy-3Ms"/>
                     <constraint firstItem="X5e-yK-rZG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="bcw-12-c4V"/>
                     <constraint firstItem="X5e-yK-rZG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="hRX-uk-ZYT"/>
-                    <constraint firstItem="5CD-LS-eCQ" firstAttribute="top" secondItem="X5e-yK-rZG" secondAttribute="bottom" constant="6" id="kXY-6O-Guj"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
                 <outlet property="fieldNameLabel" destination="X5e-yK-rZG" id="R9h-Ha-WU8"/>
                 <outlet property="fieldValueTextField" destination="5CD-LS-eCQ" id="9CW-W8-4W7"/>
+                <outlet property="prefixLabel" destination="xvJ-K2-C4Y" id="NL1-r3-hAm"/>
+                <outlet property="suffixLabel" destination="obo-gd-u2g" id="YTp-KV-zgB"/>
             </connections>
-            <point key="canvasLocation" x="34" y="62.5"/>
+            <point key="canvasLocation" x="34" y="62"/>
         </tableViewCell>
     </objects>
 </document>
