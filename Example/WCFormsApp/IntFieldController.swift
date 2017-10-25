@@ -90,7 +90,7 @@ class IntFieldController: WCFormController {
         ssnWithDefault.numberFormatMask = "###-##-####"
         ssnWithDefault.minimumValue = 100000000
         ssnWithDefault.maximumValue = 999999999
-        let ssnWithLongDefault = WCIntField(fieldName: "SSN field with long initial value", initialValue: 1234567890123)
+        let ssnWithLongDefault = WCIntField(fieldName: "SSN field with long initial value", initialValue: 1234567890)
         ssnWithLongDefault.isVisibleWhenEmpty = true
         ssnWithLongDefault.numberFormatMask = "###-##-####"
         ssnWithLongDefault.minimumValue = 100000000
