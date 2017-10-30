@@ -298,7 +298,7 @@ public enum WCOptionItemSelectionBehavior {
 }
 
 /// A field with a value that can come from a collection of preset options.
-internal class WCOptionField<ItemType: OptionFieldItem, ValueType: Equatable>: WCGenericField<ValueType, WCOptionFieldAppearance>, WCEditableSelectableField,
+public class WCOptionField<ItemType: OptionFieldItem, ValueType: Equatable>: WCGenericField<ValueType, WCOptionFieldAppearance>, WCEditableSelectableField,
                                                                                WCOptionItemSelectionDelegate, WCOptionItemSelectionDataSource,
                                                                                WCOptionAppearanceSettable
 {
