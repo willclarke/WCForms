@@ -300,13 +300,13 @@ public class WCMultipleOptionField<ItemType: OptionFieldItem>: WCOptionField<Ite
     ///
     /// - Parameter cell: The UITableViewCell for the field.
     public override func setupCell(_ cell: UITableViewCell) {
-        if let cell = cell as? WCOptionFieldRightDetailCell {
-            if preferredSummaryStyle == .count {
-                cell.fieldNameAndValueStackView.alignment = .center
-            } else {
-                cell.fieldNameAndValueStackView.alignment = .firstBaseline
-            }
-        }
+//        if let cell = cell as? WCOptionFieldRightDetailCell {
+//            if preferredSummaryStyle == .count {
+//                cell.fieldNameAndValueStackView.alignment = .center
+//            } else {
+//                cell.fieldNameAndValueStackView.alignment = .firstBaseline
+//            }
+//        }
         super.setupCell(cell)
     }
 

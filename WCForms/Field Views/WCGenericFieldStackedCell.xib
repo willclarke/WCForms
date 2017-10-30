@@ -5,7 +5,7 @@
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -20,13 +20,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Field Name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Od5-34-zdt">
-                        <rect key="frame" x="16" y="12" width="288" height="24"/>
+                        <rect key="frame" x="16" y="10" width="288" height="24"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="249" text="Field Value" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fuf-l5-xKu">
-                        <rect key="frame" x="16" y="44" width="288" height="15.5"/>
+                        <rect key="frame" x="16" y="42" width="288" height="20.5"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
@@ -36,10 +36,10 @@
                     <constraint firstItem="fuf-l5-xKu" firstAttribute="top" secondItem="Od5-34-zdt" secondAttribute="bottom" constant="8" id="LfF-Ec-ZB0"/>
                     <constraint firstItem="fuf-l5-xKu" firstAttribute="trailing" secondItem="Od5-34-zdt" secondAttribute="trailing" id="RRg-Bq-Y77"/>
                     <constraint firstItem="fuf-l5-xKu" firstAttribute="leading" secondItem="Od5-34-zdt" secondAttribute="leading" id="TWY-lG-1li"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="fuf-l5-xKu" secondAttribute="bottom" constant="2.5" id="Xox-Dz-XIL"/>
-                    <constraint firstItem="Od5-34-zdt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="eBK-43-PHB"/>
-                    <constraint firstItem="Od5-34-zdt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="lzi-OM-gPA"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="Od5-34-zdt" secondAttribute="trailing" constant="8" id="nEw-dk-Td3"/>
+                    <constraint firstAttribute="bottom" secondItem="fuf-l5-xKu" secondAttribute="bottom" constant="10" id="jSL-CQ-kCw"/>
+                    <constraint firstItem="Od5-34-zdt" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="lzi-OM-gPA"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Od5-34-zdt" secondAttribute="trailing" id="nEw-dk-Td3"/>
+                    <constraint firstItem="Od5-34-zdt" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="s6D-eE-E25"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

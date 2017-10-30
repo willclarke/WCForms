@@ -298,10 +298,8 @@ public enum WCOptionItemSelectionBehavior {
 }
 
 /// A field with a value that can come from a collection of preset options.
-internal class WCOptionField<ItemType: OptionFieldItem, ValueType: Equatable>: WCGenericField<ValueType, WCOptionFieldAppearance>,
-                                                                               WCEditableSelectableField,
-                                                                               WCOptionItemSelectionDelegate,
-                                                                               WCOptionItemSelectionDataSource,
+internal class WCOptionField<ItemType: OptionFieldItem, ValueType: Equatable>: WCGenericField<ValueType, WCOptionFieldAppearance>, WCEditableSelectableField,
+                                                                               WCOptionItemSelectionDelegate, WCOptionItemSelectionDataSource,
                                                                                WCOptionAppearanceSettable
 {
 
@@ -324,7 +322,7 @@ internal class WCOptionField<ItemType: OptionFieldItem, ValueType: Equatable>: W
         }
     }
 
-    override var fieldValue: ValueType? {
+    override public var fieldValue: ValueType? {
         didSet {
             guard fieldValue != oldValue else {
                 return

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12120" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -21,19 +21,19 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Field Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vl9-Tm-erw">
-                        <rect key="frame" x="16" y="9" width="182.5" height="24"/>
+                        <rect key="frame" x="8" y="10" width="201.5" height="24"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="Field Value" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9dN-1A-czN">
-                        <rect key="frame" x="206.5" y="9" width="97.5" height="24"/>
+                        <rect key="frame" x="217.5" y="10" width="94.5" height="24"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="YTt-6z-SBY">
-                        <rect key="frame" x="14" y="41" width="292" height="31"/>
+                        <rect key="frame" x="6" y="42" width="308" height="30"/>
                         <connections>
                             <action selector="intSliderValueChanged:" destination="KGk-i7-Jjw" eventType="valueChanged" id="gvo-FS-e8M"/>
                         </connections>
@@ -42,13 +42,13 @@
                 <constraints>
                     <constraint firstItem="YTt-6z-SBY" firstAttribute="trailing" secondItem="9dN-1A-czN" secondAttribute="trailing" id="4Vn-rx-S6n"/>
                     <constraint firstItem="YTt-6z-SBY" firstAttribute="top" secondItem="Vl9-Tm-erw" secondAttribute="bottom" constant="8" id="5P9-N8-hLG"/>
-                    <constraint firstItem="Vl9-Tm-erw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="Jyh-FQ-9LJ"/>
+                    <constraint firstItem="Vl9-Tm-erw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="6iD-1u-eUb"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="9dN-1A-czN" secondAttribute="trailing" id="EFm-yM-4M6"/>
                     <constraint firstAttribute="bottomMargin" secondItem="YTt-6z-SBY" secondAttribute="bottom" constant="2.5" id="OoT-JB-ZUq"/>
                     <constraint firstItem="9dN-1A-czN" firstAttribute="leading" secondItem="Vl9-Tm-erw" secondAttribute="trailing" constant="8" id="Rye-08-OJu"/>
                     <constraint firstItem="YTt-6z-SBY" firstAttribute="leading" secondItem="Vl9-Tm-erw" secondAttribute="leading" id="SCE-QA-qxP"/>
+                    <constraint firstItem="Vl9-Tm-erw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="bJy-7n-iM2"/>
                     <constraint firstItem="9dN-1A-czN" firstAttribute="firstBaseline" secondItem="Vl9-Tm-erw" secondAttribute="firstBaseline" id="dPo-ke-bTj"/>
-                    <constraint firstItem="Vl9-Tm-erw" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="1" id="dVd-DS-gHf"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="9dN-1A-czN" secondAttribute="trailing" constant="8" id="xki-XW-RYX"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

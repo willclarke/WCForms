@@ -20,17 +20,17 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field Value" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nWN-Rv-22p">
-                        <rect key="frame" x="16" y="14" width="288" height="15.5"/>
+                        <rect key="frame" x="8" y="10" width="304" height="23"/>
                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
                 <constraints>
-                    <constraint firstItem="nWN-Rv-22p" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="3" id="6b3-xh-0o1"/>
-                    <constraint firstItem="nWN-Rv-22p" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="8zD-FR-QHf"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="nWN-Rv-22p" secondAttribute="trailing" constant="8" id="dyh-Ps-W95"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="nWN-Rv-22p" secondAttribute="bottom" constant="3.5" id="lDg-UN-2qI"/>
+                    <constraint firstItem="nWN-Rv-22p" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="8zD-FR-QHf"/>
+                    <constraint firstItem="nWN-Rv-22p" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="BcA-A5-8ln"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="nWN-Rv-22p" secondAttribute="trailing" id="dyh-Ps-W95"/>
+                    <constraint firstAttribute="bottom" secondItem="nWN-Rv-22p" secondAttribute="bottom" constant="10" id="eTK-eA-r3H"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>

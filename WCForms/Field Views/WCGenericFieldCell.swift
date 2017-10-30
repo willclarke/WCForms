@@ -65,37 +65,36 @@ internal class WCGenericFieldWithFieldNameCell: WCGenericFieldCell {
 
 }
 
-internal protocol LabelBalancingStackViewCell: class {
-    
+internal protocol LabelBalancingViewCell: class {
+
     var proportionalWidthConstraint: NSLayoutConstraint? { get set }
     var fieldNameMinimumWidthConstraint: NSLayoutConstraint? { get set }
     var fieldValueMinimumWidthConstraint: NSLayoutConstraint? { get set }
-    
-    weak var fieldNameAndValueStackView: UIStackView! { get }
+    var fieldNameValueSpacingConstraint: NSLayoutConstraint! { get set }
+
     weak var fieldNameLabel: UILabel! { get }
-    weak var valueView: UIView! { get }
+    weak var fieldValueView: UIView! { get }
     var contentView: UIView { get }
-    
-    var stackViewMarginSpacing: CGFloat { get }
+
     var minimumLabelWidth: CGFloat { get }
     var valueIsEmpty: Bool { get }
-    
+
 }
 
-extension LabelBalancingStackViewCell {
-    
+extension LabelBalancingViewCell {
+
     func clearLabelWidthConstraints() {
         if let proportionalWidthConstraint = proportionalWidthConstraint {
-            fieldNameAndValueStackView.removeConstraint(proportionalWidthConstraint)
+            contentView.removeConstraint(proportionalWidthConstraint)
         }
         if let fieldNameMinimumWidthConstraint = fieldNameMinimumWidthConstraint {
             fieldNameLabel.removeConstraint(fieldNameMinimumWidthConstraint)
         }
         if let fieldValueMinimumWidthConstraint = fieldValueMinimumWidthConstraint {
-            valueView.removeConstraint(fieldValueMinimumWidthConstraint)
+            fieldValueView.removeConstraint(fieldValueMinimumWidthConstraint)
         }
     }
-    
+
     func updateLabelWidthConstraints() {
         guard fieldNameLabel.text != nil && !valueIsEmpty else {
             clearLabelWidthConstraints()
@@ -103,16 +102,16 @@ extension LabelBalancingStackViewCell {
         }
         let preferredFieldNameSize = fieldNameLabel.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude,
                                                                         height: CGFloat.greatestFiniteMagnitude))
-        let preferredFieldValueSize = valueView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude,
-                                                                    height: CGFloat.greatestFiniteMagnitude))
-        let availableStackSpace = contentView.frame.size.width - contentView.layoutMargins.left - contentView.layoutMargins.right
-            - fieldNameAndValueStackView.spacing - stackViewMarginSpacing
-        guard preferredFieldNameSize.width + preferredFieldValueSize.width > availableStackSpace else {
+        let preferredFieldValueSize = fieldValueView.sizeThatFits(CGSize(width: CGFloat.greatestFiniteMagnitude,
+                                                                         height: CGFloat.greatestFiniteMagnitude))
+        let availableLabelSpace = contentView.frame.size.width - contentView.layoutMargins.left - contentView.layoutMargins.right
+            - fieldNameValueSpacingConstraint.constant
+        guard preferredFieldNameSize.width + preferredFieldValueSize.width > availableLabelSpace else {
             // there is enough room for both the value and name to be on one line
             clearLabelWidthConstraints()
             return
         }
-        
+
         let newMinimumFieldNameWidthConstraint = NSLayoutConstraint(item: fieldNameLabel,
                                                                     attribute: .width,
                                                                     relatedBy: .greaterThanOrEqual,
@@ -120,15 +119,15 @@ extension LabelBalancingStackViewCell {
                                                                     attribute: .notAnAttribute,
                                                                     multiplier: 1.0,
                                                                     constant: min(minimumLabelWidth, preferredFieldNameSize.width))
-        
-        let newMinimumFieldValueWidthConstraint = NSLayoutConstraint(item: valueView,
+
+        let newMinimumFieldValueWidthConstraint = NSLayoutConstraint(item: fieldValueView,
                                                                      attribute: .width,
                                                                      relatedBy: .greaterThanOrEqual,
                                                                      toItem: nil,
                                                                      attribute: .notAnAttribute,
                                                                      multiplier: 1.0,
                                                                      constant: min(minimumLabelWidth, preferredFieldValueSize.width))
-        
+
         let fieldNameArea = preferredFieldNameSize.width * preferredFieldNameSize.height
         let fieldValueArea = preferredFieldValueSize.width * preferredFieldValueSize.height
         let maxFieldMultiplier: CGFloat = 0.35
@@ -136,47 +135,46 @@ extension LabelBalancingStackViewCell {
         let newProportionalConstraint = NSLayoutConstraint(item: fieldNameLabel,
                                                            attribute: .width,
                                                            relatedBy: .equal,
-                                                           toItem: valueView,
+                                                           toItem: fieldValueView,
                                                            attribute: .width,
                                                            multiplier: fieldNameToValueMultiplier,
                                                            constant: 0.0)
         newProportionalConstraint.priority = UILayoutPriority(rawValue: 999) // We want the minimum width constraints to override this
-        
+
         clearLabelWidthConstraints()
-        
+
         fieldNameLabel.addConstraint(newMinimumFieldNameWidthConstraint)
-        valueView.addConstraint(newMinimumFieldValueWidthConstraint)
-        fieldNameAndValueStackView.addConstraint(newProportionalConstraint)
-        
+        fieldValueView.addConstraint(newMinimumFieldValueWidthConstraint)
+        contentView.addConstraint(newProportionalConstraint)
+
         fieldNameMinimumWidthConstraint = newMinimumFieldNameWidthConstraint
         fieldValueMinimumWidthConstraint = newMinimumFieldValueWidthConstraint
         proportionalWidthConstraint = newProportionalConstraint
     }
-    
+
 }
 
-internal class WCGenericFieldRightDetailCell: WCGenericFieldWithFieldNameCell, LabelBalancingStackViewCell {
+internal class WCGenericFieldRightDetailCell: WCGenericFieldWithFieldNameCell, LabelBalancingViewCell {
 
-    @IBOutlet weak var fieldNameAndValueStackView: UIStackView!
+    var fieldValueView: UIView! {
+        return valueLabel
+    }
+
+    @IBOutlet weak var fieldNameValueSpacingConstraint: NSLayoutConstraint!
 
     var proportionalWidthConstraint: NSLayoutConstraint? = nil
     var fieldNameMinimumWidthConstraint: NSLayoutConstraint? = nil
     var fieldValueMinimumWidthConstraint: NSLayoutConstraint? = nil
 
-    var valueView: UIView! {
-        return valueLabel
-    }
     var valueIsEmpty: Bool {
         return valueLabel.text == nil || valueLabel.text == ""
     }
 
     let minimumLabelWidth: CGFloat = 90.0
-    let stackViewMarginSpacing: CGFloat = 16.0
 
     override func prepareForReuse() {
         super.prepareForReuse()
         clearLabelWidthConstraints()
-        fieldNameAndValueStackView.alignment = .firstBaseline
     }
 
     override func awakeFromNib() {

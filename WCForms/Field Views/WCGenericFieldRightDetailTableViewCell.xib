@@ -6,50 +6,50 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13173"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WCGenericFieldRightDetailTableViewCell" id="KGk-i7-Jjw" customClass="WCGenericFieldRightDetailCell" customModule="WCForms" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="346" height="44"/>
+        <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WCGenericFieldRightDetailTableViewCell" rowHeight="44" id="KGk-i7-Jjw" customClass="WCGenericFieldRightDetailCell" customModule="WCForms" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="370" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="346" height="43.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="370" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" distribution="fillProportionally" alignment="firstBaseline" spacing="8" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TpQ-rp-FEx">
-                        <rect key="frame" x="16" y="13" width="346" height="18"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Field Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14c-CS-RYZ">
-                                <rect key="frame" x="0.0" y="0.0" width="171" height="18"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="1000" text="Field Value" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hah-j4-ZCy">
-                                <rect key="frame" x="179" y="0.0" width="167" height="18"/>
-                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                    </stackView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="1000" text="Field Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="14c-CS-RYZ">
+                        <rect key="frame" x="8" y="10" width="251.5" height="23.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Field Value" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hah-j4-ZCy">
+                        <rect key="frame" x="267.5" y="10" width="94.5" height="23.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="bottomMargin" secondItem="TpQ-rp-FEx" secondAttribute="bottom" constant="2" id="1bG-Es-SEV"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="TpQ-rp-FEx" secondAttribute="trailing" constant="8" id="Thy-2G-oGO"/>
-                    <constraint firstItem="TpQ-rp-FEx" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="mDZ-cw-IEx"/>
-                    <constraint firstItem="TpQ-rp-FEx" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="yI3-d9-SUv"/>
+                    <constraint firstAttribute="bottom" secondItem="14c-CS-RYZ" secondAttribute="bottom" constant="10" id="40v-mA-kGp"/>
+                    <constraint firstItem="14c-CS-RYZ" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="EuB-8m-PeX"/>
+                    <constraint firstItem="hah-j4-ZCy" firstAttribute="top" secondItem="14c-CS-RYZ" secondAttribute="top" id="Q13-SZ-pEm"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="hah-j4-ZCy" secondAttribute="trailing" id="cs7-Hr-dHo"/>
+                    <constraint firstItem="hah-j4-ZCy" firstAttribute="bottom" secondItem="14c-CS-RYZ" secondAttribute="bottom" id="mby-TF-g3i"/>
+                    <constraint firstItem="14c-CS-RYZ" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="qv4-FI-9iR"/>
+                    <constraint firstItem="hah-j4-ZCy" firstAttribute="firstBaseline" secondItem="14c-CS-RYZ" secondAttribute="firstBaseline" id="tNT-5G-gSB"/>
+                    <constraint firstItem="hah-j4-ZCy" firstAttribute="leading" secondItem="14c-CS-RYZ" secondAttribute="trailing" constant="8" id="yxO-1L-9Ia"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="fieldNameAndValueStackView" destination="TpQ-rp-FEx" id="HgM-BO-vP8"/>
                 <outlet property="fieldNameLabel" destination="14c-CS-RYZ" id="wyn-OR-ytk"/>
+                <outlet property="fieldNameValueSpacingConstraint" destination="yxO-1L-9Ia" id="5Zg-DA-OZR"/>
                 <outlet property="valueLabel" destination="hah-j4-ZCy" id="zpW-hd-iUz"/>
             </connections>
-            <point key="canvasLocation" x="219" y="45"/>
+            <point key="canvasLocation" x="231" y="95"/>
         </tableViewCell>
     </objects>
 </document>

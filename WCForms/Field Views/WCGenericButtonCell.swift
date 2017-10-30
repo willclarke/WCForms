@@ -151,7 +151,7 @@ class WCGenericButtonStackedCell: WCGenericButtonCell {
 }
 
 /// A button field with the field value to the right of the field name.
-class WCGenericButtonRightDetailCell: WCGenericButtonCell, LabelBalancingStackViewCell {
+class WCGenericButtonRightDetailCell: WCGenericButtonCell {
 
     // MARK: - Public accessors for view elements; conformance to WCGenericButtonCellDisplayable
 
@@ -163,30 +163,6 @@ class WCGenericButtonRightDetailCell: WCGenericButtonCell, LabelBalancingStackVi
             fieldNameLabel.text = newValue
         }
     }
-
-
-    // MARK: - Conformance to LabelBalancingStackViewCell
-
-    @IBOutlet weak var fieldNameAndValueStackView: UIStackView!
-
-    var proportionalWidthConstraint: NSLayoutConstraint? = nil
-    var fieldNameMinimumWidthConstraint: NSLayoutConstraint? = nil
-    var fieldValueMinimumWidthConstraint: NSLayoutConstraint? = nil
-
-    var valueView: UIView! {
-        return fieldValueButton
-    }
-    var valueIsEmpty: Bool {
-        if let valueText = fieldValueButton.title(for: .normal), valueText != "" {
-            return false
-        } else {
-            return true
-        }
-    }
-
-    let minimumLabelWidth: CGFloat = 90.0
-    let stackViewMarginSpacing: CGFloat = 16.0
-
 
     // MARK: - IBOutlets
 

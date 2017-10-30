@@ -255,9 +255,8 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
             displayValue += suffixText ?? ""
             return displayValue
         } else {
-            return nil
+            return emptyValueLabelText
         }
-
     }
 
     /// Attempt to make this field to become the first responder.

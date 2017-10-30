@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13196" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12089"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13174"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -14,30 +14,24 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="WCDoubleFieldRightDetailCell" id="KGk-i7-Jjw" customClass="WCDoubleFieldCell" customModule="WCForms" customModuleProvider="target">
+        <tableViewCell contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="WCDoubleFieldRightDetailCell" id="KGk-i7-Jjw" customClass="WCDoubleFieldCell" customModule="WCForms" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="43.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fK4-rq-xQG">
-                        <rect key="frame" x="16" y="10" width="101" height="23"/>
-                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
-                        <nil key="textColor"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <stackView opaque="NO" contentMode="scaleToFill" alignment="firstBaseline" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="xY1-KR-79v">
-                        <rect key="frame" x="147" y="13" width="157" height="21"/>
+                        <rect key="frame" x="152.5" y="13" width="151.5" height="21"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Px" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0Cc-si-iym">
-                                <rect key="frame" x="0.0" y="0.0" width="19" height="21"/>
+                                <rect key="frame" x="-152.5" y="0.0" width="19" height="20.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="None" textAlignment="right" adjustsFontForContentSizeCategory="YES" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="0UW-lh-3My">
-                                <rect key="frame" x="20" y="-3" width="117" height="24"/>
+                                <rect key="frame" x="0.0" y="-3" width="151.5" height="24"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad" returnKeyType="done"/>
@@ -47,7 +41,7 @@
                                 </connections>
                             </textField>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" text="Sx" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bp4-01-2xM">
-                                <rect key="frame" x="138" y="0.0" width="19" height="21"/>
+                                <rect key="frame" x="-152.5" y="0.0" width="19" height="20.5"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -55,22 +49,28 @@
                         </subviews>
                     </stackView>
                     <view contentMode="scaleToFill" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Ubn-3k-Da5">
-                        <rect key="frame" x="117" y="0.0" width="30" height="43"/>
+                        <rect key="frame" x="114" y="0.0" width="38.5" height="43"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Field Name" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fK4-rq-xQG">
+                        <rect key="frame" x="16" y="10" width="98" height="23"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="Ubn-3k-Da5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="0m6-cH-KMO"/>
                     <constraint firstItem="Ubn-3k-Da5" firstAttribute="width" secondItem="0UW-lh-3My" secondAttribute="width" multiplier="0.25" id="1bF-Co-mq4"/>
                     <constraint firstAttribute="bottom" secondItem="Ubn-3k-Da5" secondAttribute="bottom" id="3QG-pd-Eq6"/>
-                    <constraint firstAttribute="trailingMargin" secondItem="xY1-KR-79v" secondAttribute="trailing" constant="8" id="684-Gb-NHM"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="fK4-rq-xQG" secondAttribute="bottom" constant="2" id="8op-3n-rZW"/>
+                    <constraint firstAttribute="bottom" secondItem="fK4-rq-xQG" secondAttribute="bottom" constant="10" id="3t4-sD-seY"/>
+                    <constraint firstItem="fK4-rq-xQG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="EbR-ww-xmh"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="xY1-KR-79v" secondAttribute="trailing" id="HEL-xC-QSo"/>
                     <constraint firstAttribute="width" relation="lessThanOrEqual" secondItem="xY1-KR-79v" secondAttribute="width" multiplier="3" id="XF6-pJ-s3T"/>
                     <constraint firstItem="fK4-rq-xQG" firstAttribute="firstBaseline" secondItem="xY1-KR-79v" secondAttribute="firstBaseline" id="aZ1-9B-EnO"/>
-                    <constraint firstItem="fK4-rq-xQG" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="8" id="jqJ-Ev-g0w"/>
+                    <constraint firstItem="fK4-rq-xQG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="iGm-gD-4TK"/>
                     <constraint firstItem="xY1-KR-79v" firstAttribute="leading" secondItem="Ubn-3k-Da5" secondAttribute="trailing" id="lWo-Iq-mMZ"/>
                     <constraint firstItem="Ubn-3k-Da5" firstAttribute="leading" secondItem="fK4-rq-xQG" secondAttribute="trailing" id="u8K-3w-7qg"/>
-                    <constraint firstItem="fK4-rq-xQG" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="2" id="xvp-pv-TJG"/>
                 </constraints>
             </tableViewCellContentView>
             <connections>
