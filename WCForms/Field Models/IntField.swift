@@ -201,9 +201,9 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
             var unusedNumberCharacters = numberCharacters
             if let intValue = Int(numberCharacters) {
                 let expectedNumberOfNumbers = numberFormatMask.components(separatedBy: "#").count - 1
-                if numberCharacters.characters.count > expectedNumberOfNumbers {
+                if numberCharacters.count > expectedNumberOfNumbers {
                     var preDisplayString = ""
-                    for character in unusedNumberCharacters.characters {
+                    for character in unusedNumberCharacters {
                         if numberCharactersBeforeInsertionPoint.isEmpty {
                             break
                         } else if character == numberCharactersBeforeInsertionPoint.remove(at: numberCharactersBeforeInsertionPoint.startIndex) {
@@ -215,13 +215,13 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
                     return (display: numberCharacters, value: intValue, newInsertionIndex: preDisplayString.endIndex)
                 }
                 var displayString = ""
-                for formatCharacter in numberFormatMask.characters {
+                for formatCharacter in numberFormatMask {
                     if unusedNumberCharacters.isEmpty {
                         break
                     }
                     if formatCharacter == "#" {
                         let nextNumberCharacter = unusedNumberCharacters.remove(at: numberCharacters.startIndex)
-                        displayString.characters.append(nextNumberCharacter)
+                        displayString.append(nextNumberCharacter)
                         if !numberCharactersBeforeInsertionPoint.isEmpty
                             && nextNumberCharacter == numberCharactersBeforeInsertionPoint.remove(at: numberCharactersBeforeInsertionPoint.startIndex)
                         {
@@ -230,7 +230,7 @@ public class WCIntField: WCGenericField<Int, WCIntFieldAppearance>, WCTextFieldI
                             }
                         }
                     } else {
-                        displayString.characters.append(formatCharacter)
+                        displayString.append(formatCharacter)
                     }
                 }
                 return (display: displayString, value: intValue, newInsertionIndex: newInsertionIndex)

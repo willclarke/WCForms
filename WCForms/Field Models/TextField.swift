@@ -203,14 +203,14 @@ public class WCTextField: WCGenericField<String, WCTextFieldAppearance>, WCTextF
             throw WCFieldValidationError.missingValue(fieldName: fieldName)
         }
         if let fieldValue = fieldValue {
-            if let minimumLength = minimumLength, fieldValue.characters.count < minimumLength {
+            if let minimumLength = minimumLength, fieldValue.count < minimumLength {
                 let errorFormatter = NSLocalizedString("%@ must contain at least %d characters.",
                                                        tableName: "WCForms",
                                                        comment: "Warning that a string is too short. %@ is the field name, %d is the number of characters.")
                 let errorString = String(format: errorFormatter, fieldName, minimumLength)
                 throw WCFieldValidationError.outOfBounds(fieldName: fieldName, boundsError: errorString)
             }
-            if let maximumLength = maximumLength, fieldValue.characters.count > maximumLength {
+            if let maximumLength = maximumLength, fieldValue.count > maximumLength {
                 let errorFormatter = NSLocalizedString("%@ must contain %d or fewer characters.",
                                                        tableName: "WCForms",
                                                        comment: "Warning that a string is too long. %@ is the field name, %d is the number of characters.")
